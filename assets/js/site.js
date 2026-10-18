@@ -285,7 +285,8 @@ ${sections ? `<div class="toc-block"><h2>On this page</h2><ol class="toc">${sect
     <div class="footer-grid">
       <div>
         <a class="brand" href="index.html"><img src="assets/img/logo-mark.png" alt="" width="34" height="34"><span>Agentic AI Crash Course<small>${SITE.org}</small></span></a>
-        <p class="small mt-1">A free, open crash course on Agentic AI for students, researchers, and practitioners. Examples marked <em>illustrative</em> are simplified for teaching.</p>
+        <p class="small mt-1">A free, open crash course on Agentic AI for students, researchers, and practitioners.</p>
+        <p class="small"><strong>To cite:</strong> Dr. Alaa Khamis. <em>Agentic AI Crash Course</em>. Agentic AI @ KFUPM Community, 2026.</p>
       </div>
       <div><h2>Modules</h2><ul>${list(SITE.modules.slice(0, half))}</ul></div>
       <div><h2>&nbsp;</h2><ul>${list(SITE.modules.slice(half))}</ul></div>
