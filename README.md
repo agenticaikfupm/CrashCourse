@@ -1,1 +1,165 @@
-# CrashCourse
+# Agentic AI Crash Course
+
+An interactive, responsive crash course on Agentic AI from the
+[Agentic AI @ KFUPM](https://agenticaikfupm.github.io/) community.
+
+The site is plain HTML, CSS, and JavaScript with no build framework, so it
+deploys directly to GitHub Pages. Python examples run in the browser with
+[Pyodide](https://pyodide.org/) or open in Google Colab.
+
+**Live site (after deployment):** https://agenticaikfupm.github.io/CrashCourse/
+
+## Contents
+
+| Page | File | Highlights |
+| --- | --- | --- |
+| Home | `index.html` | Objectives, audience, prerequisites, module map, labs index, outcomes |
+| 1. Evolution of AI | `evolution.html` | Interactive timeline (GANs to Physical AI), model-release lanes, inference code |
+| 2. Components of AI Agents | `components.html` | Selectable architecture diagram, five component examples |
+| 3. Agent Design Patterns | `patterns.html` | Eight patterns, each with a playable workflow diagram and code |
+| 4. Model Context Protocol | `mcp.html` | Host/client/server workflow, JSON-RPC simulation, official SDK example |
+| 5. Decision APIs | `decision-apis.html` | Live decision table, OpenAPI-to-tool example, optimization with OR-Tools |
+| 6. Agentic AI Workflows | `workflows.html` | Perception-to-feedback loop and an end-to-end Python example |
+| 7. No-Code Agentic Workflows | `no-code.html` | n8n and Langflow flows, importable n8n templates, Python equivalents |
+| 8. Agentic AI Governance | `governance.html` | Control layers, approval simulator, guardrail/evaluation code, embedded video |
+| Glossary | `glossary.html` | 46 searchable terms with examples and related concepts |
+| Resources | `resources.html` | Curated links filtered by type, topic, and level, plus all notebooks |
+
+## Folder structure
+
+```
+website/
+  index.html, evolution.html, ...   one HTML file per page
+  404.html                          GitHub Pages "not found" page
+  .nojekyll                         serve files as-is (no Jekyll processing)
+  assets/
+    css/style.css                   all styles; design tokens at the top
+    js/site.js                      header, sidebar, footer, theme, tabs, quizzes, video
+    js/code.js                      code panels: highlight, copy, edit, run (Pyodide)
+    js/diagram.js                   reusable, accessible SVG flow diagrams
+    js/pages/*.js                   page-specific diagrams and widgets
+    data/glossary.js                glossary terms (edit here)
+    data/resources.js               curated resources (edit here)
+    data/notebooks.js               generated list of notebooks
+    exports/*.json                  importable n8n workflow templates
+    img/                            logo and icons from the community site
+  examples/*.py                     Python examples (single source of truth)
+  notebooks/*.ipynb                 generated Google Colab notebooks
+  tools/build.py                    injects code into pages, generates notebooks
+  tools/check_links.py              checks internal and external links
+  VERIFICATION.md                   test report and known limitations
+```
+
+## Run locally
+
+You need Python 3.10 or newer (only the standard library is used).
+
+```bash
+cd website
+python -m http.server 8000
+```
+
+Then open http://localhost:8000/. Opening the HTML files directly also works,
+but running a local server is closer to how GitHub Pages serves the site.
+
+## Edit content
+
+- **Text and layout:** edit the HTML page. Each module page uses the same
+  structure: a page header, `<section id="...">` blocks (the sidebar's
+  "On this page" list is built from their `<h2>` headings), and `<nav id="pager">`.
+- **Module list, repository, or Colab location:** edit the `SITE` object at the
+  top of `assets/js/site.js`.
+- **Glossary or resources:** edit `assets/data/glossary.js` or
+  `assets/data/resources.js`. The pages update automatically.
+- **Diagrams:** each diagram is data (nodes, edges, steps) in
+  `assets/js/pages/*.js`, rendered by `assets/js/diagram.js`.
+- **Colors and fonts:** edit the tokens at the top of `assets/css/style.css`.
+  They match the Agentic AI @ KFUPM community site.
+
+### Python examples and notebooks
+
+The files in `examples/` are the single source of truth. After editing or
+adding an example, run:
+
+```bash
+python tools/build.py
+```
+
+This copies each example into its code panel (`<figure class="code-panel"
+data-example="file.py">`), regenerates `notebooks/*.ipynb` and
+`assets/data/notebooks.js`, and warns about missing examples and em dashes.
+
+Conventions:
+
+- The module docstring's first line is the title; the rest becomes the
+  notebook introduction.
+- `# %%` splits notebook cells. `# !pip install ...` becomes a real install
+  cell in the notebook. `# %%writefile name.py` as the first line of a cell
+  becomes a Jupyter cell magic.
+- `asyncio.run(main())` is automatically turned into `await main()` in
+  notebooks and in the browser, where an event loop is already running.
+- Examples that only use the standard library get a **Run** button
+  (`data-run="browser"`). Examples that install packages use
+  `data-run="colab"`.
+- Examples with a stand-in `llm()` or `fake_llm()` function get an extra
+  notebook cell that loads a small open model (no API key) so learners can
+  compare.
+
+## Deploy to GitHub Pages
+
+1. Create the repository `agenticaikfupm/CrashCourse` (or use the existing one).
+2. Copy the **contents** of this `website/` folder to the repository root and push:
+   ```bash
+   git init
+   git add .
+   git commit -m "Agentic AI crash course website"
+   git branch -M main
+   git remote add origin https://github.com/agenticaikfupm/CrashCourse.git
+   git push -u origin main
+   ```
+3. On GitHub, open **Settings > Pages**. Under **Build and deployment**, choose
+   **Deploy from a branch**, branch `main`, folder `/ (root)`, and save.
+4. After a minute the site is live at https://agenticaikfupm.github.io/CrashCourse/.
+
+The "Open in Colab" buttons point to
+`https://colab.research.google.com/github/agenticaikfupm/CrashCourse/blob/main/notebooks/...`,
+so they work once the notebooks are pushed to the `main` branch. If you use a
+different repository or branch, update `colabBase` and `githubBlobBase` in
+`assets/js/site.js` and `SITE_URL` in `tools/build.py`, then run the build.
+`404.html` uses the `/CrashCourse/` path prefix; change it if the repository
+name changes.
+
+## Check links
+
+```bash
+python tools/check_links.py            # internal and external links
+python tools/check_links.py --offline  # internal links and anchors only
+```
+
+## Accessibility and browser support
+
+- Semantic landmarks, a skip link, visible focus styles, and labeled controls.
+- Diagrams are keyboard operable (Tab to a box, Enter or Space to select) and
+  include a text description of every step for screen readers.
+- Tabs follow the ARIA tabs pattern (arrow keys, Home, End).
+- Light and dark themes follow the system setting and can be switched in the header.
+- Animations respect "reduce motion".
+- Tested in current Chromium-based browsers at phone, tablet, and desktop widths.
+
+## Third-party services
+
+Loaded only from public CDNs, with fallbacks:
+
+- Google Fonts (Inter, Space Grotesk): falls back to system fonts.
+- Prism 1.29.0 from cdnjs for syntax highlighting: falls back to plain code.
+- Pyodide 0.26.4 from jsDelivr, loaded only when a learner presses **Run**:
+  an error message points to Colab if it cannot load.
+- YouTube, for the embedded video on the governance page. YouTube requires the
+  page to send a referrer, so test the page through a local server (not by
+  opening the file directly), or the player may show an error.
+
+## License and credits
+
+Course content by the Agentic AI @ KFUPM community. Add a license file (for
+example, CC BY 4.0 for content and MIT for code) before publishing if you want
+others to reuse the material.

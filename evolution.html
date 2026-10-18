@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evolution of AI | Agentic AI Crash Course</title>
+<meta name="description" content="An interactive timeline from GANs and Transformers to LLMs, multimodal models, AI agents, Vision-Language-Action models, and Physical AI.">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.classList.add("js");(function(){try{var t=localStorage.getItem("cc-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}})();</script>
+<script>window.Prism={manual:true};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script defer src="assets/js/site.js"></script>
+<script defer src="assets/js/code.js"></script>
+<script defer src="assets/js/pages/evolution.js"></script>
+</head>
+<body data-page="evolution">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+<noscript><div class="noscript-nav">JavaScript is off, so the timeline is shown as text below and Run buttons are unavailable. <a href="index.html">Course home</a></div></noscript>
+
+<main id="main" tabindex="-1">
+  <header class="page-head">
+    <div class="wrap">
+      <p class="breadcrumb"><a href="index.html">Home</a> / Module 1</p>
+      <span class="eyebrow">Module 1</span>
+      <h1>Evolution of AI</h1>
+      <p class="lead">How we got from neural networks that generate pictures to agents that plan, use tools, and act in the physical world. Select each milestone to see what it added and why it matters for Agentic AI.</p>
+      <div class="page-meta"><span><i data-icon="clock"></i>About 30 minutes</span><span><i data-icon="code"></i>2 Python examples</span><span><i data-icon="grad"></i>Beginner</span></div>
+    </div>
+  </header>
+
+  <div class="wrap course-layout">
+    <nav id="course-nav" class="course-nav"></nav>
+    <article class="content">
+
+      <section id="overview">
+        <h2>What you will learn</h2>
+        <div class="prose">
+          <ul class="check-list">
+            <li>The nine milestones in the course timeline and the problem each one solved.</li>
+            <li>Why Transformers and LLMs became the "brain" of modern agents.</li>
+            <li>How multimodal perception and physical action extend what agents can do.</li>
+            <li>How a language model generates text, step by step, in runnable code.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="timeline-section">
+        <h2>Interactive timeline</h2>
+        <p class="prose">Use the mouse, or focus the timeline and press the <kbd>Left</kbd> and <kbd>Right</kbd> arrow keys. The years follow the course slides and mark when each wave became prominent. Earlier research papers often came first; for example, the first Vision-Language-Action models appeared in 2023.</p>
+        <div id="timeline" class="timeline">
+          <!-- Fallback when JavaScript is unavailable -->
+          <ol>
+            <li><strong>2014, GANs:</strong> generator and discriminator networks compete to create realistic content.</li>
+            <li><strong>2017, Transformers:</strong> attention-based architecture behind modern language and vision models.</li>
+            <li><strong>2020, LLMs:</strong> large next-token predictors that learn tasks from examples in the prompt.</li>
+            <li><strong>2022, ChatGPT:</strong> instruction-following chat assistants for everyone.</li>
+            <li><strong>2023, MLLMs:</strong> models that understand images and documents as well as text.</li>
+            <li><strong>2024, AI Agents:</strong> LLMs in a loop with tools and memory.</li>
+            <li><strong>2025, Agentic AI:</strong> autonomous, long-running, multi-agent systems with oversight.</li>
+            <li><strong>2026, VLA, SLA &amp; MHS:</strong> Vision-Language-Action and Sensor-Language-Action models, plus the Model Hardware Standard that lets agents operate physical devices.</li>
+            <li><strong>Next, Physical AI:</strong> agents that perceive and act in the real world.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="releases-section">
+        <h2>Frontier models along the way</h2>
+        <p class="prose">The course slide also tracks two frontier model families. Notice the trend in the highlights: from chat, to reasoning and multimodality, to computer use and long-running, always-on agents.</p>
+        <div id="releases"></div>
+      </section>
+
+      <section id="big-picture">
+        <h2>The big picture</h2>
+        <div class="grid grid-3">
+          <div class="card"><div class="card-icon"><i data-icon="sparkle"></i></div><h3>Generate</h3><p>GANs and Transformers taught models to create content and to understand long context.</p></div>
+          <div class="card"><div class="card-icon"><i data-icon="message"></i></div><h3>Understand and talk</h3><p>LLMs, chat assistants, and multimodal models made language and images a universal interface.</p></div>
+          <div class="card"><div class="card-icon"><i data-icon="bolt"></i></div><h3>Act</h3><p>Agents, VLA and SLA models, hardware standards, and Physical AI connect that understanding to tools, software, and machines.</p></div>
+        </div>
+      </section>
+
+      <section id="code">
+        <h2>Try it: how a language model generates text</h2>
+        <div class="prose">
+          <p>Every LLM, from GPT-3 to today's frontier models, generates text with the same loop: predict a probability for each possible next token, choose one, append it, and repeat. The first example builds a tiny model so you can see every number. Change the <code>temperature</code> and run it again: higher values make the output more random.</p>
+        </div>
+        <figure class="code-panel" data-example="evo_tiny_lm.py" data-title="Tiny language model inference" data-run="browser" data-colab="evo_tiny_lm.ipynb">
+          <pre><code class="language-python">"""Inference with a tiny language model
+
+Large language models generate text one token at a time: they look at the
+text so far, estimate a probability for every possible next token, pick one,
+and repeat. This example builds a toy "bigram" model (it only looks at the
+previous word) so you can see that loop with nothing hidden.
+
+Illustrative: real LLMs use Transformers with billions of parameters and
+look at thousands of previous tokens, but the generation loop is the same.
+"""
+import random
+from collections import Counter, defaultdict
+
+corpus = """
+an agent uses tools to act . the agent uses memory to plan .
+an agent uses search to find facts . an agent plans actions .
+an agent reasons about goals . the agent plans the next step .
+a model predicts the next word . a model learns patterns from data .
+the agent observes feedback . the agent perceives its environment .
+"""
+
+# 1) "Training": count which word follows which.
+words = corpus.split()
+next_counts = defaultdict(Counter)
+for prev, nxt in zip(words, words[1:]):
+    next_counts[prev][nxt] += 1
+
+
+def next_word_probs(prev: str) -&gt; dict:
+    """Turn raw counts into probabilities for the next word."""
+    counts = next_counts[prev]
+    total = sum(counts.values())
+    return {w: c / total for w, c in counts.most_common()}
+
+
+# 2) Inference: the autoregressive generation loop.
+def generate(prompt: str, max_words: int = 10, temperature: float = 1.0, seed: int = 7) -&gt; str:
+    rng = random.Random(seed)
+    out = prompt.split()
+    for _ in range(max_words):
+        probs = next_word_probs(out[-1])
+        if not probs:
+            break
+        if temperature == 0:                      # greedy decoding
+            word = max(probs, key=probs.get)
+        else:                                     # sampling with temperature
+            weights = [p ** (1 / temperature) for p in probs.values()]
+            word = rng.choices(list(probs), weights=weights)[0]
+        out.append(word)
+        if word == ".":
+            break
+    return " ".join(out)
+
+
+print("Next-word probabilities after 'agent':")
+for w, p in next_word_probs("agent").items():
+    print(f"  {w:&lt;10} {p:.2f}")
+
+print("\nGreedy (temperature 0) always picks the most likely word:")
+print("  ", generate("the agent", temperature=0))
+
+print("\nSampling (temperature 1.5) gives different text for different random seeds:")
+for seed in range(1, 5):
+    print("  ", generate("the agent", temperature=1.5, seed=seed))</code></pre>
+        </figure>
+        <div class="prose">
+          <p>The second example uses real pretrained models from Hugging Face: a small text generator and CLIP, a vision-language model that scores how well an image matches each text label. It needs to download models, so it runs in Google Colab.</p>
+        </div>
+        <figure class="code-panel" data-example="evo_hf_multimodal.py" data-title="Text generation and image understanding" data-run="colab" data-colab="evo_hf_multimodal.ipynb">
+          <pre><code class="language-python">"""Real model inference: text generation and image understanding
+
+This example downloads two small open models from the Hugging Face Hub:
+  1. distilgpt2 for text generation (a small GPT-2 style language model)
+  2. CLIP for zero-shot image classification (matches an image to text labels)
+
+CLIP is a vision-language model: it maps images and text into the same
+embedding space, which is one of the building blocks of multimodal AI.
+
+Run it in Google Colab (free) or locally after installing the packages.
+The first run downloads several hundred MB of model weights.
+"""
+# %%
+# In Colab, install the packages first (remove the leading "!" in a terminal):
+# !pip -q install transformers torch pillow requests
+
+# %%
+from transformers import pipeline
+
+# 1) Text generation with a small causal language model.
+generator = pipeline("text-generation", model="distilgpt2")
+result = generator("An AI agent is a system that", max_new_tokens=25, do_sample=False)
+print(result[0]["generated_text"])
+
+# %%
+# 2) Multimodal: zero-shot image classification with CLIP.
+classifier = pipeline("zero-shot-image-classification", model="openai/clip-vit-base-patch32")
+image_url = "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/pipeline-cat-chonk.jpeg"
+labels = ["a photo of a cat", "a photo of a dog", "a photo of a car", "a diagram"]
+for item in classifier(image_url, candidate_labels=labels):
+    print(f"{item['label']:&lt;20} {item['score']:.3f}")</code></pre>
+        </figure>
+      </section>
+
+      <section id="check">
+        <h2>Check your understanding</h2>
+        <form class="quiz" data-answer="b" data-explain="Multimodal models let an agent perceive screens, documents, and camera images, which tools and actions then build on.">
+          <fieldset>
+            <legend>Which milestone most directly improved what an agent can <em>perceive</em>?</legend>
+            <label><input type="radio" name="q1" value="a"> GANs</label>
+            <label><input type="radio" name="q1" value="b"> Multimodal LLMs</label>
+            <label><input type="radio" name="q1" value="c"> ChatGPT</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+      </section>
+
+      <section id="takeaways">
+        <h2>Key takeaways</h2>
+        <ul class="check-list prose">
+          <li>Each wave added a capability: generation, context, language, instruction following, perception, action, autonomy, and embodiment.</li>
+          <li>Agents are not a new kind of model. They are systems built around models, adding tools, memory, planning, and feedback.</li>
+          <li>As agents gain physical and real-world reach, governance and human oversight matter more (see Module 8).</li>
+        </ul>
+      </section>
+
+      <nav id="pager"></nav>
+    </article>
+  </div>
+</main>
+<div id="site-footer"></div>
+</body>
+</html>

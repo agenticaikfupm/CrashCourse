@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>No-Code Agentic Workflows | Agentic AI Crash Course</title>
+<meta name="description" content="Build agentic workflows visually with n8n and similar platforms: interactive workflow diagrams, step-by-step explanations, importable templates, and Python equivalents.">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.classList.add("js");(function(){try{var t=localStorage.getItem("cc-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}})();</script>
+<script>window.Prism={manual:true};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script defer src="assets/js/site.js"></script>
+<script defer src="assets/js/code.js"></script>
+<script defer src="assets/js/diagram.js"></script>
+<script defer src="assets/js/pages/nocode.js"></script>
+</head>
+<body data-page="nocode">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+<noscript><div class="noscript-nav">JavaScript is off, so workflow diagrams are hidden. Each workflow is also described step by step. <a href="index.html">Course home</a></div></noscript>
+
+<main id="main" tabindex="-1">
+  <header class="page-head">
+    <div class="wrap">
+      <p class="breadcrumb"><a href="index.html">Home</a> / Module 7</p>
+      <span class="eyebrow">Module 7</span>
+      <h1>No-Code Agentic Workflows</h1>
+      <p class="lead">Visual workflow platforms let you connect triggers, AI models, tools, and approvals by dragging nodes on a canvas. They are a fast way to prototype agents and automate real processes, often without writing code.</p>
+      <div class="page-meta"><span><i data-icon="clock"></i>About 35 minutes</span><span><i data-icon="flow"></i>3 workflows, 2 importable templates</span><span><i data-icon="grad"></i>Beginner</span></div>
+    </div>
+  </header>
+
+  <div class="wrap course-layout">
+    <nav id="course-nav" class="course-nav"></nav>
+    <article class="content">
+
+      <section id="why">
+        <h2>No-code, low-code, and code</h2>
+        <div class="prose">
+          <p><strong>No-code</strong> platforms let you build entirely with visual blocks. <strong>Low-code</strong> platforms add places to write small expressions or scripts when needed. The building blocks map directly to what you learned earlier: a <em>trigger</em> starts the workflow (perception), <em>AI nodes</em> reason, <em>branch nodes</em> route, <em>app nodes</em> act, and <em>approval steps</em> provide human oversight.</p>
+        </div>
+        <div class="def-grid">
+          <div><h4>Choose no-code when</h4><ul><li>You want a working prototype in an afternoon</li><li>The process connects common apps (email, sheets, chat)</li><li>Non-programmers must maintain it</li></ul></div>
+          <div><h4>Choose code when</h4><ul><li>Logic is complex or needs custom algorithms</li><li>You need thorough automated tests and version control</li><li>Performance, cost, or deployment constraints are strict</li></ul></div>
+          <div><h4>Common approach</h4><ul><li>Prototype visually, then move critical parts to code</li><li>Or call your Python code from a workflow node</li></ul></div>
+        </div>
+      </section>
+
+      <section id="platforms">
+        <h2>Platforms at a glance</h2>
+        <div class="table-wrap">
+          <table>
+            <caption class="visually-hidden">Visual platforms for agentic workflows</caption>
+            <thead><tr><th scope="col">Platform</th><th scope="col">Best known for</th><th scope="col">Hosting</th><th scope="col">Link</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">n8n</th><td>Workflow automation with many app integrations and built-in AI Agent nodes</td><td>Cloud or self-hosted (fair-code license)</td><td><a href="https://n8n.io/">n8n.io</a></td></tr>
+              <tr><th scope="row">Langflow</th><td>Visual builder for agents and RAG flows, built in Python</td><td>Open source, self-hosted or cloud</td><td><a href="https://www.langflow.org/">langflow.org</a></td></tr>
+              <tr><th scope="row">Flowise</th><td>Drag-and-drop LLM apps and agents</td><td>Open source, self-hosted or cloud</td><td><a href="https://flowiseai.com/">flowiseai.com</a></td></tr>
+              <tr><th scope="row">Dify</th><td>LLM application platform with workflows, RAG, and agents</td><td>Open source, self-hosted or cloud</td><td><a href="https://dify.ai/">dify.ai</a></td></tr>
+              <tr><th scope="row">Make</th><td>Visual automation scenarios across thousands of apps</td><td>Cloud</td><td><a href="https://www.make.com/">make.com</a></td></tr>
+              <tr><th scope="row">Zapier</th><td>App-to-app automation for business users, with AI features</td><td>Cloud</td><td><a href="https://zapier.com/">zapier.com</a></td></tr>
+              <tr><th scope="row">Microsoft Copilot Studio</th><td>Building agents inside the Microsoft 365 ecosystem</td><td>Cloud</td><td><a href="https://www.microsoft.com/en-us/microsoft-copilot/microsoft-copilot-studio">Copilot Studio</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted">Features, pricing, and licenses change often. Check each platform's site before choosing.</p>
+      </section>
+
+      <section id="triage">
+        <h2>Example 1 (n8n): email triage with human approval</h2>
+        <div class="def-grid">
+          <div><h4>Objective</h4><p>Sort incoming email automatically and draft replies to questions, but never send anything without a person's approval.</p></div>
+          <div><h4>Inputs</h4><ul><li>New emails (Gmail trigger)</li><li>A chat model credential</li><li>A reviewer who approves drafts</li></ul></div>
+          <div><h4>Outputs</h4><ul><li>Spam archived, urgent mail escalated</li><li>Approved replies sent</li><li>A log row for every email</li></ul></div>
+        </div>
+        <figure class="nocode-diagram figure" data-flow="triage"></figure>
+        <h3>Step by step</h3>
+        <ol class="prose">
+          <li><strong>Gmail Trigger</strong> checks for new email every minute.</li>
+          <li><strong>Text Classifier</strong> (an AI node) labels each email as spam, urgent, or question. It uses a chat model attached as a sub-node.</li>
+          <li>Each label has its own output branch: spam is archived, urgent mail notifies on-call staff.</li>
+          <li>For questions, an <strong>AI Agent</strong> node drafts a reply.</li>
+          <li>A <strong>human approval</strong> step (for example, n8n's "send and wait for response" option on messaging nodes) pauses until a person approves.</li>
+          <li>The reply is sent and the result is logged, for example to Google Sheets.</li>
+        </ol>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="assets/exports/n8n-email-triage.json" download><i data-icon="download"></i>Download n8n template (JSON)</a>
+          <a class="btn btn-ghost" href="https://docs.n8n.io/">n8n documentation</a>
+        </div>
+        <div class="callout illustrative">
+          <i data-icon="alert"></i>
+          <div><span class="callout-title">About the template</span><p>Import it in n8n by pasting the JSON onto the canvas or using <em>Import from File</em>. It is a starter: nodes ending in "(configure)" are placeholders for your own Gmail, approval, and logging nodes, and you must add your own credentials. Its structure was checked, but it has not been run against a live n8n instance, so node versions may need updating in newer releases.</p></div>
+        </div>
+        <p class="prose">The same logic in Python, with each function mapped to a node. Seeing both helps you decide when to stay visual and when to switch to code.</p>
+        <figure class="code-panel" data-example="nc_email_triage.py" data-title="Email triage as Python" data-run="browser" data-colab="nc_email_triage.ipynb">
+          <pre><code class="language-python">"""Python equivalent of the n8n "email triage with approval" workflow
+
+Each function below matches one node in the visual workflow:
+  Trigger -&gt; Classify (AI) -&gt; Route (Switch) -&gt; Draft reply (AI)
+          -&gt; Human approval -&gt; Send / Log
+
+Seeing the same logic as code helps you understand what the visual nodes do,
+and shows when moving from no-code to code makes sense.
+
+Illustrative: classify() and draft_reply() stand in for LLM nodes.
+"""
+from datetime import datetime
+
+NEW_EMAILS = [
+    {"from": "student@university.edu", "subject": "Can I join the crash course late?", "body": "I missed week 1."},
+    {"from": "promo@shop.com", "subject": "50% off laptops", "body": "Today only!"},
+    {"from": "dean@university.edu", "subject": "Urgent: room change", "body": "Workshop moves to Building 22."},
+]
+
+def trigger():                        # n8n: Gmail / IMAP trigger node
+    return NEW_EMAILS
+
+def classify(email):                  # n8n: AI Agent or Text Classifier node
+    text = (email["subject"] + " " + email["body"]).lower()
+    if "urgent" in text:
+        return "urgent"
+    if any(w in text for w in ("sale", "% off", "promo")):
+        return "spam"
+    return "question"
+
+def draft_reply(email):               # n8n: AI Agent node with a reply prompt
+    return f"Hello, thanks for your message about '{email['subject']}'. We will get back to you shortly."
+
+def human_approval(draft):            # n8n: "Send and wait for response" approval step
+    return "approve"                  # simulated: a person clicked Approve
+
+def send(email, text):                # n8n: Gmail "send" node
+    return f"sent to {email['from']}"
+
+LOG = []
+def log(email, category, outcome):    # n8n: Google Sheets / database node
+    LOG.append({"time": datetime(2026, 1, 1, 9, 0).isoformat(), "from": email["from"], "category": category, "outcome": outcome})
+
+for email in trigger():
+    category = classify(email)
+    if category == "spam":                                   # n8n: Switch node, branch 1
+        log(email, category, "archived")
+    elif category == "urgent":                               # branch 2
+        log(email, category, "forwarded to on-call staff")
+    else:                                                    # branch 3
+        draft = draft_reply(email)
+        decision = human_approval(draft)
+        log(email, category, send(email, draft) if decision == "approve" else "rejected by reviewer")
+
+for row in LOG:
+    print(row)</code></pre>
+        </figure>
+      </section>
+
+      <section id="digest">
+        <h2>Example 2 (n8n): weekly research digest</h2>
+        <div class="def-grid">
+          <div><h4>Objective</h4><p>Every week, fetch the newest papers on agentic AI and send a short, student-friendly summary.</p></div>
+          <div><h4>Inputs</h4><ul><li>A schedule</li><li>The public arXiv API (no key needed)</li><li>A chat model credential</li></ul></div>
+          <div><h4>Outputs</h4><ul><li>A digest message with titles, one-line summaries, and links</li></ul></div>
+        </div>
+        <figure class="nocode-diagram figure" data-flow="digest"></figure>
+        <h3>Step by step</h3>
+        <ol class="prose">
+          <li>A <strong>Schedule Trigger</strong> runs every Sunday at 9 am.</li>
+          <li>An <strong>HTTP Request</strong> node calls the <a href="https://info.arxiv.org/help/api/index.html">arXiv API</a> for the five newest matching papers.</li>
+          <li>An <strong>XML</strong> node converts the Atom feed into JSON.</li>
+          <li>An <strong>LLM chain</strong> summarizes the papers using only the fetched data, which reduces invented details.</li>
+          <li>A messaging node sends the digest.</li>
+        </ol>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="assets/exports/n8n-research-digest.json" download><i data-icon="download"></i>Download n8n template (JSON)</a>
+        </div>
+      </section>
+
+      <section id="rag">
+        <h2>Example 3 (Langflow, Flowise, or Dify): document Q&amp;A</h2>
+        <div class="def-grid">
+          <div><h4>Objective</h4><p>Answer students' questions about the course using only the syllabus and FAQ, with sources.</p></div>
+          <div><h4>Inputs</h4><ul><li>Course documents</li><li>An embedding model and a chat model</li><li>A user question</li></ul></div>
+          <div><h4>Outputs</h4><ul><li>An answer grounded in the documents, with the source file</li></ul></div>
+        </div>
+        <figure class="nocode-diagram figure" data-flow="rag"></figure>
+        <h3>Step by step</h3>
+        <ol class="prose">
+          <li>Load the documents and split them into chunks.</li>
+          <li>Embed each chunk and store the vectors in a vector store (done once).</li>
+          <li>When a question arrives, embed it and retrieve the most similar chunks.</li>
+          <li>Insert the chunks into a prompt that tells the model to answer only from them, and show the sources.</li>
+        </ol>
+        <p class="prose">These platforms ship ready-made RAG templates, so this flow takes minutes to assemble. Start from the template gallery on <a href="https://www.langflow.org/">Langflow</a>, <a href="https://flowiseai.com/">Flowise</a>, or <a href="https://dify.ai/">Dify</a>. Exports from those tools depend on their versions, so no export file is provided here. The Python equivalent shows exactly what each block does:</p>
+        <figure class="code-panel" data-example="nc_doc_qa.py" data-title="Document Q&amp;A (RAG) as Python" data-run="browser" data-colab="nc_doc_qa.ipynb">
+          <pre><code class="language-python">"""Python equivalent of a visual "document Q&amp;A" (RAG) flow
+
+Visual builders such as Langflow, Flowise, and Dify ship templates for
+retrieval-augmented generation (RAG). The flow is the same in each tool:
+
+  Load documents -&gt; Split into chunks -&gt; Embed -&gt; Store in a vector index
+  Question -&gt; Embed -&gt; Retrieve top chunks -&gt; Prompt + LLM -&gt; Answer with sources
+
+Illustrative: we "embed" text as word-count vectors and use cosine similarity
+so this runs without downloads. Real flows use an embedding model and a
+vector database.
+"""
+import math
+import re
+from collections import Counter
+
+DOCS = {
+    "syllabus.txt": "The crash course has eight modules. Module 4 covers the Model Context Protocol (MCP). "
+                    "Module 8 covers governance, guardrails and human oversight.",
+    "faq.txt": "Notebooks open in Google Colab. You need basic Python. No paid API key is required "
+               "because examples use a stand-in model.",
+}
+
+def split(text):                                    # "Text splitter" node (one chunk per sentence)
+    return [s for s in re.split(r"(?&lt;=[.!?])\s+", text) if s]
+
+def embed(text):                                    # "Embeddings" node
+    return Counter(re.findall(r"[a-z0-9]+", text.lower()))
+
+def cosine(a, b):
+    dot = sum(a[k] * b[k] for k in a)
+    return dot / ((math.sqrt(sum(v * v for v in a.values())) * math.sqrt(sum(v * v for v in b.values()))) or 1)
+
+INDEX = [(name, chunk, embed(chunk)) for name, text in DOCS.items() for chunk in split(text)]  # "Vector store" node
+
+def retrieve(question, k=2):                        # "Retriever" node
+    q = embed(question)
+    return sorted(INDEX, key=lambda item: cosine(q, item[2]), reverse=True)[:k]
+
+def answer(question):                               # "Prompt" + "LLM" nodes (stand-in)
+    hits = retrieve(question)
+    context = "\n".join(f"[{name}] {chunk}" for name, chunk, _ in hits)
+    prompt = f"Answer using only this context:\n{context}\n\nQuestion: {question}"
+    best_name, best_chunk, _ = hits[0]
+    return prompt, f"{best_chunk} (source: {best_name})"
+
+for q in ["Which module covers MCP?", "Do I need an API key?"]:
+    prompt, reply = answer(q)
+    print("PROMPT SENT TO THE LLM:\n" + prompt)
+    print("ANSWER:", reply, "\n" + "-" * 60)</code></pre>
+        </figure>
+      </section>
+
+      <section id="tips">
+        <h2>Tips for reliable visual workflows</h2>
+        <ul class="check-list prose">
+          <li>Keep credentials in the platform's credential store, never inside prompts or node text.</li>
+          <li>Add an approval step before any node that sends, pays, or deletes.</li>
+          <li>Use structured output (a fixed list of labels or a JSON schema) for AI nodes that feed branches.</li>
+          <li>Log every run and review failed executions regularly.</li>
+          <li>Export workflows as JSON and keep them in version control.</li>
+        </ul>
+      </section>
+
+      <nav id="pager"></nav>
+    </article>
+  </div>
+</main>
+<div id="site-footer"></div>
+</body>
+</html>

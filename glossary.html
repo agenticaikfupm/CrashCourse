@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossary | Agentic AI Crash Course</title>
+<meta name="description" content="A searchable glossary of Agentic AI terms with concise definitions, simple examples, and related concepts.">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.classList.add("js");(function(){try{var t=localStorage.getItem("cc-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}})();</script>
+<script defer src="assets/js/site.js"></script>
+<script defer src="assets/data/glossary.js"></script>
+<script defer src="assets/js/pages/glossary.js"></script>
+</head>
+<body data-page="glossary">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+
+<main id="main" tabindex="-1">
+  <header class="page-head">
+    <div class="wrap">
+      <p class="breadcrumb"><a href="index.html">Home</a> / Reference</p>
+      <span class="eyebrow">Reference</span>
+      <h1>Agentic AI Glossary</h1>
+      <p class="lead">Plain-language definitions of the terms used in this course, each with a simple example and links to related ideas.</p>
+    </div>
+  </header>
+
+  <div class="wrap course-layout">
+    <nav id="course-nav" class="course-nav"></nav>
+    <div class="content">
+      <div class="search-box" role="search">
+        <i data-icon="search"></i>
+        <label for="glossary-search" class="visually-hidden">Search the glossary</label>
+        <input id="glossary-search" type="search" placeholder="Search terms, for example RAG or memory  (press / to focus)" autocomplete="off" aria-describedby="glossary-count">
+      </div>
+      <div class="filter-row">
+        <label for="glossary-cat">Category</label>
+        <select id="glossary-cat"></select>
+      </div>
+      <nav class="az" id="glossary-az" aria-label="Jump to letter"></nav>
+      <p class="result-count" id="glossary-count" role="status" aria-live="polite"></p>
+      <noscript><div class="empty-state">The glossary needs JavaScript to display. The terms are stored in <a href="assets/data/glossary.js">assets/data/glossary.js</a>.</div></noscript>
+      <div class="glossary-list" id="glossary-list"></div>
+    </div>
+  </div>
+</main>
+<div id="site-footer"></div>
+</body>
+</html>

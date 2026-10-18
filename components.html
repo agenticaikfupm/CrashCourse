@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Components of AI Agents | Agentic AI Crash Course</title>
+<meta name="description" content="Explore the building blocks of an AI agent: perception, reasoning, planning, action, tools, memory, feedback, safety, and human oversight.">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.classList.add("js");(function(){try{var t=localStorage.getItem("cc-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}})();</script>
+<script>window.Prism={manual:true};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script defer src="assets/js/site.js"></script>
+<script defer src="assets/js/code.js"></script>
+<script defer src="assets/js/diagram.js"></script>
+<script defer src="assets/js/pages/components.js"></script>
+</head>
+<body data-page="components">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+<noscript><div class="noscript-nav">JavaScript is off, so the diagram is not interactive. The component table and all code are below. <a href="index.html">Course home</a></div></noscript>
+
+<main id="main" tabindex="-1">
+  <header class="page-head">
+    <div class="wrap">
+      <p class="breadcrumb"><a href="index.html">Home</a> / Module 2</p>
+      <span class="eyebrow">Module 2</span>
+      <h1>Components of AI Agents</h1>
+      <p class="lead">An AI agent is a system that perceives its situation, reasons about a goal, plans, and acts through tools, while remembering what matters and learning from feedback. Explore each building block and how they connect.</p>
+      <div class="page-meta"><span><i data-icon="clock"></i>About 40 minutes</span><span><i data-icon="code"></i>5 Python examples</span><span><i data-icon="grad"></i>Beginner</span></div>
+    </div>
+  </header>
+
+  <div class="wrap course-layout">
+    <nav id="course-nav" class="course-nav"></nav>
+    <article class="content">
+
+      <section id="definition">
+        <h2>What is an AI agent?</h2>
+        <div class="prose">
+          <p>A chatbot answers a question. An <strong>agent</strong> works toward a goal: it can take several steps, call tools, check results, and decide what to do next. In most modern agents a <strong>foundation model</strong> (a large language or reasoning model) does the reasoning, and ordinary software provides everything else: memory, tools, rules, and logging.</p>
+        </div>
+        <div class="callout note">
+          <i data-icon="info"></i>
+          <div><span class="callout-title">A useful mental model</span><p>Agent = model + instructions + memory + tools + a loop, wrapped in safety controls and human oversight.</p></div>
+        </div>
+      </section>
+
+      <section id="architecture">
+        <h2>Interactive agent architecture</h2>
+        <p class="prose">This diagram is based on the course slide. Select a component (in the diagram or with the buttons) to see its role, or press <strong>Play</strong> to follow one request through the whole agent.</p>
+        <div class="pill-bar" id="component-pills" aria-label="Choose a component"></div>
+        <div class="explorer">
+          <figure id="agent-diagram" class="figure"></figure>
+          <aside class="detail-panel" id="component-detail" aria-live="polite">
+            <p class="muted">Select a component to see details.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="at-a-glance">
+        <h2>The nine components at a glance</h2>
+        <div class="table-wrap">
+          <table>
+            <caption class="visually-hidden">Agent components, their purpose, and an everyday analogy</caption>
+            <thead><tr><th scope="col">Component</th><th scope="col">Purpose</th><th scope="col">Everyday analogy</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Perception</th><td>Turn raw inputs into structured observations</td><td>Reading and understanding an email</td></tr>
+              <tr><th scope="row">Reasoning</th><td>Interpret the goal and decide what matters</td><td>Thinking through options</td></tr>
+              <tr><th scope="row">Planning</th><td>Order the steps needed to reach the goal</td><td>Writing a to-do list</td></tr>
+              <tr><th scope="row">Action</th><td>Execute a step that affects the world</td><td>Making the phone call</td></tr>
+              <tr><th scope="row">Tools</th><td>Extend abilities with APIs, search, code, solvers</td><td>Using a calculator or a map app</td></tr>
+              <tr><th scope="row">Memory</th><td>Keep context now and knowledge over time</td><td>Notes and personal experience</td></tr>
+              <tr><th scope="row">Feedback and learning</th><td>Compare results with goals and improve</td><td>Checking whether the plan worked</td></tr>
+              <tr><th scope="row">Safety and governance</th><td>Rules, limits, logging, and evaluation</td><td>Company policies and audits</td></tr>
+              <tr><th scope="row">Human oversight</th><td>Approve, correct, or stop the agent</td><td>A manager who signs off on big decisions</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="code">
+        <h2>Python examples, one per component</h2>
+        <p class="prose">Each example isolates one component so you can read it in a few minutes. All of them run in your browser. Where a real agent would call a language model, the code uses simple rules and says so; the Colab notebooks show how to swap in a real open model.</p>
+        <div class="tabs">
+          <div role="tablist" aria-label="Component examples" class="tablist">
+            <button role="tab" id="tab-perception" aria-controls="panel-perception" aria-selected="true">Perception</button>
+            <button role="tab" id="tab-reasoning" aria-controls="panel-reasoning" aria-selected="false">Reasoning</button>
+            <button role="tab" id="tab-planning" aria-controls="panel-planning" aria-selected="false">Planning</button>
+            <button role="tab" id="tab-action" aria-controls="panel-action" aria-selected="false">Action and tools</button>
+            <button role="tab" id="tab-memory" aria-controls="panel-memory" aria-selected="false">Memory</button>
+          </div>
+          <div role="tabpanel" id="panel-perception" aria-labelledby="tab-perception">
+            <p class="prose"><strong>Input:</strong> a chatty user message and a sensor feed with one missing and one valid value. <strong>Output:</strong> a structured observation with warnings.</p>
+            <figure class="code-panel" data-example="comp_perception.py" data-title="Perception" data-run="browser" data-colab="comp_perception.ipynb">
+              <pre><code class="language-python">"""Perception: turning raw inputs into structured observations
+
+An agent cannot act on raw text, images, or sensor values directly. The
+perception step cleans and structures them into an "observation" that the
+reasoning step can use. Here we parse a messy user request and a sensor feed.
+
+Illustrative: a real agent would often use an LLM or a vision model for this
+step. The goal is the same: produce a clean, structured observation.
+"""
+import json
+import re
+from dataclasses import asdict, dataclass, field
+
+
+@dataclass
+class Observation:
+    intent: str
+    entities: dict = field(default_factory=dict)
+    sensors: dict = field(default_factory=dict)
+    warnings: list = field(default_factory=list)
+
+
+def perceive(user_text: str, sensor_feed: dict) -&gt; Observation:
+    text = user_text.lower().strip()
+
+    # Very small intent detector (an LLM classifier would go here).
+    if any(w in text for w in ("book", "reserve")):
+        intent = "book_room"
+    elif any(w in text for w in ("weather", "temperature", "hot")):
+        intent = "check_conditions"
+    else:
+        intent = "unknown"
+
+    entities = {}
+    if m := re.search(r"(\d+)\s*(people|persons|students)", text):
+        entities["group_size"] = int(m.group(1))
+    if m := re.search(r"\b(\d{1,2})\s*(am|pm)\b", text):
+        hour = int(m.group(1)) % 12 + (12 if m.group(2) == "pm" else 0)
+        entities["hour"] = hour
+    if m := re.search(r"building\s*(\d+)", text):
+        entities["building"] = m.group(1)
+
+    # Validate sensor readings instead of trusting them blindly.
+    sensors, warnings = {}, []
+    for name, value in sensor_feed.items():
+        if value is None:
+            warnings.append(f"sensor '{name}' returned no data")
+        elif name == "temperature_c" and not -10 &lt;= value &lt;= 60:
+            warnings.append(f"temperature {value} C looks wrong, ignoring it")
+        else:
+            sensors[name] = value
+
+    return Observation(intent, entities, sensors, warnings)
+
+
+obs = perceive(
+    "Hi! Please book a room in Building 22 for 6 students at 3 pm",
+    {"temperature_c": 41, "occupancy_pct": None, "noise_db": 48},
+)
+print(json.dumps(asdict(obs), indent=2))</code></pre>
+            </figure>
+          </div>
+          <div role="tabpanel" id="panel-reasoning" aria-labelledby="tab-reasoning">
+            <p class="prose"><strong>Input:</strong> the observation and a list of rooms. <strong>Output:</strong> a decision plus a readable trace of each reasoning step.</p>
+            <figure class="code-panel" data-example="comp_reasoning.py" data-title="Reasoning" data-run="browser" data-colab="comp_reasoning.ipynb">
+              <pre><code class="language-python">"""Reasoning: weighing evidence to reach a decision
+
+Reasoning connects observations and goals to a conclusion. LLM-based agents
+often reason in natural language ("chain of thought"). Here we make each
+reasoning step explicit so you can read the trace and check it.
+
+Illustrative: the rules below stand in for what an LLM would infer.
+"""
+observation = {
+    "intent": "book_room",
+    "group_size": 6,
+    "hour": 15,
+    "rooms": [
+        {"name": "B22-101", "capacity": 4, "free_at": [9, 10, 15]},
+        {"name": "B22-204", "capacity": 8, "free_at": [13, 15, 16]},
+        {"name": "B22-310", "capacity": 20, "free_at": [15]},
+    ],
+}
+
+
+def reason(obs: dict) -&gt; tuple[str, list[str]]:
+    trace = []
+    size, hour = obs["group_size"], obs["hour"]
+    trace.append(f"Goal: find a room for {size} people at {hour}:00.")
+
+    fits = [r for r in obs["rooms"] if r["capacity"] &gt;= size]
+    trace.append(f"Rooms large enough: {[r['name'] for r in fits]}.")
+
+    free = [r for r in fits if hour in r["free_at"]]
+    trace.append(f"Of those, free at {hour}:00: {[r['name'] for r in free]}.")
+
+    if not free:
+        trace.append("No room satisfies both constraints, so I should ask the user.")
+        return "ask_user", trace
+
+    # Prefer the smallest room that fits, to keep big rooms for big groups.
+    best = min(free, key=lambda r: r["capacity"])
+    trace.append(f"Choose the smallest suitable room: {best['name']} (capacity {best['capacity']}).")
+    return best["name"], trace
+
+
+decision, trace = reason(observation)
+for i, step in enumerate(trace, 1):
+    print(f"Thought {i}: {step}")
+print("\nDecision:", decision)</code></pre>
+            </figure>
+          </div>
+          <div role="tabpanel" id="panel-planning" aria-labelledby="tab-planning">
+            <p class="prose"><strong>Input:</strong> tasks with prerequisites. <strong>Output:</strong> stages that can run in order (and in parallel), plus what to replan if a step fails.</p>
+            <figure class="code-panel" data-example="comp_planning.py" data-title="Planning" data-run="browser" data-colab="comp_planning.ipynb">
+              <pre><code class="language-python">"""Planning: breaking a goal into ordered, executable steps
+
+Planning turns a goal into a sequence of steps that respects dependencies
+(some steps must happen before others). This example declares tasks with
+their prerequisites and computes a valid order with a topological sort.
+
+Illustrative: an LLM planner would propose the tasks and dependencies in
+structured form; the ordering logic below is what makes the plan executable.
+"""
+from graphlib import TopologicalSorter
+
+goal = "Organize a one-day Agentic AI workshop"
+
+# task -&gt; set of tasks that must finish first
+tasks = {
+    "pick_date": set(),
+    "book_room": {"pick_date"},
+    "invite_speakers": {"pick_date"},
+    "open_registration": {"book_room", "invite_speakers"},
+    "prepare_colab_notebooks": {"invite_speakers"},
+    "send_reminders": {"open_registration"},
+    "run_workshop": {"send_reminders", "prepare_colab_notebooks"},
+}
+
+sorter = TopologicalSorter(tasks)
+sorter.prepare()
+
+print(f"Goal: {goal}\n")
+stage = 1
+while sorter.is_active():
+    ready = sorted(sorter.get_ready())          # tasks whose prerequisites are done
+    print(f"Stage {stage} (can run in parallel): {', '.join(ready)}")
+    for task in ready:
+        sorter.done(task)
+    stage += 1
+
+# Replanning: if a step fails, only the steps that depend on it must change.
+failed = "book_room"
+affected = {t for t, deps in tasks.items() if failed in deps}
+print(f"\nIf '{failed}' fails, re-plan these dependent steps first: {sorted(affected)}")</code></pre>
+            </figure>
+          </div>
+          <div role="tabpanel" id="panel-action" aria-labelledby="tab-action">
+            <p class="prose"><strong>Input:</strong> a user question. <strong>Output:</strong> the tool call the model requests and the tool's result. This is the core idea behind function calling.</p>
+            <figure class="code-panel" data-example="comp_action_tools.py" data-title="Action and tool use" data-run="browser" data-colab="comp_action_tools.ipynb">
+              <pre><code class="language-python">"""Action and tools: calling functions from structured model output
+
+Modern LLMs can "call" tools: you describe each tool with a name, a short
+description, and a JSON schema for its arguments. The model replies with a
+structured request (tool name + arguments), your code runs the function,
+and the result goes back to the model. This is often called function calling.
+
+Illustrative: fake_llm() returns the kind of JSON a real model would return.
+"""
+import json
+import math
+
+# 1) Tools are ordinary Python functions...
+def get_weather(city: str) -&gt; dict:
+    data = {"Dhahran": {"temp_c": 38, "sky": "clear"}, "Riyadh": {"temp_c": 41, "sky": "dusty"}}
+    return data.get(city, {"error": f"no data for {city}"})
+
+def calculator(expression: str) -&gt; float:
+    allowed = {"sqrt": math.sqrt, "pi": math.pi}
+    return eval(expression, {"__builtins__": {}}, allowed)  # restricted; see the governance module
+
+# 2) ...plus a description the model can read (a JSON schema per tool).
+TOOLS = {
+    "get_weather": {
+        "function": get_weather,
+        "description": "Current weather for a city",
+        "parameters": {"type": "object", "properties": {"city": {"type": "string"}}, "required": ["city"]},
+    },
+    "calculator": {
+        "function": calculator,
+        "description": "Evaluate a math expression",
+        "parameters": {"type": "object", "properties": {"expression": {"type": "string"}}, "required": ["expression"]},
+    },
+}
+
+def fake_llm(user_message: str) -&gt; str:
+    """Stands in for a model that decides which tool to call."""
+    if "weather" in user_message.lower():
+        return json.dumps({"tool": "get_weather", "arguments": {"city": "Dhahran"}})
+    return json.dumps({"tool": "calculator", "arguments": {"expression": "sqrt(2) * 10"}})
+
+# 3) The action step: validate the request, then execute it.
+def act(model_output: str):
+    call = json.loads(model_output)
+    name, args = call["tool"], call["arguments"]
+    if name not in TOOLS:
+        return {"error": f"unknown tool {name}"}
+    missing = [p for p in TOOLS[name]["parameters"]["required"] if p not in args]
+    if missing:
+        return {"error": f"missing arguments: {missing}"}
+    return TOOLS[name]["function"](**args)
+
+for question in ["What's the weather in Dhahran?", "What is ten times the square root of two?"]:
+    request = fake_llm(question)
+    print("User:      ", question)
+    print("Model asks:", request)
+    print("Tool result:", act(request), "\n")</code></pre>
+            </figure>
+          </div>
+          <div role="tabpanel" id="panel-memory" aria-labelledby="tab-memory">
+            <p class="prose"><strong>Input:</strong> a short conversation and stored memories. <strong>Output:</strong> the context that still fits, and the long-term memories most relevant to a new request.</p>
+            <figure class="code-panel" data-example="comp_memory.py" data-title="Short- and long-term memory" data-run="browser" data-colab="comp_memory.ipynb">
+              <pre><code class="language-python">"""Memory: short-term context and long-term recall
+
+Agents use two kinds of memory:
+  * Short-term memory: the recent conversation that fits in the model's context.
+  * Long-term memory: facts stored outside the model and retrieved when relevant
+    (semantic facts, episodic past events, procedural "how-to" knowledge).
+
+Long-term memory is usually retrieved by similarity search over embeddings.
+To keep this runnable anywhere, we use simple word-overlap similarity instead.
+"""
+from collections import deque
+
+
+class ShortTermMemory:
+    """Keeps only the last N turns, like a limited context window."""
+    def __init__(self, max_turns: int = 3):
+        self.turns = deque(maxlen=max_turns)
+
+    def add(self, role: str, text: str):
+        self.turns.append(f"{role}: {text}")
+
+    def as_context(self) -&gt; str:
+        return "\n".join(self.turns)
+
+
+class LongTermMemory:
+    """Stores facts with a type and retrieves the most similar ones."""
+    def __init__(self):
+        self.items = []
+
+    def store(self, text: str, kind: str):
+        self.items.append({"text": text, "kind": kind})
+
+    @staticmethod
+    def _similarity(a: str, b: str) -&gt; float:
+        wa, wb = set(a.lower().split()), set(b.lower().split())
+        return len(wa &amp; wb) / (len(wa | wb) or 1)       # Jaccard similarity
+
+    def retrieve(self, query: str, k: int = 2):
+        ranked = sorted(self.items, key=lambda m: self._similarity(query, m["text"]), reverse=True)
+        return [m for m in ranked[:k] if self._similarity(query, m["text"]) &gt; 0]
+
+
+stm = ShortTermMemory(max_turns=3)
+ltm = LongTermMemory()
+ltm.store("the user prefers meetings in the morning", "semantic")
+ltm.store("last week the user booked room B22-204 for the ai club", "episodic")
+ltm.store("to book a room, check capacity first then availability", "procedural")
+ltm.store("the cafeteria closes at 8 pm", "semantic")
+
+for role, text in [("user", "hi"), ("agent", "hello! how can I help?"),
+                   ("user", "book a room for the ai club"), ("agent", "sure, for when?")]:
+    stm.add(role, text)
+
+print("Short-term memory (only the last 3 turns survive):")
+print(stm.as_context())
+
+query = "book a room for the ai club in the morning"
+print(f"\nLong-term memories relevant to: '{query}'")
+for m in ltm.retrieve(query, k=3):
+    print(f"  [{m['kind']}] {m['text']}")</code></pre>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="check">
+        <h2>Check your understanding</h2>
+        <form class="quiz" data-answer="c" data-explain="Episodic memory records past events, such as what the user booked last week. Semantic memory holds facts; procedural memory holds how-to knowledge.">
+          <fieldset>
+            <legend>"Last week the user booked room B22-204." What type of long-term memory is this?</legend>
+            <label><input type="radio" name="q1" value="a"> Semantic</label>
+            <label><input type="radio" name="q1" value="b"> Procedural</label>
+            <label><input type="radio" name="q1" value="c"> Episodic</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+      </section>
+
+      <section id="takeaways">
+        <h2>Key takeaways</h2>
+        <ul class="check-list prose">
+          <li>The foundation model is only one component. Reliability comes from the parts around it.</li>
+          <li>Tools give agents real capabilities, so actions are where safety checks and approvals belong.</li>
+          <li>Memory and feedback turn a one-shot answer into a system that improves over a task.</li>
+        </ul>
+      </section>
+
+      <nav id="pager"></nav>
+    </article>
+  </div>
+</main>
+<div id="site-footer"></div>
+</body>
+</html>

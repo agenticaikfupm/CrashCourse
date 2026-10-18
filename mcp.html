@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model Context Protocol (MCP) | Agentic AI Crash Course</title>
+<meta name="description" content="What the Model Context Protocol is, why it is useful, how clients and servers exchange tools, resources, and prompts, with an interactive workflow and Python examples.">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.classList.add("js");(function(){try{var t=localStorage.getItem("cc-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}})();</script>
+<script>window.Prism={manual:true};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script defer src="assets/js/site.js"></script>
+<script defer src="assets/js/code.js"></script>
+<script defer src="assets/js/diagram.js"></script>
+<script defer src="assets/js/pages/mcp.js"></script>
+</head>
+<body data-page="mcp">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+<noscript><div class="noscript-nav">JavaScript is off, so the workflow diagram is hidden. Its steps are listed in the text. <a href="index.html">Course home</a></div></noscript>
+
+<main id="main" tabindex="-1">
+  <header class="page-head">
+    <div class="wrap">
+      <p class="breadcrumb"><a href="index.html">Home</a> / Module 4</p>
+      <span class="eyebrow">Module 4</span>
+      <h1>Model Context Protocol (MCP)</h1>
+      <p class="lead">MCP is an open standard for connecting AI applications to external tools and data. Build a connector once as an MCP server, and any MCP-compatible application can use it.</p>
+      <div class="page-meta"><span><i data-icon="clock"></i>About 35 minutes</span><span><i data-icon="code"></i>2 Python examples</span><span><i data-icon="grad"></i>Intermediate</span></div>
+    </div>
+  </header>
+
+  <div class="wrap course-layout">
+    <nav id="course-nav" class="course-nav"></nav>
+    <article class="content">
+
+      <section id="what">
+        <h2>What MCP is</h2>
+        <div class="prose">
+          <p>The <strong>Model Context Protocol</strong> was introduced by Anthropic in November 2024 as an open protocol. It defines how an AI application asks an external program what it can do (its tools, data, and prompt templates) and how it uses those capabilities. Messages follow <strong>JSON-RPC 2.0</strong>, a simple request and response format. The official documentation compares MCP to a USB-C port: one standard connector instead of a custom cable for every device.</p>
+        </div>
+      </section>
+
+      <section id="why">
+        <h2>Why it is useful</h2>
+        <div class="grid grid-3">
+          <div class="card"><div class="card-icon"><i data-icon="plug"></i></div><h3>Build once, reuse everywhere</h3><p>Without a standard, every app needs its own integration for every system. With MCP, one server for your database works in any MCP-compatible host.</p></div>
+          <div class="card"><div class="card-icon"><i data-icon="shield"></i></div><h3>Clear boundaries</h3><p>The server holds credentials and business logic. The model only sees tool descriptions and results, and the host can ask the user before each call.</p></div>
+          <div class="card"><div class="card-icon"><i data-icon="globe"></i></div><h3>Shared ecosystem</h3><p>Open-source and vendor servers exist for common systems such as file systems, Git hosting, databases, and browsers, so you rarely start from zero.</p></div>
+        </div>
+      </section>
+
+      <section id="architecture">
+        <h2>Hosts, clients, and servers</h2>
+        <div class="def-grid">
+          <div><h4>Host</h4><p>The AI application the user works in, such as a chat app, an IDE, or your own agent. It runs the model and manages permissions.</p></div>
+          <div><h4>Client</h4><p>A connector inside the host. Each client keeps a one-to-one connection with one server.</p></div>
+          <div><h4>Server</h4><p>A program that exposes capabilities. It can run locally (started by the host, talking over <strong>stdio</strong>) or remotely (over <strong>Streamable HTTP</strong>).</p></div>
+        </div>
+      </section>
+
+      <section id="primitives">
+        <h2>Tools, resources, and prompts</h2>
+        <div class="table-wrap">
+          <table>
+            <caption class="visually-hidden">The three server primitives in MCP</caption>
+            <thead><tr><th scope="col">Primitive</th><th scope="col">What it is</th><th scope="col">Who decides to use it</th><th scope="col">Example</th><th scope="col">Methods</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Tools</th><td>Functions that do something or compute something</td><td>The model (usually with user approval)</td><td><code>get_course_schedule(module)</code></td><td><code>tools/list</code>, <code>tools/call</code></td></tr>
+              <tr><th scope="row">Resources</th><td>Read-only data identified by a URI</td><td>The application or user attaches them as context</td><td><code>course://syllabus</code></td><td><code>resources/list</code>, <code>resources/read</code></td></tr>
+              <tr><th scope="row">Prompts</th><td>Reusable prompt templates with arguments</td><td>The user picks them, often as slash commands</td><td><code>summarize_module(module)</code></td><td><code>prompts/list</code>, <code>prompts/get</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="prose small muted">Clients can offer features to servers too, such as <em>sampling</em> (a server asks the host's model to generate text). See the specification for the full list.</p>
+      </section>
+
+      <section id="workflow">
+        <h2>Interactive MCP workflow</h2>
+        <p class="prose">Follow one question from the user, through the host and an MCP server, to an external system and back. Press <strong>Play</strong> or use <strong>Next</strong>.</p>
+        <figure id="mcp-diagram" class="figure"></figure>
+        <div class="prose">
+          <h3>How MCP connects agents to external systems</h3>
+          <p>The model never talks to the database or API directly. It only <em>requests</em> a tool call. The host decides whether to allow it, the client sends it to the right server, and the server, which you control, performs the real operation with its own credentials and validation. This separation is what makes MCP integrations reusable and easier to secure.</p>
+        </div>
+      </section>
+
+      <section id="code">
+        <h2>Try it: MCP messages and a real server</h2>
+        <div class="prose">
+          <p><strong>Example 1</strong> simulates both sides in one program so you can read the actual JSON-RPC messages. <strong>Input:</strong> five client requests. <strong>Output:</strong> each request and the server's reply. It is a simplification for learning and skips transport and parts of the handshake.</p>
+        </div>
+        <figure class="code-panel" data-example="mcp_concepts.py" data-title="MCP concepts with JSON-RPC" data-run="browser" data-colab="mcp_concepts.ipynb">
+          <pre><code class="language-python">"""MCP concepts: a client and server exchanging JSON-RPC messages
+
+The Model Context Protocol (MCP) uses JSON-RPC 2.0 messages between a client
+(inside the AI application) and a server (which exposes capabilities).
+A server can offer three kinds of capabilities:
+  * Tools: functions the model can call (tools/list, tools/call)
+  * Resources: data the application can read (resources/list, resources/read)
+  * Prompts: reusable prompt templates (prompts/list, prompts/get)
+
+Illustrative simulation: this runs both sides in one process and skips the
+transport (stdio or HTTP) and parts of the initialization handshake. Message
+shapes are simplified. See the next example for the official Python SDK.
+"""
+import json
+
+
+class TinyMCPServer:
+    """A toy server exposing one tool, one resource, and one prompt."""
+
+    def __init__(self):
+        self.tools = {
+            "get_course_schedule": {
+                "description": "Return the schedule for a course module",
+                "inputSchema": {"type": "object", "properties": {"module": {"type": "integer"}}, "required": ["module"]},
+            }
+        }
+        self.resources = {"course://syllabus": "Module 1: Evolution of AI ... Module 8: Governance"}
+        self.prompts = {"summarize_module": "Summarize module {module} for a beginner in 3 bullet points."}
+
+    def handle(self, request: dict) -&gt; dict:
+        method, params = request["method"], request.get("params", {})
+        if method == "initialize":
+            result = {"serverInfo": {"name": "course-server"}, "capabilities": {"tools": {}, "resources": {}, "prompts": {}}}
+        elif method == "tools/list":
+            result = {"tools": [{"name": n, **spec} for n, spec in self.tools.items()]}
+        elif method == "tools/call":
+            module = params["arguments"]["module"]
+            result = {"content": [{"type": "text", "text": f"Module {module} runs on Sunday at 4 pm"}]}
+        elif method == "resources/list":
+            result = {"resources": [{"uri": u} for u in self.resources]}
+        elif method == "resources/read":
+            uri = params["uri"]
+            result = {"contents": [{"uri": uri, "text": self.resources[uri]}]}
+        elif method == "prompts/get":
+            text = self.prompts[params["name"]].format(**params["arguments"])
+            result = {"messages": [{"role": "user", "content": {"type": "text", "text": text}}]}
+        else:
+            return {"jsonrpc": "2.0", "id": request["id"], "error": {"code": -32601, "message": "Method not found"}}
+        return {"jsonrpc": "2.0", "id": request["id"], "result": result}
+
+
+class TinyMCPClient:
+    def __init__(self, server):
+        self.server, self.next_id = server, 1
+
+    def request(self, method: str, params: dict | None = None) -&gt; dict:
+        msg = {"jsonrpc": "2.0", "id": self.next_id, "method": method}
+        if params:
+            msg["params"] = params
+        self.next_id += 1
+        print("client -&gt;", json.dumps(msg))
+        reply = self.server.handle(msg)
+        print("server &lt;-", json.dumps(reply), "\n")
+        return reply
+
+
+client = TinyMCPClient(TinyMCPServer())
+client.request("initialize")
+client.request("tools/list")
+client.request("tools/call", {"name": "get_course_schedule", "arguments": {"module": 4}})
+client.request("resources/read", {"uri": "course://syllabus"})
+client.request("prompts/get", {"name": "summarize_module", "arguments": {"module": 4}})</code></pre>
+        </figure>
+        <div class="prose">
+          <p><strong>Example 2</strong> uses the official Python SDK (version 2). The <code>MCPServer</code> class (named <code>FastMCP</code> in version 1 of the SDK) turns decorated Python functions into a tool, a resource, and a prompt. A client then starts the server as a subprocess and calls it. It needs the <code>mcp</code> package, so run it in Colab or locally; the notebook writes the server file and runs the client for you.</p>
+        </div>
+        <figure class="code-panel" data-example="mcp_server.py" data-title="Server and client with the official SDK" data-run="colab" data-colab="mcp_server.ipynb">
+          <pre><code class="language-python">"""A real MCP server and client with the official Python SDK
+
+This uses the official `mcp` Python SDK (https://github.com/modelcontextprotocol/python-sdk),
+version 2 or later. In version 2 the high-level server class is MCPServer
+(it was called FastMCP in version 1).
+Part 1 writes a small server with one tool, one resource, and one prompt.
+Part 2 starts the server as a subprocess over stdio and calls it from a client.
+
+Run it in Google Colab or locally (Python 3.10+). In a plain script, run the
+server and client as two separate files; the notebook does both for you.
+"""
+# %%
+# !pip -q install "mcp[cli]&gt;=2"
+
+# %%
+# %%writefile course_server.py
+from mcp.server.mcpserver import MCPServer
+
+mcp = MCPServer("Course Helper")
+
+
+@mcp.tool()
+def add(a: int, b: int) -&gt; int:
+    """Add two numbers."""
+    return a + b
+
+
+@mcp.resource("course://modules/{number}")
+def module_title(number: int) -&gt; str:
+    """Title of a course module."""
+    titles = {1: "Evolution of AI", 2: "Components of AI Agents", 4: "Model Context Protocol"}
+    return titles.get(int(number), "Unknown module")
+
+
+@mcp.prompt()
+def explain(topic: str) -&gt; str:
+    """A reusable prompt template."""
+    return f"Explain {topic} to a beginner using one everyday analogy."
+
+
+if __name__ == "__main__":
+    mcp.run()          # stdio transport by default
+
+# %%
+# Part 2: a client that launches the server and talks to it.
+import asyncio
+import sys
+
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
+
+
+async def main():
+    params = StdioServerParameters(command=sys.executable, args=["course_server.py"])
+    # Server log messages go to a file (notebooks do not always expose a real stderr).
+    with open("server.log", "w") as log:
+        async with stdio_client(params, errlog=log) as (read, write):
+            async with ClientSession(read, write) as session:
+                await session.initialize()
+
+                tools = await session.list_tools()
+                print("Tools:", [t.name for t in tools.tools])
+
+                result = await session.call_tool("add", arguments={"a": 2, "b": 3})
+                print("add(2, 3) -&gt;", result.content[0].text)
+
+                resource = await session.read_resource("course://modules/4")
+                print("Resource:", resource.contents[0].text)
+
+                prompt = await session.get_prompt("explain", arguments={"topic": "MCP"})
+                print("Prompt:", prompt.messages[0].content.text)
+
+
+asyncio.run(main())</code></pre>
+        </figure>
+        <div class="callout note">
+          <i data-icon="info"></i>
+          <div><span class="callout-title">Test your server visually</span><p>The official <a href="https://github.com/modelcontextprotocol/inspector">MCP Inspector</a> is a browser-based tool for connecting to a server, listing its capabilities, and calling tools by hand.</p></div>
+        </div>
+      </section>
+
+      <section id="security">
+        <h2>Using MCP safely</h2>
+        <ul class="check-list prose">
+          <li><strong>Trust:</strong> only install servers from sources you trust. A server runs code on your machine or sees your data.</li>
+          <li><strong>Least privilege:</strong> give each server the minimum access it needs, for example a read-only database user.</li>
+          <li><strong>Consent:</strong> keep user approval on for tools that change data, send messages, or spend money.</li>
+          <li><strong>Untrusted content:</strong> tool results and descriptions can contain hidden instructions (prompt injection). Treat them as data.</li>
+        </ul>
+      </section>
+
+      <section id="docs">
+        <h2>Official documentation</h2>
+        <ul class="res-list">
+          <li><div class="res"><a class="res-title" href="https://modelcontextprotocol.io/">Model Context Protocol website</a><p>Introduction, concepts, and tutorials for building servers and clients.</p></div></li>
+          <li><div class="res"><a class="res-title" href="https://modelcontextprotocol.io/specification">MCP specification</a><p>The authoritative protocol definition, including versions and message formats.</p></div></li>
+          <li><div class="res"><a class="res-title" href="https://github.com/modelcontextprotocol/python-sdk">Official Python SDK</a><p>Includes the high-level MCPServer class (FastMCP in version 1), client sessions, and examples.</p></div></li>
+          <li><div class="res"><a class="res-title" href="https://github.com/modelcontextprotocol/servers">Reference servers</a><p>Example servers maintained alongside the protocol.</p></div></li>
+        </ul>
+      </section>
+
+      <section id="check">
+        <h2>Check your understanding</h2>
+        <form class="quiz" data-answer="b" data-explain="Resources are read-only data the application can attach as context. Tools perform actions or computations, and prompts are templates.">
+          <fieldset>
+            <legend>A course syllabus that the app can attach to the conversation is best exposed as a...</legend>
+            <label><input type="radio" name="q1" value="a"> Tool</label>
+            <label><input type="radio" name="q1" value="b"> Resource</label>
+            <label><input type="radio" name="q1" value="c"> Prompt</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+      </section>
+
+      <nav id="pager"></nav>
+    </article>
+  </div>
+</main>
+<div id="site-footer"></div>
+</body>
+</html>

@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Design Patterns | Agentic AI Crash Course</title>
+<meta name="description" content="Interactive workflow diagrams, strengths, limitations, and Python code for common agent design patterns: sequential, routing, parallel, tool calling, reflection, plan-and-execute, and multi-agent.">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.classList.add("js");(function(){try{var t=localStorage.getItem("cc-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}})();</script>
+<script>window.Prism={manual:true};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script defer src="assets/js/site.js"></script>
+<script defer src="assets/js/code.js"></script>
+<script defer src="assets/js/diagram.js"></script>
+<script defer src="assets/js/pages/patterns.js"></script>
+</head>
+<body data-page="patterns">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+<noscript><div class="noscript-nav">JavaScript is off, so diagrams are hidden and all patterns are listed one after another. <a href="index.html">Course home</a></div></noscript>
+
+<main id="main" tabindex="-1">
+  <header class="page-head">
+    <div class="wrap">
+      <p class="breadcrumb"><a href="index.html">Home</a> / Module 3</p>
+      <span class="eyebrow">Module 3</span>
+      <h1>Agent Design Patterns</h1>
+      <p class="lead">Design patterns are reusable ways to arrange model calls, tools, and checks. Start with the simplest pattern that solves the problem, and add autonomy only when it clearly helps.</p>
+      <div class="page-meta"><span><i data-icon="clock"></i>About 50 minutes</span><span><i data-icon="code"></i>8 Python examples</span><span><i data-icon="grad"></i>Beginner to intermediate</span></div>
+    </div>
+  </header>
+
+  <div class="wrap course-layout">
+    <nav id="course-nav" class="course-nav"></nav>
+    <article class="content">
+
+      <section id="workflows-vs-agents">
+        <h2>Workflows and agents</h2>
+        <div class="prose">
+          <p>A helpful distinction, used for example in Anthropic's engineering article <a href="https://www.anthropic.com/engineering/building-effective-agents">"Building effective agents"</a>:</p>
+          <ul>
+            <li><strong>Workflows</strong> follow paths that you define in code. The model fills in the steps, but the order is fixed. They are predictable and easy to test.</li>
+            <li><strong>Agents</strong> let the model decide the path: which tool to call, when to loop, and when to stop. They are flexible but harder to predict, more expensive, and need stronger guardrails.</li>
+          </ul>
+          <p>The patterns below move roughly from low to high <strong>agency</strong> (how much the model decides on its own). The course slides mark agency level as an open question for each pattern, so the bars here are an illustrative rating by the course team, meant for discussion.</p>
+        </div>
+      </section>
+
+      <section id="catalog">
+        <h2>Pattern catalog</h2>
+        <p class="prose">Choose a pattern. Each diagram can be played step by step, and each example runs in your browser. Use the arrow keys to move between tabs.</p>
+        <div class="tabs">
+          <div role="tablist" aria-label="Design patterns" class="tablist" id="pattern-tabs">
+            <button role="tab" id="tab-basic" aria-controls="panel-basic" aria-selected="true">Basic responder</button>
+            <button role="tab" id="tab-sequential" aria-controls="panel-sequential" aria-selected="false">Sequential</button>
+            <button role="tab" id="tab-routing" aria-controls="panel-routing" aria-selected="false">Routing</button>
+            <button role="tab" id="tab-parallel" aria-controls="panel-parallel" aria-selected="false">Parallel</button>
+            <button role="tab" id="tab-tools" aria-controls="panel-tools" aria-selected="false">Tool calling</button>
+            <button role="tab" id="tab-reflection" aria-controls="panel-reflection" aria-selected="false">Evaluator-optimizer</button>
+            <button role="tab" id="tab-plan" aria-controls="panel-plan" aria-selected="false">Plan-and-execute</button>
+            <button role="tab" id="tab-multi" aria-controls="panel-multi" aria-selected="false">Multi-agent</button>
+          </div>
+
+          <!-- Basic responder -->
+          <div role="tabpanel" id="panel-basic" aria-labelledby="tab-basic">
+            <div class="flex-between"><h3 class="mb-0">Basic responder</h3><span class="agency">Agency level (illustrative) <span class="bar" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></span><span class="visually-hidden">1 of 5</span></span></div>
+            <p class="prose mt-1">One prompt, one model call, one answer. This is the baseline every other pattern improves on.</p>
+            <figure class="pattern-diagram" data-pattern="basic"></figure>
+            <div class="def-grid">
+              <div><h4>Strengths</h4><ul><li>Fastest and cheapest</li><li>Simple to build and test</li></ul></div>
+              <div><h4>Limitations</h4><ul><li>No access to current or private data</li><li>No verification, so it can state invented facts</li></ul></div>
+              <div><h4>Suitable use cases</h4><ul><li>Rewriting, summarizing, brainstorming</li><li>Questions about general knowledge</li></ul></div>
+            </div>
+            <p class="small muted"><strong>Example from the slides:</strong> "Please suggest recent books on smart mobility." The model returns a list of titles, but nothing checks that they exist. A search tool (tool calling pattern) fixes this.</p>
+            <figure class="code-panel" data-example="pat_basic.py" data-title="Basic responder" data-run="browser" data-colab="pat_basic.ipynb">
+              <pre><code class="language-python">"""Pattern 0: Basic responder (one model call)
+
+The simplest design: the user's query goes to the model once and the answer
+comes straight back. There is no tool use, no loop, and no memory, so the
+agency level is the lowest. It is fast and cheap, but the answer is only as
+good as the model's built-in knowledge, which may be outdated or wrong.
+
+Illustrative: llm() is a stand-in. In the Colab notebook you can swap it for
+a real open model.
+"""
+
+def llm(prompt: str) -&gt; str:
+    """Stand-in for a language model call (swap in a real model here)."""
+    canned = {
+        "books": "Here are some books on smart mobility: (1) ... (2) ... (3) ...",
+    }
+    for key, answer in canned.items():
+        if key in prompt.lower():
+            return answer
+    return "I'm not sure, but here is my best guess based on my training data."
+
+
+def basic_responder(query: str) -&gt; str:
+    prompt = f"You are a helpful assistant.\nUser: {query}\nAssistant:"
+    return llm(prompt)
+
+
+query = "Please suggest recent books on smart mobility"
+print("User: ", query)
+print("Model:", basic_responder(query))
+print("\nNote: nothing checks whether these books exist. Later patterns add tools and verification.")</code></pre>
+            </figure>
+          </div>
+
+          <!-- Sequential -->
+          <div role="tabpanel" id="panel-sequential" aria-labelledby="tab-sequential">
+            <div class="flex-between"><h3 class="mb-0">Sequential workflow (prompt chaining)</h3><span class="agency">Agency level (illustrative) <span class="bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span><span class="visually-hidden">2 of 5</span></span></div>
+            <p class="prose mt-1">Split a task into fixed steps where each step's output feeds the next. Add programmatic "gates" between steps to stop early when something is wrong.</p>
+            <figure class="pattern-diagram" data-pattern="sequential"></figure>
+            <div class="def-grid">
+              <div><h4>Strengths</h4><ul><li>Each step is simpler, so quality is higher</li><li>Easy to debug: inspect every intermediate result</li><li>Predictable cost and latency</li></ul></div>
+              <div><h4>Limitations</h4><ul><li>Slower than a single call</li><li>Errors in early steps propagate</li><li>Cannot adapt the order to unusual inputs</li></ul></div>
+              <div><h4>Suitable use cases</h4><ul><li>Draft, then translate, then format</li><li>Extract data, validate it, then write a report</li></ul></div>
+            </div>
+            <figure class="code-panel" data-example="pat_sequential.py" data-title="Sequential workflow" data-run="browser" data-colab="pat_sequential.ipynb">
+              <pre><code class="language-python">"""Pattern 1: Sequential workflow (prompt chaining)
+
+A task is split into fixed steps. Each step's output becomes the next step's
+input, and a "gate" between steps can stop the chain early if a check fails.
+Because the path is fixed in code, the behavior is predictable and easy to debug.
+
+Illustrative: each step would normally be its own LLM call with its own prompt.
+"""
+
+def llm(task: str, text: str) -&gt; str:
+    """Stand-in for an LLM; each 'task' would be a different prompt."""
+    if task == "extract":
+        return "smart parking; real-time occupancy sensors; mobile app; reduce search time"
+    if task == "outline":
+        points = [p.strip() for p in text.split(";")]
+        return "\n".join(f"{i}. {p.capitalize()}" for i, p in enumerate(points, 1))
+    if task == "write":
+        return ("Our campus smart-parking pilot uses real-time occupancy sensors and a "
+                "mobile app so drivers spend less time searching for a space.")
+    raise ValueError(task)
+
+
+def gate_has_enough_points(outline: str, minimum: int = 3) -&gt; bool:
+    return len(outline.splitlines()) &gt;= minimum
+
+
+def sequential_pipeline(notes: str) -&gt; str:
+    print("Step 1: extract key ideas")
+    ideas = llm("extract", notes)
+    print("   -&gt;", ideas)
+
+    print("Step 2: turn ideas into an outline")
+    outline = llm("outline", ideas)
+    print("   -&gt;", outline.replace("\n", "\n      "))
+
+    print("Gate: does the outline have at least 3 points?")
+    if not gate_has_enough_points(outline):
+        return "Stopped: not enough material. Ask the user for more notes."
+    print("   -&gt; yes, continue")
+
+    print("Step 3: write the final paragraph")
+    return llm("write", outline)
+
+
+notes = "Meeting notes: parking is hard near Building 22; sensors could help; app idea..."
+print("\nFinal output:", sequential_pipeline(notes))</code></pre>
+            </figure>
+          </div>
+
+          <!-- Routing -->
+          <div role="tabpanel" id="panel-routing" aria-labelledby="tab-routing">
+            <div class="flex-between"><h3 class="mb-0">Routing</h3><span class="agency">Agency level (illustrative) <span class="bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span><span class="visually-hidden">2 of 5</span></span></div>
+            <p class="prose mt-1">A router classifies each input and sends it to the best handler: a specialized prompt, a different model, or a tool. The slides show a router LLM choosing between an image model and two LLM routes.</p>
+            <figure class="pattern-diagram" data-pattern="routing"></figure>
+            <div class="def-grid">
+              <div><h4>Strengths</h4><ul><li>Specialized handlers do better than one general prompt</li><li>Saves cost: send easy requests to small models</li></ul></div>
+              <div><h4>Limitations</h4><ul><li>A wrong classification sends the request down the wrong path</li><li>Routes must be kept in sync as the system grows</li></ul></div>
+              <div><h4>Suitable use cases</h4><ul><li>Customer support triage</li><li>Choosing text, image, or code models</li><li>Small model for easy questions, large model for hard ones</li></ul></div>
+            </div>
+            <figure class="code-panel" data-example="pat_routing.py" data-title="Router" data-run="browser" data-colab="pat_routing.ipynb">
+              <pre><code class="language-python">"""Pattern 2: Routing
+
+A router (often a small, cheap model) classifies each request and sends it to
+the most suitable handler: a specialized prompt, a different model, or a tool.
+This keeps each handler simple and lets you use expensive models only when needed.
+
+Illustrative: classify() uses keywords; a real router would ask an LLM to
+return one label from a fixed list (structured output).
+"""
+
+ROUTES = {
+    "image": "Image generation model",
+    "code": "Coding model",
+    "math": "Calculator tool",
+    "general": "General chat model",
+}
+
+
+def classify(query: str) -&gt; str:
+    """Router: return exactly one label from ROUTES."""
+    q = query.lower()
+    if any(w in q for w in ("image", "picture", "draw", "generate a photo")):
+        return "image"
+    if any(w in q for w in ("python", "bug", "function", "code")):
+        return "code"
+    if any(ch.isdigit() for ch in q) and any(op in q for op in "+-*/"):
+        return "math"
+    return "general"
+
+
+def handle(route: str, query: str) -&gt; str:
+    if route == "math":
+        expr = "".join(ch for ch in query if ch in "0123456789+-*/(). ")
+        return f"{expr.strip()} = {eval(expr, {'__builtins__': {}})}"
+    if route == "image":
+        return "[image request sent to an image model: 'a camel crossing a desert highway']"
+    if route == "code":
+        return "Here is a fixed version of your function..."
+    return "Here is a friendly general answer."
+
+
+queries = [
+    "Generate an image of a camel crossing a desert highway",
+    "Why does my Python function return None?",
+    "What is 12 * (7 + 3)?",
+    "What is KFUPM known for?",
+]
+for q in queries:
+    route = classify(q)
+    print(f"Query:   {q}\nRoute:   {route} -&gt; {ROUTES[route]}\nAnswer:  {handle(route, q)}\n")</code></pre>
+            </figure>
+          </div>
+
+          <!-- Parallel -->
+          <div role="tabpanel" id="panel-parallel" aria-labelledby="tab-parallel">
+            <div class="flex-between"><h3 class="mb-0">Parallel execution</h3><span class="agency">Agency level (illustrative) <span class="bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span><span class="visually-hidden">2 of 5</span></span></div>
+            <p class="prose mt-1">Run independent subtasks at the same time and combine the results. <strong>Sectioning</strong> gives each worker a different part; <strong>voting</strong> runs the same task several times and compares answers.</p>
+            <figure class="pattern-diagram" data-pattern="parallel"></figure>
+            <div class="def-grid">
+              <div><h4>Strengths</h4><ul><li>Lower total latency</li><li>Each worker can focus on one aspect</li><li>Voting improves confidence</li></ul></div>
+              <div><h4>Limitations</h4><ul><li>Only works when subtasks are independent</li><li>More calls means more cost</li><li>Merging conflicting results needs care</li></ul></div>
+              <div><h4>Suitable use cases</h4><ul><li>Reviewing a document for several criteria</li><li>Running a guardrail check alongside the main answer</li><li>Searching several sources at once</li></ul></div>
+            </div>
+            <figure class="code-panel" data-example="pat_parallel.py" data-title="Parallel reviewers with asyncio" data-run="browser" data-colab="pat_parallel.ipynb">
+              <pre><code class="language-python">"""Pattern 3: Parallel execution (fan-out, then aggregate)
+
+Independent subtasks run at the same time and their results are combined.
+Two common forms:
+  * Sectioning: different workers handle different parts of a task.
+  * Voting: several workers do the same task and the answers are compared.
+
+We use asyncio so the three "reviewers" wait concurrently. Each one pretends
+to take one second, but the whole run takes about one second, not three.
+"""
+import asyncio
+import time
+
+
+async def reviewer(aspect: str, text: str, delay: float = 1.0) -&gt; dict:
+    """Stand-in for an LLM call that reviews one aspect of the text."""
+    await asyncio.sleep(delay)                       # simulated network latency
+    findings = {
+        "clarity": "Clear overall; define 'agentic' in the first sentence.",
+        "accuracy": "No factual problems found in this short draft.",
+        "safety": "Mentions sensor data: add a note about privacy.",
+    }
+    return {"aspect": aspect, "finding": findings[aspect]}
+
+
+async def main():
+    draft = "Agentic systems can monitor campus parking sensors and guide drivers."
+    start = time.perf_counter()
+
+    # Fan-out: start all reviewers at once.
+    results = await asyncio.gather(
+        reviewer("clarity", draft),
+        reviewer("accuracy", draft),
+        reviewer("safety", draft),
+    )
+
+    # Aggregate: combine the independent results into one report.
+    print("Combined review:")
+    for r in results:
+        print(f"  - {r['aspect']:&lt;9} {r['finding']}")
+    print(f"\nElapsed: {time.perf_counter() - start:.1f} s for 3 reviews (run in parallel)")
+
+
+asyncio.run(main())</code></pre>
+            </figure>
+          </div>
+
+          <!-- Tool calling -->
+          <div role="tabpanel" id="panel-tools" aria-labelledby="tab-tools">
+            <div class="flex-between"><h3 class="mb-0">Tool calling</h3><span class="agency">Agency level (illustrative) <span class="bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span><span class="visually-hidden">3 of 5</span></span></div>
+            <p class="prose mt-1">The model chooses tools and arguments, sees each result, and continues until the task is done. The slides list typical tools: APIs, a browser, a vector database, the local file system, and an optimization solver.</p>
+            <figure class="pattern-diagram" data-pattern="tools"></figure>
+            <div class="def-grid">
+              <div><h4>Strengths</h4><ul><li>Access to current, private, and exact information</li><li>Can take real actions</li><li>Results are grounded in tool outputs</li></ul></div>
+              <div><h4>Limitations</h4><ul><li>Wrong arguments or tool choice cause errors</li><li>Side effects need permissions and confirmation</li><li>Tool outputs can carry prompt-injection text</li></ul></div>
+              <div><h4>Suitable use cases</h4><ul><li>Email and calendar assistants</li><li>Data lookups and calculations</li><li>Booking and ticketing systems</li></ul></div>
+            </div>
+            <p class="small muted"><strong>Example from the slides:</strong> "Filter my emails by importance and send an out-of-office notification to the top 5 most important emails", with a confirmation step before sending.</p>
+            <figure class="code-panel" data-example="pat_tool_calling.py" data-title="Tool calling with confirmation" data-run="browser" data-colab="pat_tool_calling.ipynb">
+              <pre><code class="language-python">"""Pattern 4: Tool calling with human confirmation
+
+The model decides which tools to call and with what arguments, observes the
+results, and continues until it can answer. Actions that change the world
+(like sending email) pause for human confirmation first.
+
+Scenario from the course slides: "Filter my emails by importance and send an
+out-of-office (OOO) notification to the top 5 most important emails."
+
+Illustrative: plan_tool_calls() stands in for the model's tool-call decisions.
+"""
+
+INBOX = [
+    {"id": 1, "sender": "dean@university.edu", "subject": "Budget approval needed", "urgent": True},
+    {"id": 2, "sender": "newsletter@shop.com", "subject": "Weekend sale", "urgent": False},
+    {"id": 3, "sender": "student@university.edu", "subject": "Thesis draft feedback", "urgent": True},
+    {"id": 4, "sender": "colleague@university.edu", "subject": "Paper review deadline", "urgent": True},
+    {"id": 5, "sender": "it@university.edu", "subject": "Password expires soon", "urgent": False},
+    {"id": 6, "sender": "partner@industry.com", "subject": "Project kickoff", "urgent": True},
+    {"id": 7, "sender": "events@university.edu", "subject": "Seminar tomorrow", "urgent": False},
+]
+
+# ---- Tools ----------------------------------------------------------------
+def read_emails() -&gt; list:
+    return INBOX
+
+def rank_by_importance(emails: list, top_k: int) -&gt; list:
+    def score(e):
+        return (2 if e["urgent"] else 0) + (1 if e["sender"].endswith("university.edu") else 0)
+    return sorted(emails, key=score, reverse=True)[:top_k]
+
+def send_ooo(email_ids: list) -&gt; str:
+    return f"Sent OOO replies to emails {email_ids}"
+
+TOOLS = {"read_emails": read_emails, "rank_by_importance": rank_by_importance, "send_ooo": send_ooo}
+NEEDS_APPROVAL = {"send_ooo"}                     # tools with side effects
+
+# ---- Agent loop -----------------------------------------------------------
+def human_approves(tool: str, args: dict) -&gt; bool:
+    print(f"   [approval needed] {tool}({args}) -&gt; auto-approved for this demo")
+    return True                                   # in an app, show a confirm button
+
+def agent(task: str):
+    print("Task:", task)
+    emails = call("read_emails", {})
+    top = call("rank_by_importance", {"emails": emails, "top_k": 5})
+    for e in top:
+        print(f"   #{e['id']} {e['subject']} ({e['sender']})")
+    return call("send_ooo", {"email_ids": [e["id"] for e in top]})
+
+def call(tool: str, args: dict):
+    shown = {k: (f"&lt;{len(v)} items&gt;" if isinstance(v, list) and v and isinstance(v[0], dict) else v) for k, v in args.items()}
+    print(f"-&gt; tool call: {tool}({shown})")
+    if tool in NEEDS_APPROVAL and not human_approves(tool, args):
+        return "Canceled by the user"
+    return TOOLS[tool](**args)
+
+print("\nResult:", agent("Filter my emails by importance and send OOO to the top 5"))</code></pre>
+            </figure>
+          </div>
+
+          <!-- Reflection -->
+          <div role="tabpanel" id="panel-reflection" aria-labelledby="tab-reflection">
+            <div class="flex-between"><h3 class="mb-0">Evaluator-optimizer (reflection) loop</h3><span class="agency">Agency level (illustrative) <span class="bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span><span class="visually-hidden">3 of 5</span></span></div>
+            <p class="prose mt-1">One call generates, another evaluates and gives feedback, and the generator revises. The slides call this the reflection pattern: generate, reflect, iterate, then return the reflected output.</p>
+            <figure class="pattern-diagram" data-pattern="reflection"></figure>
+            <div class="def-grid">
+              <div><h4>Strengths</h4><ul><li>Noticeably better quality when clear criteria exist</li><li>Tests or rubrics make the evaluation objective</li></ul></div>
+              <div><h4>Limitations</h4><ul><li>Several rounds multiply cost and time</li><li>A model may approve its own mistakes</li><li>Needs a stopping rule</li></ul></div>
+              <div><h4>Suitable use cases</h4><ul><li>Code generation with unit tests</li><li>Translation or writing with a style rubric</li><li>Search that must reach a quality bar</li></ul></div>
+            </div>
+            <figure class="code-panel" data-example="pat_reflection.py" data-title="Generate, evaluate, revise" data-run="browser" data-colab="pat_reflection.ipynb">
+              <pre><code class="language-python">"""Pattern 5: Reflection / evaluator-optimizer loop
+
+One model call generates a draft; another call (or a set of checks) evaluates
+it and gives feedback; the generator revises. The loop stops when the
+evaluator is satisfied or after a maximum number of rounds.
+
+Illustrative: generate() and evaluate() are stand-ins. In practice the
+evaluator is often an LLM with a rubric, unit tests, or both.
+"""
+
+def generate(task: str, feedback: list[str], round_no: int) -&gt; str:
+    """Stand-in generator that improves when it receives feedback."""
+    drafts = [
+        "def average(xs): return sum(xs) / len(xs)",
+        "def average(xs):\n    if not xs:\n        return 0.0\n    return sum(xs) / len(xs)",
+        'def average(xs: list[float]) -&gt; float:\n    """Return the mean of xs, or 0.0 for an empty list."""\n'
+        "    if not xs:\n        return 0.0\n    return sum(xs) / len(xs)",
+    ]
+    return drafts[min(round_no, len(drafts) - 1)]
+
+
+def evaluate(code: str) -&gt; list[str]:
+    """Evaluator: run tests and style checks, return a list of problems."""
+    problems = []
+    scope = {}
+    exec(code, scope)                       # fine for this demo; sandbox untrusted code in real systems
+    try:
+        scope["average"]([])
+    except ZeroDivisionError:
+        problems.append("Crashes on an empty list.")
+    if scope["average"]([2, 4]) != 3:
+        problems.append("Wrong result for [2, 4].")
+    if '"""' not in code:
+        problems.append("Missing docstring.")
+    return problems
+
+
+task = "Write a Python function average(xs)."
+feedback: list[str] = []
+for round_no in range(5):
+    draft = generate(task, feedback, round_no)
+    feedback = evaluate(draft)
+    print(f"--- Round {round_no + 1} ---\n{draft}")
+    print("Evaluator:", "PASS" if not feedback else "; ".join(feedback), "\n")
+    if not feedback:
+        break</code></pre>
+            </figure>
+          </div>
+
+          <!-- Plan and execute -->
+          <div role="tabpanel" id="panel-plan" aria-labelledby="tab-plan">
+            <div class="flex-between"><h3 class="mb-0">Plan-and-execute</h3><span class="agency">Agency level (illustrative) <span class="bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="visually-hidden">4 of 5</span></span></div>
+            <p class="prose mt-1">A planner writes the whole plan first; an executor carries out each step with tools; a replanner adjusts the remaining steps when something fails. A close relative is the orchestrator-workers pattern, where a central model hands steps to worker models.</p>
+            <figure class="pattern-diagram" data-pattern="plan"></figure>
+            <div class="def-grid">
+              <div><h4>Strengths</h4><ul><li>Handles long, multi-step tasks</li><li>The plan is visible and can be reviewed by a person</li><li>Recovers from failures by replanning</li></ul></div>
+              <div><h4>Limitations</h4><ul><li>A bad plan wastes every later step</li><li>Plans can go stale as the situation changes</li><li>Harder to test than fixed workflows</li></ul></div>
+              <div><h4>Suitable use cases</h4><ul><li>Research tasks across several sources</li><li>Data analysis pipelines</li><li>Multi-step operations with approvals</li></ul></div>
+            </div>
+            <figure class="code-panel" data-example="pat_plan_execute.py" data-title="Plan, execute, replan" data-run="browser" data-colab="pat_plan_execute.ipynb">
+              <pre><code class="language-python">"""Pattern 6: Plan-and-execute
+
+A planner first writes the whole plan as structured steps. An executor then
+runs each step with a tool and records the result. If a step fails, the
+planner is asked to revise the remaining plan (replanning).
+
+Illustrative: make_plan() and replan() stand in for LLM calls that return JSON.
+"""
+import json
+
+def make_plan(goal: str) -&gt; list[dict]:
+    plan = [
+        {"step": 1, "tool": "search_papers", "input": "agentic AI survey"},
+        {"step": 2, "tool": "summarize", "input": "results of step 1"},
+        {"step": 3, "tool": "email", "input": "send summary to the study group"},
+    ]
+    print("Planner output:\n" + json.dumps(plan, indent=2))
+    return plan
+
+def replan(failed_step: dict) -&gt; list[dict]:
+    print(f"   Replanning after failure in step {failed_step['step']}...")
+    return [{"step": failed_step["step"], "tool": "post_to_forum", "input": "share summary on the course forum"}]
+
+# ---- Tools (one fails on purpose to show replanning) ----------------------
+def search_papers(q):  return ["A Survey on LLM-based Autonomous Agents", "ReAct"]
+def summarize(_):      return "Two key ideas: agents combine LLM reasoning with tools; ReAct interleaves thoughts and actions."
+def email(_):          raise ConnectionError("mail server unavailable")
+def post_to_forum(_):  return "Posted to forum"
+TOOLS = {f.__name__: f for f in (search_papers, summarize, email, post_to_forum)}
+
+def execute(goal: str):
+    queue = make_plan(goal)
+    results = {}
+    while queue:
+        step = queue.pop(0)
+        try:
+            results[step["step"]] = TOOLS[step["tool"]](step["input"])
+            print(f"Executed step {step['step']} [{step['tool']}] -&gt; {results[step['step']]}")
+        except Exception as err:
+            print(f"Step {step['step']} [{step['tool']}] failed: {err}")
+            queue = replan(step) + queue
+    return results
+
+execute("Find and share a short summary of recent work on agentic AI")</code></pre>
+            </figure>
+          </div>
+
+          <!-- Multi-agent -->
+          <div role="tabpanel" id="panel-multi" aria-labelledby="tab-multi">
+            <div class="flex-between"><h3 class="mb-0">Multi-agent collaboration</h3><span class="agency">Agency level (illustrative) <span class="bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="visually-hidden">5 of 5</span></span></div>
+            <p class="prose mt-1">Several agents with different roles, prompts, or tools work together, usually coordinated by a manager agent. The slides name three cooperation styles:</p>
+            <ul class="prose">
+              <li><strong>Augmentative:</strong> each agent adds a different piece (division of labor).</li>
+              <li><strong>Integrative:</strong> outputs are merged into one consistent result.</li>
+              <li><strong>Debative:</strong> agents critique each other until they converge.</li>
+            </ul>
+            <figure class="pattern-diagram" data-pattern="multi"></figure>
+            <div class="def-grid">
+              <div><h4>Strengths</h4><ul><li>Separation of concerns: each agent stays focused</li><li>Debate can catch errors a single agent misses</li><li>Teams can scale to large tasks</li></ul></div>
+              <div><h4>Limitations</h4><ul><li>Highest cost and latency</li><li>Coordination failures and loops</li><li>Harder to trace who decided what</li></ul></div>
+              <div><h4>Suitable use cases</h4><ul><li>Complex reports needing research, analysis, and review</li><li>Software projects with planner, coder, and tester roles</li><li>Simulations with several stakeholders</li></ul></div>
+            </div>
+            <figure class="code-panel" data-example="pat_multi_agent.py" data-title="Manager and sub-agents" data-run="browser" data-colab="pat_multi_agent.ipynb">
+              <pre><code class="language-python">"""Pattern 7: Multi-agent collaboration (manager and sub-agents)
+
+A manager agent splits the task, assigns parts to specialized sub-agents, and
+combines their work. The course slides name three cooperation styles:
+  * Augmentative: each agent adds a different piece (division of labor).
+  * Integrative: agents' outputs are merged into one consistent result.
+  * Debative: agents critique each other until they converge.
+
+Illustrative: every agent here is a small Python class with canned behavior.
+"""
+
+class Agent:
+    def __init__(self, name: str, role: str):
+        self.name, self.role = name, role
+
+    def work(self, task: str) -&gt; str:
+        raise NotImplementedError
+
+
+class Researcher(Agent):
+    def work(self, task):
+        return "Facts: Riyadh Metro opened in 2024; ride-hailing demand is growing."
+
+class Analyst(Agent):
+    def work(self, task):
+        return "Insight: first/last-mile links to metro stations are the main gap."
+
+class Critic(Agent):
+    def work(self, draft):
+        return "Missing: cite data sources and consider summer heat on walking distance." if "heat" not in draft else "OK"
+
+
+class Manager(Agent):
+    def __init__(self, team):
+        super().__init__("Manager", "coordinates the team")
+        self.team = team
+
+    def work(self, task):
+        print(f"[Manager] Task: {task}")
+        # Augmentative: split the work between specialists.
+        parts = {a.name: a.work(task) for a in self.team if not isinstance(a, Critic)}
+        for name, out in parts.items():
+            print(f"[{name}] {out}")
+        # Integrative: merge the pieces into one draft.
+        draft = " ".join(parts.values())
+        # Debative: a critic challenges the draft, and the manager revises.
+        critic = next(a for a in self.team if isinstance(a, Critic))
+        for round_no in range(1, 3):
+            verdict = critic.work(draft)
+            print(f"[{critic.name}] round {round_no}: {verdict}")
+            if verdict == "OK":
+                break
+            draft += " Recommendation: shaded walkways and e-scooter docks within 500 m, given summer heat; sources to be cited."
+        return draft
+
+
+team = [Researcher("Researcher", "finds facts"), Analyst("Analyst", "draws insights"), Critic("Critic", "reviews")]
+print("\nFinal answer:\n" + Manager(team).work("Brief on improving access to metro stations"))</code></pre>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="choosing">
+        <h2>Choosing a pattern</h2>
+        <div class="table-wrap">
+          <table>
+            <caption class="visually-hidden">Quick guide for choosing a design pattern</caption>
+            <thead><tr><th scope="col">If your task...</th><th scope="col">Start with</th></tr></thead>
+            <tbody>
+              <tr><td>can be answered in one step from general knowledge</td><td>Basic responder</td></tr>
+              <tr><td>always follows the same steps</td><td>Sequential workflow</td></tr>
+              <tr><td>has clearly different kinds of input</td><td>Routing</td></tr>
+              <tr><td>has independent parts, or benefits from several opinions</td><td>Parallel execution</td></tr>
+              <tr><td>needs current data or must change something</td><td>Tool calling</td></tr>
+              <tr><td>has clear quality criteria or tests</td><td>Evaluator-optimizer</td></tr>
+              <tr><td>is long and its steps are not known in advance</td><td>Plan-and-execute</td></tr>
+              <tr><td>needs several distinct skills or viewpoints</td><td>Multi-agent</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout">
+          <i data-icon="info"></i>
+          <div><span class="callout-title">Patterns combine</span><p>Real systems mix patterns: a router may send hard requests to a plan-and-execute agent whose steps use tools and whose final answer passes through an evaluator.</p></div>
+        </div>
+      </section>
+
+      <section id="check">
+        <h2>Check your understanding</h2>
+        <form class="quiz" data-answer="a" data-explain="The steps are fixed and known in advance, so a sequential workflow with a validation gate is the simplest reliable choice.">
+          <fieldset>
+            <legend>Every week you must extract numbers from a report, validate them, and write a summary email. Which pattern fits best?</legend>
+            <label><input type="radio" name="q1" value="a"> Sequential workflow with a gate</label>
+            <label><input type="radio" name="q1" value="b"> Multi-agent debate</label>
+            <label><input type="radio" name="q1" value="c"> Routing</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+      </section>
+
+      <nav id="pager"></nav>
+    </article>
+  </div>
+</main>
+<div id="site-footer"></div>
+</body>
+</html>

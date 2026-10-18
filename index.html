@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentic AI Crash Course | Agentic AI @ KFUPM</title>
+<meta name="description" content="A free, interactive crash course on Agentic AI from the Agentic AI @ KFUPM community: evolution of AI, agent components, design patterns, MCP, decision APIs, workflows, no-code tools, and governance, with runnable Python.">
+<meta property="og:title" content="Agentic AI Crash Course">
+<meta property="og:description" content="Interactive diagrams and runnable Python examples for learning Agentic AI from the ground up.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.classList.add("js");(function(){try{var t=localStorage.getItem("cc-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}})();</script>
+<script defer src="assets/js/site.js"></script>
+<script defer src="assets/data/notebooks.js"></script>
+<script defer src="assets/js/pages/home.js"></script>
+</head>
+<body data-page="home">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+
+<main id="main" tabindex="-1">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Agentic AI @ KFUPM &middot; Crash course</span>
+        <h1>Learn how AI agents perceive, reason, plan, and act</h1>
+        <p class="lead">A free, hands-on introduction to Agentic AI. Explore interactive diagrams, run Python examples right in your browser, and finish with a clear picture of how to build agents that are useful and safe.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="evolution.html">Start Module 1 <i data-icon="right"></i></a>
+          <a class="btn btn-ghost" href="#labs"><i data-icon="flask"></i>Browse the labs</a>
+          <a class="btn btn-ghost" href="https://agenticaikfupm.github.io/"><i data-icon="users"></i>Agentic AI @ KFUPM</a>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><b>8</b><span>modules</span></div>
+          <div class="stat"><b>27</b><span>Python examples</span></div>
+          <div class="stat"><b>46</b><span>glossary terms</span></div>
+          <div class="stat"><b>~5 h</b><span>total study time</span></div>
+        </div>
+      </div>
+      <figure class="hero-visual" aria-label="The agent loop: perception, reasoning, planning, action, feedback and learning">
+        <svg viewBox="0 0 400 360" role="img" aria-labelledby="hero-svg-title">
+          <title id="hero-svg-title">The agent loop: perception, reasoning, planning, action, and feedback, around a central foundation model</title>
+          <defs><marker id="hv-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="hv-arrow"/></marker></defs>
+          <circle cx="200" cy="180" r="128" class="hv-ring"/>
+          <circle cx="200" cy="180" r="128" class="hv-ring-anim"/>
+          <g class="hv-core"><circle cx="200" cy="180" r="54"/><text x="200" y="176" text-anchor="middle">Foundation</text><text x="200" y="194" text-anchor="middle">model</text></g>
+          <g class="hv-node"><rect x="140" y="28" width="120" height="40" rx="10"/><text x="200" y="53" text-anchor="middle">Perception</text></g>
+          <g class="hv-node"><rect x="282" y="112" width="112" height="40" rx="10"/><text x="338" y="137" text-anchor="middle">Reasoning</text></g>
+          <g class="hv-node"><rect x="252" y="262" width="112" height="40" rx="10"/><text x="308" y="287" text-anchor="middle">Planning</text></g>
+          <g class="hv-node"><rect x="36" y="262" width="112" height="40" rx="10"/><text x="92" y="287" text-anchor="middle">Action</text></g>
+          <g class="hv-node hv-fb"><rect x="6" y="112" width="112" height="40" rx="10"/><text x="62" y="137" text-anchor="middle">Feedback</text></g>
+        </svg>
+      </figure>
+    </div>
+  </section>
+
+  <section class="home-section" id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">About the course</span>
+        <h2>What you will learn</h2>
+        <p>This crash course is offered by the <a href="https://agenticaikfupm.github.io/">Agentic AI @ KFUPM</a> community. It assumes no prior knowledge of Agentic AI.</p>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Learning objectives</h3>
+          <ul class="check-list">
+            <li>Explain how AI evolved from GANs and Transformers to agents and Physical AI.</li>
+            <li>Describe the components of an agent and how they work together.</li>
+            <li>Choose a suitable design pattern for a given task.</li>
+            <li>Connect agents to tools and data with MCP and decision APIs.</li>
+            <li>Build and trace an end-to-end agent loop in Python.</li>
+            <li>Prototype workflows with no-code platforms such as n8n.</li>
+            <li>Apply guardrails, evaluation, monitoring, and human oversight.</li>
+          </ul>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <h3>Who it is for</h3>
+            <p>University students, researchers, faculty, and practitioners from any discipline who want a practical understanding of AI agents.</p>
+          </div>
+          <div class="card">
+            <h3>Prerequisites</h3>
+            <ul>
+              <li>Basic Python: variables, functions, lists, and dictionaries.</li>
+              <li>A web browser. Most examples run in the page; others open in free Google Colab.</li>
+              <li>No paid API keys are required.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>How to use this site</h3>
+            <p>Work through the modules in order or jump to what you need. Each module has an interactive diagram, short explanations, runnable code, and a quick check of your understanding.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section soft" id="modules">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Course structure</span>
+        <h2>Eight modules, from foundations to governance</h2>
+        <p>Modules 1 and 2 build the vocabulary. Modules 3 to 7 show how to design, connect, and run agents. Module 8 covers how to deploy them responsibly.</p>
+      </div>
+      <div class="grid grid-4" id="module-cards">
+        <a class="card" href="evolution.html"><span class="card-num">MODULE 01</span><h3>Evolution of AI</h3><p>From GANs and Transformers to multimodal models, agents, and Physical AI.</p><div class="card-foot"><span class="tag">30 min</span><span class="tag brand">Timeline</span></div></a>
+        <a class="card" href="components.html"><span class="card-num">MODULE 02</span><h3>Components of AI Agents</h3><p>Perception, reasoning, planning, action, tools, memory, and oversight.</p><div class="card-foot"><span class="tag">40 min</span><span class="tag brand">Architecture</span></div></a>
+        <a class="card" href="patterns.html"><span class="card-num">MODULE 03</span><h3>Agent Design Patterns</h3><p>Sequential, routing, parallel, tool calling, reflection, planning, and multi-agent.</p><div class="card-foot"><span class="tag">50 min</span><span class="tag brand">8 patterns</span></div></a>
+        <a class="card" href="mcp.html"><span class="card-num">MODULE 04</span><h3>Model Context Protocol</h3><p>A standard way to connect agents to tools, data, and prompts.</p><div class="card-foot"><span class="tag">35 min</span><span class="tag brand">Protocol</span></div></a>
+        <a class="card" href="decision-apis.html"><span class="card-num">MODULE 05</span><h3>Decision APIs</h3><p>Rules engines, optimizers, and OpenAPI decision services as agent tools.</p><div class="card-foot"><span class="tag">35 min</span><span class="tag brand">Live demo</span></div></a>
+        <a class="card" href="workflows.html"><span class="card-num">MODULE 06</span><h3>Agentic AI Workflows</h3><p>Perception to feedback: an end-to-end agent loop you can run.</p><div class="card-foot"><span class="tag">40 min</span><span class="tag brand">End to end</span></div></a>
+        <a class="card" href="no-code.html"><span class="card-num">MODULE 07</span><h3>No-Code Agentic Workflows</h3><p>Build agent workflows visually with n8n and similar platforms.</p><div class="card-foot"><span class="tag">35 min</span><span class="tag brand">Templates</span></div></a>
+        <a class="card" href="governance.html"><span class="card-num">MODULE 08</span><h3>Agentic AI Governance</h3><p>Guardrails, evaluation, monitoring, and human oversight.</p><div class="card-foot"><span class="tag">40 min</span><span class="tag brand">Safety</span></div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section" id="labs">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Interactive examples</span>
+        <h2>Labs</h2>
+        <p>Every Python example in the course, grouped by module. Examples marked <span class="tag brand">Runs in browser</span> run directly on the module page with one click. The others open in Google Colab because they install packages.</p>
+      </div>
+      <div id="labs-list" class="labs">
+        <p class="muted">Enable JavaScript to see the list, or open any module page. All notebooks are in the <a href="https://github.com/agenticaikfupm/CrashCourse/tree/main/notebooks">notebooks folder</a> of the repository.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section soft" id="outcomes">
+    <div class="wrap">
+      <div class="grid grid-2">
+        <div>
+          <span class="eyebrow">Expected outcomes</span>
+          <h2>By the end you will be able to...</h2>
+          <ul class="check-list">
+            <li>Read an agent architecture diagram and name each part.</li>
+            <li>Sketch a workflow for a real task and justify the pattern you chose.</li>
+            <li>Write a small agent loop in Python with tools, memory, and feedback.</li>
+            <li>Expose a capability to agents through an MCP server or a decision API.</li>
+            <li>Propose guardrails, an evaluation plan, and an approval policy for an agent.</li>
+          </ul>
+        </div>
+        <div class="grid">
+          <a class="card" href="glossary.html"><div class="card-icon"><i data-icon="book"></i></div><h3>Glossary</h3><p>Plain-language definitions of 46 key terms, with examples.</p></a>
+          <a class="card" href="resources.html"><div class="card-icon"><i data-icon="layers"></i></div><h3>Resources</h3><p>Documentation, papers, courses, tools, and benchmarks, by level.</p></a>
+          <a class="card" href="https://agenticaikfupm.github.io/"><div class="card-icon"><i data-icon="users"></i></div><h3>Join the community</h3><p>Meetups, research groups, and events at Agentic AI @ KFUPM.</p></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<div id="site-footer"></div>
+</body>
+</html>

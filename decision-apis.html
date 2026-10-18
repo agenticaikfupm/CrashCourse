@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decision APIs | Agentic AI Crash Course</title>
+<meta name="description" content="How agents call decision APIs: rules engines and decision tables, optimization solvers, and OpenAPI-described decision services, with interactive demos and Python code.">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.classList.add("js");(function(){try{var t=localStorage.getItem("cc-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}})();</script>
+<script>window.Prism={manual:true};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script defer src="assets/js/site.js"></script>
+<script defer src="assets/js/code.js"></script>
+<script defer src="assets/js/diagram.js"></script>
+<script defer src="assets/js/pages/decisions.js"></script>
+</head>
+<body data-page="decisions">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+<noscript><div class="noscript-nav">JavaScript is off, so the diagram and the live decision table are unavailable. All explanations and code are below. <a href="index.html">Course home</a></div></noscript>
+
+<main id="main" tabindex="-1">
+  <header class="page-head">
+    <div class="wrap">
+      <p class="breadcrumb"><a href="index.html">Home</a> / Module 5</p>
+      <span class="eyebrow">Module 5</span>
+      <h1>Decision APIs</h1>
+      <p class="lead">Language models are good at understanding requests and explaining results. Many business decisions, however, must be consistent, auditable, and sometimes provably optimal. Decision APIs let an agent hand those decisions to services built for them.</p>
+      <div class="page-meta"><span><i data-icon="clock"></i>About 35 minutes</span><span><i data-icon="code"></i>4 Python examples</span><span><i data-icon="grad"></i>Intermediate</span></div>
+    </div>
+  </header>
+
+  <div class="wrap course-layout">
+    <nav id="course-nav" class="course-nav"></nav>
+    <article class="content">
+
+      <section id="what">
+        <h2>What is a decision API?</h2>
+        <div class="prose">
+          <p>A <strong>decision API</strong> is a service that receives structured facts and returns a decision, usually with a reason. Examples: approve or reject a request, choose a price or a zone, assign vehicles to routes, or schedule shifts. Inside, it might use business rules, an optimization solver, a predictive model, or a mix.</p>
+          <p>In an agentic system the work is split: the <strong>LLM understands and explains</strong>, and the <strong>decision service decides</strong>. The agent calls the service like any other tool.</p>
+        </div>
+        <div class="grid grid-3 mt-1">
+          <div class="card"><div class="card-icon"><i data-icon="scale"></i></div><h3>Consistency</h3><p>The same facts always produce the same decision, which a probabilistic model cannot guarantee.</p></div>
+          <div class="card"><div class="card-icon"><i data-icon="gavel"></i></div><h3>Auditability</h3><p>Every decision points to a rule or model version that experts own and regulators can review.</p></div>
+          <div class="card"><div class="card-icon"><i data-icon="target"></i></div><h3>Optimality</h3><p>Solvers find the best plan under constraints, which guessing by intuition cannot.</p></div>
+        </div>
+      </section>
+
+      <section id="flow">
+        <h2>How an agent uses a decision service</h2>
+        <figure id="decision-diagram" class="figure"></figure>
+      </section>
+
+      <section id="types">
+        <h2>Three common kinds of decision services</h2>
+        <div class="table-wrap">
+          <table>
+            <caption class="visually-hidden">Kinds of decision services</caption>
+            <thead><tr><th scope="col">Kind</th><th scope="col">How it decides</th><th scope="col">Typical use</th><th scope="col">Examples of technology</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Rules and decision tables</th><td>Explicit if-then rules maintained by domain experts</td><td>Eligibility, approvals, pricing policies, compliance checks</td><td>The OMG <a href="https://www.omg.org/dmn/">Decision Model and Notation (DMN)</a> standard and engines that implement it, such as <a href="https://www.drools.org/">Drools</a></td></tr>
+              <tr><th scope="row">Optimization</th><td>A solver searches for the best solution that satisfies constraints</td><td>Scheduling, routing, assignment, resource allocation</td><td><a href="https://developers.google.com/optimization">Google OR-Tools</a>, <a href="https://highs.dev/">HiGHS</a>, and commercial solvers</td></tr>
+              <tr><th scope="row">Predictive models</th><td>A trained machine learning model returns a score or class</td><td>Risk scoring, demand forecasting, anomaly detection</td><td>Models served behind a REST API</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="rules-demo">
+        <h2>Interactive decision table</h2>
+        <p class="prose">This table decides whether a lab equipment booking is approved automatically. It uses a <strong>first-hit</strong> policy: rules are checked from top to bottom, and the first rule whose conditions all match decides. Change the inputs and watch which rule fires.</p>
+        <div class="callout illustrative"><i data-icon="alert"></i><div><span class="callout-title">Illustrative example</span><p>The rules are invented for teaching and are not a real KFUPM policy.</p></div></div>
+        <div class="decision-demo">
+          <form id="decision-form" class="decision-form" aria-label="Booking request facts">
+            <label>Role
+              <select name="role">
+                <option value="student">Student</option>
+                <option value="researcher">Researcher</option>
+                <option value="faculty">Faculty</option>
+              </select>
+            </label>
+            <label>Hours requested: <output id="hours-value">3</output>
+              <input type="range" name="hours" min="1" max="12" value="3">
+            </label>
+            <label>Hazard level
+              <select name="hazard">
+                <option value="low">Low</option>
+                <option value="high">High</option>
+              </select>
+            </label>
+            <label class="check"><input type="checkbox" name="training" checked> Completed safety training</label>
+          </form>
+          <div>
+            <div class="table-wrap mt-0">
+              <table class="rules-table">
+                <caption class="visually-hidden">Decision rules, the matching rule is highlighted</caption>
+                <thead><tr><th scope="col">Rule</th><th scope="col">When</th><th scope="col">Then</th><th scope="col">Reason</th></tr></thead>
+                <tbody id="rules-body"><tr><td colspan="4">Enable JavaScript to use the live table. The same rules are in the Python example below.</td></tr></tbody>
+              </table>
+            </div>
+            <div id="decision-result" class="decision-result" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+        <figure class="code-panel" data-example="dec_rules_engine.py" data-title="Decision table (first-hit policy)" data-run="browser" data-colab="dec_rules_engine.ipynb">
+          <pre><code class="language-python">"""Decision table: a tiny rules engine an agent can call
+
+Many organizations encode business decisions as decision tables: each row is
+a rule with conditions and an outcome. The OMG Decision Model and Notation
+(DMN) standard formalizes this idea. A "first hit" policy returns the outcome
+of the first rule whose conditions all match.
+
+Why agents care: the LLM gathers and structures the inputs, but the decision
+itself comes from an auditable, deterministic table that experts maintain.
+
+Illustrative: a simplified decision table, not a full DMN implementation.
+"""
+
+# Decision: should a lab equipment request be approved automatically?
+# Each condition is (field, operator, value). "-" in the output means "no rule".
+RULES = [
+    {"id": "R1", "when": [("safety_training", "==", False)],                        "then": "reject",         "why": "Safety training is required"},
+    {"id": "R2", "when": [("hazard_level", "==", "high")],                          "then": "manual_review",  "why": "High-hazard equipment needs a supervisor"},
+    {"id": "R3", "when": [("hours", "&gt;", 8)],                                       "then": "manual_review",  "why": "Long bookings need approval"},
+    {"id": "R4", "when": [("role", "in", ["faculty", "researcher"])],               "then": "approve",        "why": "Staff with training may book"},
+    {"id": "R5", "when": [("role", "==", "student"), ("hours", "&lt;=", 4)],           "then": "approve",        "why": "Short student bookings are fine"},
+    {"id": "R6", "when": [],                                                        "then": "manual_review",  "why": "Default rule"},
+]
+
+OPS = {
+    "==": lambda a, b: a == b, "&gt;": lambda a, b: a &gt; b, "&lt;=": lambda a, b: a &lt;= b,
+    "in": lambda a, b: a in b,
+}
+
+
+def decide(facts: dict) -&gt; dict:
+    """First-hit policy: return the first matching rule."""
+    for rule in RULES:
+        if all(OPS[op](facts[field], value) for field, op, value in rule["when"]):
+            return {"decision": rule["then"], "rule": rule["id"], "reason": rule["why"]}
+    return {"decision": "-", "rule": None, "reason": "no rule matched"}
+
+
+requests = [
+    {"role": "student", "hours": 3, "hazard_level": "low", "safety_training": True},
+    {"role": "student", "hours": 6, "hazard_level": "low", "safety_training": True},
+    {"role": "faculty", "hours": 2, "hazard_level": "high", "safety_training": True},
+    {"role": "researcher", "hours": 2, "hazard_level": "low", "safety_training": False},
+]
+for facts in requests:
+    print(facts, "\n  -&gt;", decide(facts), "\n")</code></pre>
+        </figure>
+      </section>
+
+      <section id="openapi">
+        <h2>OpenAPI: describing decision services for agents</h2>
+        <div class="prose">
+          <p>The <a href="https://www.openapis.org/">OpenAPI Specification</a> is a widely used, machine-readable format for describing HTTP APIs: their paths, operations, parameters, and JSON schemas. Because a model's tool definition also uses a name, a description, and a JSON schema, an OpenAPI operation maps naturally onto a tool. Several agent platforms can import an OpenAPI document and expose its operations as tools; custom GPT Actions in ChatGPT, for example, are defined with an OpenAPI schema. An OpenAPI-described service can also be wrapped as an MCP server (Module 4).</p>
+          <p>The example converts a small OpenAPI document for a parking-permit decision service into a tool, then lets a stand-in model call it. <strong>Input:</strong> the OpenAPI document and a user question. <strong>Output:</strong> the generated tool schema, the HTTP call, and the decision.</p>
+        </div>
+        <figure class="code-panel" data-example="dec_openapi_tool.py" data-title="OpenAPI operation to agent tool" data-run="browser" data-colab="dec_openapi_tool.ipynb">
+          <pre><code class="language-python">"""From an OpenAPI description to an agent tool
+
+A decision service is often published as a web API and described with the
+OpenAPI Specification: paths, operations, parameters, and JSON schemas.
+Because the description is machine-readable, an agent framework can turn each
+operation into a tool definition automatically, then call the API when the
+model asks for it.
+
+Illustrative: the API below is fake and is "called" in-process. In a real
+system, call_operation() would send an HTTP request (for example with httpx).
+"""
+import json
+
+# A minimal OpenAPI 3 document for a parking-permit decision service.
+OPENAPI_DOC = {
+    "openapi": "3.1.0",
+    "info": {"title": "Campus Parking Decisions", "version": "1.0.0"},
+    "paths": {
+        "/decisions/parking-permit": {
+            "post": {
+                "operationId": "decideParkingPermit",
+                "summary": "Decide whether to grant a parking permit and which zone",
+                "requestBody": {"content": {"application/json": {"schema": {
+                    "type": "object",
+                    "properties": {
+                        "role": {"type": "string", "enum": ["student", "staff", "visitor"]},
+                        "distance_km": {"type": "number", "description": "Home-to-campus distance"},
+                        "has_disability_permit": {"type": "boolean"},
+                    },
+                    "required": ["role", "distance_km"],
+                }}}},
+            }
+        }
+    },
+}
+
+
+def openapi_to_tools(doc: dict) -&gt; list[dict]:
+    """Convert each OpenAPI operation into a function-calling tool schema."""
+    tools = []
+    for path, methods in doc["paths"].items():
+        for method, op in methods.items():
+            schema = op["requestBody"]["content"]["application/json"]["schema"]
+            tools.append({"name": op["operationId"], "description": op["summary"],
+                          "parameters": schema, "_route": (method.upper(), path)})
+    return tools
+
+
+def fake_decision_service(body: dict) -&gt; dict:
+    """What the server would do (normally a rules engine or optimizer)."""
+    if body.get("has_disability_permit"):
+        return {"granted": True, "zone": "A (closest)", "rule": "accessibility"}
+    if body["role"] == "staff":
+        return {"granted": True, "zone": "B", "rule": "staff"}
+    if body["role"] == "student" and body["distance_km"] &gt;= 10:
+        return {"granted": True, "zone": "C", "rule": "commuter-student"}
+    return {"granted": False, "zone": None, "rule": "students living within 10 km use the shuttle"}
+
+
+def call_operation(tool: dict, arguments: dict) -&gt; dict:
+    missing = [k for k in tool["parameters"].get("required", []) if k not in arguments]
+    if missing:
+        raise ValueError(f"missing required arguments {missing}")
+    method, path = tool["_route"]
+    print(f"   HTTP {method} {path} {json.dumps(arguments)}")
+    return fake_decision_service(arguments)
+
+
+tools = openapi_to_tools(OPENAPI_DOC)
+print("Tool generated from the OpenAPI document:")
+print(json.dumps({k: v for k, v in tools[0].items() if not k.startswith("_")}, indent=2))
+
+# The model reads the tool schema and produces arguments from the user's words.
+user = "I'm a student and I live 14 km from campus. Can I get a parking permit?"
+model_tool_call = {"name": "decideParkingPermit", "arguments": {"role": "student", "distance_km": 14}}
+print(f"\nUser: {user}\nModel calls: {model_tool_call['name']}")
+result = call_operation(tools[0], model_tool_call["arguments"])
+print("Decision service result:", result)
+print("Agent reply: Yes. You qualify for a Zone C permit as a commuter student.")</code></pre>
+        </figure>
+      </section>
+
+      <section id="optimization">
+        <h2>Optimization as a decision API</h2>
+        <div class="prose">
+          <p>Assigning three campus shuttles to three routes has only 6 possibilities, so we can check them all. The example shows that choosing "the best option for each shuttle, one at a time" (a greedy choice, similar to what a person or an LLM might do by intuition) can miss the true optimum. Real problems have millions of possibilities, which is why agents should call a solver.</p>
+        </div>
+        <figure class="code-panel" data-example="dec_optimization.py" data-title="Exhaustive assignment vs. greedy" data-run="browser" data-colab="dec_optimization.ipynb">
+          <pre><code class="language-python">"""Optimization as a decision API: assigning shuttles to routes
+
+Some decisions are best made by an optimizer, not by an LLM: the model is
+good at understanding the request, while a solver is good at finding the
+provably best assignment under constraints.
+
+Here an agent receives "assign 3 shuttles to 3 routes with the least total
+travel time" and calls an optimization tool. With only 3! = 6 possibilities we
+can check them all; real problems use solvers such as Google OR-Tools (see the
+Colab notebook for the same problem solved with OR-Tools).
+"""
+from itertools import permutations
+
+shuttles = ["S1", "S2", "S3"]
+routes = ["North gate", "Dorms", "Library"]
+
+# minutes for each shuttle to serve each route (rows: shuttles, cols: routes)
+cost = [
+    [6, 7, 9],
+    [8, 11, 6],
+    [7, 9, 13],
+]
+
+
+def optimize_assignment(cost):
+    best_total, best_perm = float("inf"), None
+    for perm in permutations(range(len(routes))):         # try every assignment
+        total = sum(cost[s][r] for s, r in enumerate(perm))
+        if total &lt; best_total:
+            best_total, best_perm = total, perm
+    return best_total, best_perm
+
+
+total, perm = optimize_assignment(cost)
+print("Optimal assignment (minimum total minutes):")
+for s, r in enumerate(perm):
+    print(f"  {shuttles[s]} -&gt; {routes[r]:&lt;11} ({cost[s][r]} min)")
+print(f"Total: {total} minutes")
+
+# Compare with a "greedy" choice an LLM might make by intuition.
+greedy, used = 0, set()
+for s in range(3):
+    r = min((r for r in range(3) if r not in used), key=lambda r: cost[s][r])
+    used.add(r)
+    greedy += cost[s][r]
+verdict = "worse than optimal" if greedy &gt; total else "happens to be optimal here"
+print(f"Greedy, one shuttle at a time: {greedy} minutes ({verdict})")</code></pre>
+        </figure>
+        <figure class="code-panel" data-example="dec_ortools.py" data-title="The same problem with OR-Tools CP-SAT" data-run="colab" data-colab="dec_ortools.ipynb">
+          <pre><code class="language-python">"""The same assignment problem with Google OR-Tools
+
+Google OR-Tools is an open-source optimization suite. Its CP-SAT solver handles
+assignment, scheduling, and routing problems. Wrapping a solver like this in a
+function (or an MCP tool, or an OpenAPI service) lets an agent call it.
+
+Run it in Google Colab or locally after installing ortools.
+"""
+# %%
+# !pip -q install ortools
+
+# %%
+from ortools.sat.python import cp_model
+
+shuttles = ["S1", "S2", "S3"]
+routes = ["North gate", "Dorms", "Library"]
+cost = [[6, 7, 9], [8, 11, 6], [7, 9, 13]]
+
+
+def solve_assignment(cost):
+    model = cp_model.CpModel()
+    n = len(cost)
+    x = {(s, r): model.NewBoolVar(f"x_{s}_{r}") for s in range(n) for r in range(n)}
+    for s in range(n):
+        model.AddExactlyOne(x[s, r] for r in range(n))      # each shuttle gets one route
+    for r in range(n):
+        model.AddExactlyOne(x[s, r] for s in range(n))      # each route gets one shuttle
+    model.Minimize(sum(cost[s][r] * x[s, r] for s in range(n) for r in range(n)))
+
+    solver = cp_model.CpSolver()
+    status = solver.Solve(model)
+    if status not in (cp_model.OPTIMAL, cp_model.FEASIBLE):
+        return None
+    plan = [(shuttles[s], routes[r]) for s in range(n) for r in range(n) if solver.Value(x[s, r])]
+    return solver.ObjectiveValue(), plan
+
+
+total, plan = solve_assignment(cost)
+for s, r in plan:
+    print(f"{s} -&gt; {r}")
+print("Total minutes:", total)</code></pre>
+        </figure>
+      </section>
+
+      <section id="platforms">
+        <h2>Specific platforms: JEV and OpenAPI Decisions</h2>
+        <div class="callout illustrative">
+          <i data-icon="info"></i>
+          <div>
+            <span class="callout-title">Content in preparation</span>
+            <p>This part of the module will cover two decision API offerings, <strong>JEV</strong> and <strong>OpenAPI Decisions</strong>. The course team is preparing verified descriptions, links, and examples. Until then, use the general concepts above: every decision service is called the same way, with structured facts in and a decision with a reason out.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="practice">
+        <h2>Good practice</h2>
+        <ul class="check-list prose">
+          <li>Let the LLM extract and validate the facts, and ask the user when a required fact is missing.</li>
+          <li>Never let the model invent the decision when a decision service exists. Instruct it to call the tool and report its result.</li>
+          <li>Return a reason or rule identifier with every decision, and log inputs and outputs for audit.</li>
+          <li>Version your rules and models, and evaluate the full agent again when they change (Module 8).</li>
+        </ul>
+      </section>
+
+      <section id="check">
+        <h2>Check your understanding</h2>
+        <form class="quiz" data-answer="c" data-explain="Assignment under constraints is an optimization problem. The LLM should interpret the request and call a solver, then explain the result.">
+          <fieldset>
+            <legend>An agent must assign 40 exam proctors to 25 rooms while respecting availability. What should decide the assignment?</legend>
+            <label><input type="radio" name="q1" value="a"> The LLM, using careful reasoning</label>
+            <label><input type="radio" name="q1" value="b"> A decision table</label>
+            <label><input type="radio" name="q1" value="c"> An optimization solver called as a tool</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+      </section>
+
+      <nav id="pager"></nav>
+    </article>
+  </div>
+</main>
+<div id="site-footer"></div>
+</body>
+</html>

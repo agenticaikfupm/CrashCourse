@@ -1,0 +1,214 @@
+{
+  "name": "Agentic AI Crash Course: email triage with human approval (starter template)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Starter template\nStarter template from the Agentic AI Crash Course. Nodes ending in '(configure)' are placeholders: replace them with your preferred Gmail, approval (for example, Gmail 'Send and wait for response'), Slack, or Google Sheets nodes, and add your own credentials.",
+        "height": 200,
+        "width": 420
+      },
+      "name": "About this template",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        -420
+      ]
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": true,
+        "filters": {},
+        "options": {}
+      },
+      "name": "Gmail Trigger",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.Subject }}\n\n{{ $json.snippet }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "spam",
+              "description": "Promotions, newsletters, and marketing"
+            },
+            {
+              "category": "urgent",
+              "description": "Time-critical messages that need staff attention today"
+            },
+            {
+              "category": "question",
+              "description": "Questions from students or colleagues that need a reply"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Classify email",
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "name": "Chat model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        240,
+        220
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Archive spam (configure)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        520,
+        -180
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Notify on-call staff (configure)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        520,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Draft a short, polite reply to this email. Do not promise anything that is not stated in the email.\n\nSubject: {{ $('Gmail Trigger').item.json.Subject }}\nBody: {{ $('Gmail Trigger').item.json.snippet }}",
+        "options": {}
+      },
+      "name": "Draft reply",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        520,
+        200
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Human approval (configure)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        780,
+        200
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Send reply and log (configure)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        200
+      ]
+    }
+  ],
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Classify email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Classify email",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Draft reply",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classify email": {
+      "main": [
+        [
+          {
+            "node": "Archive spam (configure)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notify on-call staff (configure)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Draft reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft reply": {
+      "main": [
+        [
+          {
+            "node": "Human approval (configure)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Human approval (configure)": {
+      "main": [
+        [
+          {
+            "node": "Send reply and log (configure)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

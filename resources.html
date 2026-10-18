@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resources | Agentic AI Crash Course</title>
+<meta name="description" content="Curated Agentic AI resources by topic and difficulty: documentation, tutorials, frameworks, papers, courses, books, datasets, benchmarks, no-code platforms, tools, governance frameworks, and Colab notebooks.">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.classList.add("js");(function(){try{var t=localStorage.getItem("cc-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}})();</script>
+<script defer src="assets/js/site.js"></script>
+<script defer src="assets/data/resources.js"></script>
+<script defer src="assets/data/notebooks.js"></script>
+<script defer src="assets/js/pages/resources.js"></script>
+</head>
+<body data-page="resources">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+
+<main id="main" tabindex="-1">
+  <header class="page-head">
+    <div class="wrap">
+      <p class="breadcrumb"><a href="index.html">Home</a> / Reference</p>
+      <span class="eyebrow">Reference</span>
+      <h1>Resources</h1>
+      <p class="lead">Hand-picked links for going further, organized by type, topic, and difficulty. New to the field? Filter by <strong>Beginner</strong> and start with the tutorials and courses.</p>
+    </div>
+  </header>
+
+  <div class="wrap course-layout">
+    <nav id="course-nav" class="course-nav"></nav>
+    <div class="content">
+      <div class="search-box" role="search">
+        <i data-icon="search"></i>
+        <label for="res-search" class="visually-hidden">Search resources</label>
+        <input id="res-search" type="search" placeholder="Search resources" autocomplete="off" aria-describedby="res-count">
+      </div>
+      <div class="filter-row">
+        <label for="res-type">Type</label><select id="res-type"></select>
+        <label for="res-topic">Topic</label><select id="res-topic"></select>
+        <label for="res-level">Level</label><select id="res-level"></select>
+        <button type="button" class="btn btn-ghost btn-sm" id="res-reset">Clear filters</button>
+      </div>
+      <p class="result-count" id="res-count" role="status" aria-live="polite"></p>
+      <noscript><div class="empty-state">The resource list needs JavaScript. The links are stored in <a href="assets/data/resources.js">assets/data/resources.js</a>.</div></noscript>
+      <div id="resource-groups"></div>
+      <p class="small muted mt-2">Links were checked when the course was published. External sites change; if a link breaks, please open an issue on the <a href="https://github.com/agenticaikfupm/CrashCourse">course repository</a>.</p>
+    </div>
+  </div>
+</main>
+<div id="site-footer"></div>
+</body>
+</html>

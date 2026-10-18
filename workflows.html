@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentic AI Workflows | Agentic AI Crash Course</title>
+<meta name="description" content="The agentic workflow loop: perception, reasoning, planning, action, and feedback and learning, with an interactive diagram and an end-to-end Python example.">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.classList.add("js");(function(){try{var t=localStorage.getItem("cc-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}})();</script>
+<script>window.Prism={manual:true};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script defer src="assets/js/site.js"></script>
+<script defer src="assets/js/code.js"></script>
+<script defer src="assets/js/diagram.js"></script>
+<script defer src="assets/js/pages/workflows.js"></script>
+</head>
+<body data-page="workflows">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+<noscript><div class="noscript-nav">JavaScript is off, so the loop diagram is hidden. The stage table and code below explain it fully. <a href="index.html">Course home</a></div></noscript>
+
+<main id="main" tabindex="-1">
+  <header class="page-head">
+    <div class="wrap">
+      <p class="breadcrumb"><a href="index.html">Home</a> / Module 6</p>
+      <span class="eyebrow">Module 6</span>
+      <h1>Agentic AI Workflows</h1>
+      <p class="lead">An agent is a loop, not a single answer. It perceives, reasons, plans, and acts, then uses the outcome as feedback to do better on the next cycle.</p>
+      <div class="page-meta"><span><i data-icon="clock"></i>About 40 minutes</span><span><i data-icon="code"></i>1 end-to-end example</span><span><i data-icon="grad"></i>Beginner to intermediate</span></div>
+    </div>
+  </header>
+
+  <div class="wrap course-layout">
+    <nav id="course-nav" class="course-nav"></nav>
+    <article class="content">
+
+      <section id="loop">
+        <h2>The loop</h2>
+        <p class="prose"><strong>Perception &rarr; Reasoning &rarr; Planning &rarr; Action &rarr; Feedback and learning.</strong> Solid arrows show the main flow of information. Dashed arrows show how outcomes flow back to improve perception, reasoning, or planning. Select a stage to see what goes in and what comes out.</p>
+        <div class="explorer">
+          <figure id="loop-diagram" class="figure"></figure>
+          <aside class="detail-panel" id="stage-detail" aria-live="polite"><p class="muted">Select a stage to see its inputs and outputs.</p></aside>
+        </div>
+      </section>
+
+      <section id="stages">
+        <h2>Information flow, stage by stage</h2>
+        <div class="table-wrap">
+          <table>
+            <caption class="visually-hidden">Inputs and outputs of each workflow stage</caption>
+            <thead><tr><th scope="col">Stage</th><th scope="col">Input</th><th scope="col">Output</th><th scope="col">Typical techniques</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Perception</th><td>Messages, images, sensor data, tool results</td><td>Structured observation</td><td>Parsing, vision and speech models, validation</td></tr>
+              <tr><th scope="row">Reasoning</th><td>Observation, goal, memory, rules</td><td>Interpretation or decision</td><td>LLM reasoning, decision APIs, retrieval</td></tr>
+              <tr><th scope="row">Planning</th><td>Decision and constraints</td><td>Ordered steps</td><td>Task decomposition, dependency graphs, solvers</td></tr>
+              <tr><th scope="row">Action</th><td>Next step</td><td>Change in the environment</td><td>Tool calls, APIs, MCP servers, robot commands</td></tr>
+              <tr><th scope="row">Feedback and learning</th><td>Outcomes and goals</td><td>Updated memory, parameters, prompts, or plans</td><td>Evaluation, reflection, human feedback, fine-tuning (offline)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout note">
+          <i data-icon="info"></i>
+          <div><span class="callout-title">Two speeds of learning</span><p>Inside one task, feedback changes the next step (retry, replan, update memory). Across many tasks, collected feedback can improve the system itself: better prompts, tools, rules, or a fine-tuned model. The second kind should go through evaluation before deployment.</p></div>
+        </div>
+      </section>
+
+      <section id="code">
+        <h2>End-to-end example: a campus shuttle dispatcher</h2>
+        <div class="prose">
+          <p>This program runs the whole loop for five time steps. Each stage is a small function so you can match the code to the diagram.</p>
+          <div class="def-grid">
+            <div><h4>Inputs</h4><ul><li>Riders waiting at three stops, for five time steps (simulated sensors)</li><li>A target: nobody waits more than 8 minutes</li></ul></div>
+            <div><h4>Outputs</h4><ul><li>A dispatch plan for each step</li><li>Measured wait times</li><li>The learned congestion threshold</li></ul></div>
+            <div><h4>Execution steps</h4><ol><li><code>perceive()</code> cleans the readings</li><li><code>reason()</code> finds congested stops</li><li><code>plan()</code> orders and limits dispatches</li><li><code>act()</code> simulates the outcome</li><li><code>learn()</code> updates the threshold</li></ol></div>
+          </div>
+          <p>Run it and watch the threshold drop from 20 to 12 after the agent misses its target twice. That is feedback changing future reasoning.</p>
+        </div>
+        <div class="callout illustrative"><i data-icon="alert"></i><div><span class="callout-title">Illustrative simulation</span><p>The rider numbers and wait-time formula are invented for teaching. In a real deployment, the reasoning step could be an LLM or a decision API, and the action step would call a real dispatch system.</p></div></div>
+        <figure class="code-panel" data-example="wf_end_to_end.py" data-title="Shuttle dispatcher: the full loop" data-run="browser" data-colab="wf_end_to_end.ipynb">
+          <pre><code class="language-python">"""End-to-end agentic workflow: a campus shuttle dispatcher
+
+This example runs the full loop from the Agentic AI Workflows module:
+
+    Perception -&gt; Reasoning -&gt; Planning -&gt; Action -&gt; Feedback and learning
+         ^                                                 |
+         +------------------ updated memory ---------------+
+
+Inputs:  simulated stop sensors (people waiting) for 5 time steps
+Outputs: a dispatch decision per step, plus a learned congestion threshold
+Feedback: measured wait times; when riders wait too long, the agent lowers
+          its threshold so it dispatches extra shuttles earlier next time.
+
+Illustrative: the "world" is a small deterministic simulation, and reasoning
+uses simple rules so every step is easy to trace.
+"""
+from dataclasses import dataclass, field
+
+# ---- Environment (simulated) ---------------------------------------------
+WAITING_BY_STEP = [
+    {"Dorms": 12, "Library": 5, "North gate": 3},
+    {"Dorms": 18, "Library": 9, "North gate": 4},
+    {"Dorms": 25, "Library": 14, "North gate": 6},
+    {"Dorms": 22, "Library": 17, "North gate": 9},
+    {"Dorms": 15, "Library": 19, "North gate": 11},
+]
+
+def simulate_wait(waiting: int, extra_shuttle: bool) -&gt; float:
+    """Minutes riders wait: more people means longer waits; an extra shuttle helps."""
+    return round(waiting * (0.35 if extra_shuttle else 0.6), 1)
+
+# ---- Agent memory ---------------------------------------------------------
+@dataclass
+class Memory:
+    threshold: int = 20                 # dispatch an extra shuttle above this many riders
+    max_wait_target: float = 8.0        # minutes
+    history: list = field(default_factory=list)
+
+# ---- The five stages ------------------------------------------------------
+def perceive(raw: dict) -&gt; dict:
+    """Clean the sensor feed and compute a simple summary."""
+    clean = {stop: max(0, int(n)) for stop, n in raw.items()}
+    return {"waiting": clean, "busiest": max(clean, key=clean.get)}
+
+def reason(obs: dict, mem: Memory) -&gt; list[str]:
+    """Decide which stops are congested given the current threshold."""
+    return [s for s, n in obs["waiting"].items() if n &gt; mem.threshold]
+
+def plan(congested: list[str], obs: dict) -&gt; list[dict]:
+    """Build an ordered action plan: busiest congested stops first, max 2 extra shuttles."""
+    ordered = sorted(congested, key=lambda s: -obs["waiting"][s])[:2]
+    return [{"action": "dispatch_extra", "stop": s} for s in ordered]
+
+def act(actions: list[dict], obs: dict) -&gt; dict:
+    """Execute the plan in the (simulated) world and measure the outcome."""
+    served = {a["stop"] for a in actions}
+    return {s: simulate_wait(n, s in served) for s, n in obs["waiting"].items()}
+
+def learn(waits: dict, mem: Memory) -&gt; str:
+    """Feedback: adjust the threshold when the target is missed or easily met."""
+    worst = max(waits.values())
+    if worst &gt; mem.max_wait_target and mem.threshold &gt; 8:
+        mem.threshold -= 4
+        return f"worst wait {worst} min &gt; target, lower threshold to {mem.threshold}"
+    if worst &lt; mem.max_wait_target / 2 and mem.threshold &lt; 30:
+        mem.threshold += 2
+        return f"worst wait {worst} min is low, raise threshold to {mem.threshold}"
+    return f"worst wait {worst} min, keep threshold at {mem.threshold}"
+
+# ---- Run the loop ---------------------------------------------------------
+mem = Memory()
+for t, raw in enumerate(WAITING_BY_STEP, 1):
+    obs = perceive(raw)
+    threshold_used = mem.threshold
+    congested = reason(obs, mem)
+    actions = plan(congested, obs)
+    waits = act(actions, obs)
+    note = learn(waits, mem)
+    mem.history.append({"t": t, "actions": actions, "waits": waits})
+
+    print(f"t={t} | perceive {obs['waiting']}")
+    print(f"      reason   congested (&gt; {threshold_used} riders): {congested or 'none'}")
+    print(f"      plan     {[a['stop'] for a in actions] or 'no extra shuttles'}")
+    print(f"      act      waits {waits}")
+    print(f"      learn    {note}\n")
+
+print("Learned threshold after 5 steps:", mem.threshold)</code></pre>
+        </figure>
+        <h3>Try these changes</h3>
+        <ul class="prose">
+          <li>Set <code>max_wait_target</code> to 6.0. How many cycles does it take to adapt?</li>
+          <li>Allow three extra shuttles in <code>plan()</code>. What happens to the worst wait?</li>
+          <li>Add a sensor reading of <code>-5</code>. Does <code>perceive()</code> handle it?</li>
+        </ul>
+      </section>
+
+      <section id="check">
+        <h2>Check your understanding</h2>
+        <form class="quiz" data-answer="b" data-explain="The learn() step changed the threshold that reason() uses, so feedback updated the agent's memory and changed future decisions.">
+          <fieldset>
+            <legend>In the shuttle example, what does the feedback step change?</legend>
+            <label><input type="radio" name="q1" value="a"> The sensor readings</label>
+            <label><input type="radio" name="q1" value="b"> The threshold the reasoning step uses next time</label>
+            <label><input type="radio" name="q1" value="c"> The number of bus stops</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+      </section>
+
+      <nav id="pager"></nav>
+    </article>
+  </div>
+</main>
+<div id="site-footer"></div>
+</body>
+</html>
