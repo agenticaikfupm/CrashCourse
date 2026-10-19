@@ -133,3 +133,38 @@ through Transformers) was not executed for the same download-size reason.
    points to the data files. All other pages keep their full text and code
    without JavaScript.
 8. `404.html` assumes the site is served at `/CrashCourse/`.
+
+## 8. Update: ten modules (Modules 4 and 9 added)
+
+Date: 2026-10-19.
+
+- **New Module 4, Always-on AI Agents** (`always-on.html`). Product facts for
+  OpenAI dots, Grok Bot, Instinct, and Meta Muse were taken from each official
+  page, read in a browser on this date. The Instinct page does not describe
+  background work or approvals, and the module says so instead of guessing.
+- **New Module 9, Code-based Agentic Workflows** (`code-workflows.html`).
+  SDK code follows each SDK's current official docs.
+- **Renumbering:** module lists, page headers, cross-references, the build
+  script, notebook headers, the home page, and the README now use 10 modules.
+- **Examples:** 38 in total, 26 of them run in the browser. All 26 pass with
+  CPython. The two new no-key notebooks also pass under Jupyter.
+- **Key-based examples:** the eight OpenRouter and SDK examples were run with
+  a deliberately invalid key, using these versions: openai-agents 0.24.0,
+  langchain 1.4.6 with langchain-openrouter 0.2.9, crewai 1.15.28,
+  smolagents 1.26.0, pydantic-ai-slim 2.57.0, autogen-agentchat 0.7.5, and
+  claude-agent-sdk 0.2.168. Every one built its agent and tool and reached the
+  provider, then stopped at the expected authentication error (HTTP 401). With
+  a valid key they get past authentication, but they have **not** been run
+  against a live model.
+- **Package conflict found:** CrewAI requires `openai` 2.x, while the OpenAI
+  Agents SDK requires 3.x. The page tells learners to use a separate Colab
+  runtime for each notebook.
+- **Model IDs:** the free examples use OpenRouter's `openrouter/free` router,
+  which supports tool calling (checked against the live catalog). The
+  commercial examples check each model ID against the live catalog and skip
+  any that are missing, because model lists change often.
+- **Links:** 0 internal problems. The OpenRouter and Commonstack base URLs
+  return 404 when opened directly, which is expected: they only answer on
+  endpoints such as `/chat/completions`.
+- **Layout:** no horizontal overflow on any page at 360 px or 768 px. The header
+  was tightened for phones 360 px wide.

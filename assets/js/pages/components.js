@@ -45,7 +45,7 @@
     tools: {
       title: "Tools (toolkit)", tag: "Capabilities", code: "action",
       role: "Functions and services the agent can call: APIs, search, a browser, a vector database, the file system, or an optimization solver. Each tool has a name, a description, and an input schema.",
-      where: "Extends what the model can do beyond generating text. MCP (Module 4) standardizes how tools are connected.",
+      where: "Extends what the model can do beyond generating text. MCP (Module 5) standardizes how tools are connected.",
       example: "get_weather(city), calculator(expression), search_catalog(query)."
     },
     memory: {
@@ -57,13 +57,13 @@
     feedback: {
       title: "Feedback and learning", tag: "Improvement",
       role: "Compares outcomes with goals. The agent can retry, adjust its plan, update memory, or (offline) improve prompts and models from collected feedback.",
-      where: "Closes the loop from action back to perception, reasoning, and planning (Module 6 runs this loop end to end).",
+      where: "Closes the loop from action back to perception, reasoning, and planning (Module 7 runs this loop end to end).",
       example: "A booking failed because the room was taken, so the agent picks the next-best room and remembers to check availability first."
     },
     safety: {
       title: "Safety and governance", tag: "Controls",
       role: "Policies and technical controls around the agent: input and output guardrails, tool permissions, rate and spending limits, logging, and evaluation.",
-      where: "Wraps every component, not just one step. Module 8 covers it in depth.",
+      where: "Wraps every component, not just one step. Module 10 covers it in depth.",
       example: "The agent may read calendars but cannot delete events; every tool call is logged."
     },
     oversight: {

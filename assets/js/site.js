@@ -25,11 +25,13 @@
       { id: "evolution",  num: 1, title: "Evolution of AI",          href: "evolution.html",  time: "30 min", blurb: "From GANs and Transformers to multimodal models, agents, and Physical AI." },
       { id: "components", num: 2, title: "Components of AI Agents",  href: "components.html", time: "40 min", blurb: "Perception, reasoning, planning, action, tools, memory, and oversight." },
       { id: "patterns",   num: 3, title: "Agent Design Patterns",    href: "patterns.html",   time: "50 min", blurb: "Sequential, routing, parallel, reflection, planning, and multi-agent designs." },
-      { id: "mcp",        num: 4, title: "Model Context Protocol",   href: "mcp.html",        time: "35 min", blurb: "A standard way to connect agents to tools, data, and prompts." },
-      { id: "decisions",  num: 5, title: "Decision APIs",            href: "decision-apis.html", time: "35 min", blurb: "Rules engines, optimization solvers, and OpenAPI decision services as agent tools." },
-      { id: "workflows",  num: 6, title: "Agentic AI Workflows",     href: "workflows.html",  time: "40 min", blurb: "Perception to feedback: an end-to-end agent loop you can run." },
-      { id: "nocode",     num: 7, title: "No-Code Agentic Workflows", href: "no-code.html",   time: "35 min", blurb: "Build agent workflows visually with n8n and similar platforms." },
-      { id: "governance", num: 8, title: "Agentic AI Governance",    href: "governance.html", time: "40 min", blurb: "Guardrails, evaluation, monitoring, and human oversight." }
+      { id: "alwayson",   num: 4, title: "Always-on AI Agents",      href: "always-on.html",  time: "30 min", blurb: "Proactive agents that work in the background: dots, Grok Bot, Instinct, and Muse." },
+      { id: "mcp",        num: 5, title: "Model Context Protocol",   href: "mcp.html",        time: "35 min", blurb: "A standard way to connect agents to tools, data, and prompts." },
+      { id: "decisions",  num: 6, title: "Decision APIs",            href: "decision-apis.html", time: "35 min", blurb: "Rules engines, optimization solvers, and OpenAPI decision services as agent tools." },
+      { id: "workflows",  num: 7, title: "Agentic AI Workflows",     href: "workflows.html",  time: "40 min", blurb: "Perception to feedback: an end-to-end agent loop you can run." },
+      { id: "nocode",     num: 8, title: "No-Code Agentic Workflows", href: "no-code.html",   time: "35 min", blurb: "Build agent workflows visually with n8n and similar platforms." },
+      { id: "codeflows",  num: 9, title: "Code-based Agentic Workflows", href: "code-workflows.html", time: "50 min", blurb: "Agent SDKs in Python and many models through OpenRouter and Commonstack." },
+      { id: "governance", num: 10, title: "Agentic AI Governance",   href: "governance.html", time: "40 min", blurb: "Guardrails, evaluation, monitoring, and human oversight." }
     ],
     reference: [
       { id: "glossary",  title: "Glossary",  href: "glossary.html" },

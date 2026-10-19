@@ -28,7 +28,7 @@ def add(a: int, b: int) -> int:
 @mcp.resource("course://modules/{number}")
 def module_title(number: int) -> str:
     """Title of a course module."""
-    titles = {1: "Evolution of AI", 2: "Components of AI Agents", 4: "Model Context Protocol"}
+    titles = {1: "Evolution of AI", 2: "Components of AI Agents", 5: "Model Context Protocol"}
     return titles.get(int(number), "Unknown module")
 
 
@@ -64,7 +64,7 @@ async def main():
                 result = await session.call_tool("add", arguments={"a": 2, "b": 3})
                 print("add(2, 3) ->", result.content[0].text)
 
-                resource = await session.read_resource("course://modules/4")
+                resource = await session.read_resource("course://modules/5")
                 print("Resource:", resource.contents[0].text)
 
                 prompt = await session.get_prompt("explain", arguments={"topic": "MCP"})

@@ -28,8 +28,8 @@
 <main id="main" tabindex="-1">
   <header class="page-head">
     <div class="wrap">
-      <p class="breadcrumb"><a href="index.html">Home</a> / Module 5</p>
-      <span class="eyebrow">Module 5</span>
+      <p class="breadcrumb"><a href="index.html">Home</a> / Module 6</p>
+      <span class="eyebrow">Module 6</span>
       <h1>Decision APIs</h1>
       <p class="lead">Language models are good at understanding requests and explaining results. Many business decisions, however, must be consistent, auditable, and sometimes provably optimal. Decision APIs let an agent hand those decisions to services built for them.</p>
       <div class="page-meta"><span><i data-icon="clock"></i>About 35 minutes</span><span><i data-icon="code"></i>4 Python examples</span><span><i data-icon="grad"></i>Intermediate</span></div>
@@ -161,7 +161,7 @@ for facts in requests:
       <section id="openapi">
         <h2>OpenAPI: describing decision services for agents</h2>
         <div class="prose">
-          <p>The <a href="https://www.openapis.org/">OpenAPI Specification</a> is a widely used, machine-readable format for describing HTTP APIs: their paths, operations, parameters, and JSON schemas. Because a model's tool definition also uses a name, a description, and a JSON schema, an OpenAPI operation maps naturally onto a tool. Several agent platforms can import an OpenAPI document and expose its operations as tools; custom GPT Actions in ChatGPT, for example, are defined with an OpenAPI schema. An OpenAPI-described service can also be wrapped as an MCP server (Module 4).</p>
+          <p>The <a href="https://www.openapis.org/">OpenAPI Specification</a> is a widely used, machine-readable format for describing HTTP APIs: their paths, operations, parameters, and JSON schemas. Because a model's tool definition also uses a name, a description, and a JSON schema, an OpenAPI operation maps naturally onto a tool. Several agent platforms can import an OpenAPI document and expose its operations as tools; custom GPT Actions in ChatGPT, for example, are defined with an OpenAPI schema. An OpenAPI-described service can also be wrapped as an MCP server (Module 5).</p>
           <p>The example converts a small OpenAPI document for a parking-permit decision service into a tool, then lets a stand-in model call it. <strong>Input:</strong> the OpenAPI document and a user question. <strong>Output:</strong> the generated tool schema, the HTTP call, and the decision.</p>
         </div>
         <figure class="code-panel" data-example="dec_openapi_tool.py" data-title="OpenAPI operation to agent tool" data-run="browser" data-colab="dec_openapi_tool.ipynb">
@@ -363,7 +363,7 @@ print("Total minutes:", total)</code></pre>
           <li>Let the LLM extract and validate the facts, and ask the user when a required fact is missing.</li>
           <li>Never let the model invent the decision when a decision service exists. Instruct it to call the tool and report its result.</li>
           <li>Return a reason or rule identifier with every decision, and log inputs and outputs for audit.</li>
-          <li>Version your rules and models, and evaluate the full agent again when they change (Module 8).</li>
+          <li>Version your rules and models, and evaluate the full agent again when they change (Module 10).</li>
         </ul>
       </section>
 

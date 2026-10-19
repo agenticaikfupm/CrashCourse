@@ -28,8 +28,8 @@
 <main id="main" tabindex="-1">
   <header class="page-head">
     <div class="wrap">
-      <p class="breadcrumb"><a href="index.html">Home</a> / Module 4</p>
-      <span class="eyebrow">Module 4</span>
+      <p class="breadcrumb"><a href="index.html">Home</a> / Module 5</p>
+      <span class="eyebrow">Module 5</span>
       <h1>Model Context Protocol (MCP)</h1>
       <p class="lead">MCP is an open standard for connecting AI applications to external tools and data. Build a connector once as an MCP server, and any MCP-compatible application can use it.</p>
       <div class="page-meta"><span><i data-icon="clock"></i>About 35 minutes</span><span><i data-icon="code"></i>2 Python examples</span><span><i data-icon="grad"></i>Intermediate</span></div>
@@ -123,7 +123,7 @@ class TinyMCPServer:
                 "inputSchema": {"type": "object", "properties": {"module": {"type": "integer"}}, "required": ["module"]},
             }
         }
-        self.resources = {"course://syllabus": "Module 1: Evolution of AI ... Module 8: Governance"}
+        self.resources = {"course://syllabus": "Module 1: Evolution of AI ... Module 10: Governance"}
         self.prompts = {"summarize_module": "Summarize module {module} for a beginner in 3 bullet points."}
 
     def handle(self, request: dict) -&gt; dict:
@@ -166,9 +166,9 @@ class TinyMCPClient:
 client = TinyMCPClient(TinyMCPServer())
 client.request("initialize")
 client.request("tools/list")
-client.request("tools/call", {"name": "get_course_schedule", "arguments": {"module": 4}})
+client.request("tools/call", {"name": "get_course_schedule", "arguments": {"module": 5}})
 client.request("resources/read", {"uri": "course://syllabus"})
-client.request("prompts/get", {"name": "summarize_module", "arguments": {"module": 4}})</code></pre>
+client.request("prompts/get", {"name": "summarize_module", "arguments": {"module": 5}})</code></pre>
         </figure>
         <div class="prose">
           <p><strong>Example 2</strong> uses the official Python SDK (version 2). The <code>MCPServer</code> class (named <code>FastMCP</code> in version 1 of the SDK) turns decorated Python functions into a tool, a resource, and a prompt. A client then starts the server as a subprocess and calls it. It needs the <code>mcp</code> package, so run it in Colab or locally; the notebook writes the server file and runs the client for you.</p>
@@ -204,7 +204,7 @@ def add(a: int, b: int) -&gt; int:
 @mcp.resource("course://modules/{number}")
 def module_title(number: int) -&gt; str:
     """Title of a course module."""
-    titles = {1: "Evolution of AI", 2: "Components of AI Agents", 4: "Model Context Protocol"}
+    titles = {1: "Evolution of AI", 2: "Components of AI Agents", 5: "Model Context Protocol"}
     return titles.get(int(number), "Unknown module")
 
 
@@ -240,7 +240,7 @@ async def main():
                 result = await session.call_tool("add", arguments={"a": 2, "b": 3})
                 print("add(2, 3) -&gt;", result.content[0].text)
 
-                resource = await session.read_resource("course://modules/4")
+                resource = await session.read_resource("course://modules/5")
                 print("Resource:", resource.contents[0].text)
 
                 prompt = await session.get_prompt("explain", arguments={"topic": "MCP"})

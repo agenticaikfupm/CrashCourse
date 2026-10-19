@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Always-on AI Agents | Agentic AI Crash Course</title>
+<meta name="description" content="Always-on AI agents that work proactively in the background: how they are triggered, how they stay under your control, and examples such as OpenAI dots, Grok Bot, Instinct, and Meta Muse.">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.classList.add("js");(function(){try{var t=localStorage.getItem("cc-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}})();</script>
+<script>window.Prism={manual:true};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script defer src="assets/js/site.js"></script>
+<script defer src="assets/js/code.js"></script>
+<script defer src="assets/js/diagram.js"></script>
+<script defer src="assets/js/pages/alwayson.js"></script>
+</head>
+<body data-page="alwayson">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+<noscript><div class="noscript-nav">JavaScript is off, so the architecture diagram is hidden. All explanations and code are below. <a href="index.html">Course home</a></div></noscript>
+
+<main id="main" tabindex="-1">
+  <header class="page-head">
+    <div class="wrap">
+      <p class="breadcrumb"><a href="index.html">Home</a> / Module 4</p>
+      <span class="eyebrow">Module 4</span>
+      <h1>Always-on AI Agents</h1>
+      <p class="lead">Most AI tools wait for you to ask. Always-on agents keep working in the background: they watch for events, follow routines, remember your goals, and bring you finished work, while asking for approval before anything consequential.</p>
+      <div class="page-meta"><span><i data-icon="clock"></i>About 30 minutes</span><span><i data-icon="code"></i>1 Python example</span><span><i data-icon="grad"></i>Beginner to intermediate</span></div>
+    </div>
+  </header>
+
+  <div class="wrap course-layout">
+    <nav id="course-nav" class="course-nav"></nav>
+    <article class="content">
+
+      <section id="what">
+        <h2>From reactive assistants to always-on agents</h2>
+        <div class="prose">
+          <p>In the earlier modules, an agent starts when you send a request and stops when it answers. An <strong>always-on agent</strong> is persistent: it has a lasting identity and memory, it can be woken up by things other than your messages, and it can work for hours or days on your goals. Several companies launched products of this kind in 2026, often describing them as AI teammates or personal agents.</p>
+        </div>
+        <figure class="media-figure">
+          <video controls playsinline preload="metadata" width="1280" height="720" aria-describedby="bots-caption">
+            <source src="assets/media/bots.mp4#t=0.5" type="video/mp4">
+            <p>Your browser cannot play this video. <a href="assets/media/bots.mp4">Download the video</a> (MP4, 1.1 MB).</p>
+          </video>
+          <figcaption id="bots-caption">The four always-on agents covered in this module, shown as characters: Dot (OpenAI), Muse (Meta), Grok Bot (xAI), and Instinct.</figcaption>
+        </figure>
+        <div class="table-wrap">
+          <table>
+            <caption class="visually-hidden">Reactive assistants compared with always-on agents</caption>
+            <thead><tr><th scope="col"></th><th scope="col">Reactive assistant</th><th scope="col">Always-on agent</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Starts when</th><td>You send a message</td><td>A schedule, an app event, a message, or its own background check</td></tr>
+              <tr><th scope="row">Works for</th><td>One answer</td><td>Ongoing projects, often several in parallel</td></tr>
+              <tr><th scope="row">Remembers</th><td>The current conversation</td><td>Your goals, preferences, and past feedback</td></tr>
+              <tr><th scope="row">Works in</th><td>A chat window</td><td>Connected apps and often its own cloud computer</td></tr>
+              <tr><th scope="row">Main risk</th><td>A wrong answer</td><td>A wrong action taken while you are not watching</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="architecture">
+        <h2>How an always-on agent works</h2>
+        <p class="prose">The products below differ in detail but share the same building blocks. Press <strong>Play</strong> to follow one cycle.</p>
+        <figure id="alwayson-diagram" class="figure"></figure>
+        <div class="def-grid">
+          <div><h4>Triggers</h4><p>Schedules (routines), events in connected apps, your messages, and read-only background checks for ways to help.</p></div>
+          <div><h4>Persistence</h4><p>Long-term memory of goals and preferences, and a workspace that survives between tasks, such as a dedicated cloud computer.</p></div>
+          <div><h4>Control</h4><p>Permission rules, approval requests, an activity log you can inspect, and the ability to pause or redirect the agent.</p></div>
+        </div>
+      </section>
+
+      <section id="examples">
+        <h2>Examples</h2>
+        <p class="prose">Descriptions below are summarized from each company's official product page at the time of writing. Features, availability, and pricing change often, so check the linked pages for current details.</p>
+        <div class="grid grid-2">
+          <div class="card">
+            <span class="kicker">OpenAI</span>
+            <h3>dots</h3>
+            <p>Announced September 29, 2026, as "always-on agents" in ChatGPT, powered by GPT-6 Astra. Each dot has its own cloud computer and browser, connects to apps through plugins, and learns preferences from feedback. You can message or call it in ChatGPT, Slack, or Teams.</p>
+            <ul class="small">
+              <li><strong>Proactive:</strong> "proactive research" in the background, using connected apps through read-only tools.</li>
+              <li><strong>Control:</strong> Custom Rules to allow, require approval for, or block actions; an Activity View; sensitive tasks such as changing a password always stay with you.</li>
+              <li><strong>Teams:</strong> "specialist dots" with their own identity for organizational roles, starting with enterprise pilots.</li>
+            </ul>
+            <p class="small"><a href="https://openai.com/index/introducing-dots/">Introducing dots</a></p>
+          </div>
+          <div class="card">
+            <span class="kicker">xAI</span>
+            <h3>Grok Bot</h3>
+            <p>Described as "AI teammates" that sign in to your tools, use them as you would, and return finished work. You give tasks from the desktop app (macOS or Windows) or the iOS app, and can run several Bots in parallel, around the clock.</p>
+            <ul class="small">
+              <li><strong>Proactive:</strong> routines on a schedule; you can show a Bot a workflow once and it saves it as a routine.</li>
+              <li><strong>Persistence:</strong> Bots share one persistent cloud computer per user and keep memory that improves over time.</li>
+              <li><strong>Control:</strong> Bots come back when approval is needed, and sensitive actions can go through an automatic review first.</li>
+            </ul>
+            <p class="small"><a href="https://x.ai/bot">Grok Bot</a></p>
+          </div>
+          <div class="card">
+            <span class="kicker">Instinct</span>
+            <h3>Instinct</h3>
+            <p>A personal assistant with no new app to learn: you text it or call it. The company says it understands what you are working on and can use a phone and a computer the way you do, with examples such as ordering groceries, booking a train, and sending flowers.</p>
+            <ul class="small">
+              <li><strong>Interface:</strong> text messages and phone calls.</li>
+              <li><strong>Note:</strong> the product page does not describe how background work, approvals, or permissions are handled.</li>
+            </ul>
+            <p class="small"><a href="https://instinct.com/">instinct.com</a></p>
+          </div>
+          <div class="card">
+            <span class="kicker">Meta</span>
+            <h3>Muse</h3>
+            <p>Meta's "personal AI agent." You chat with it in the Muse app on mobile or Mac, or in WhatsApp. It connects to apps such as email and calendar, and can build its own tools when a task needs one.</p>
+            <ul class="small">
+              <li><strong>Proactive:</strong> turns a goal into an action plan, tracks progress, and suggests ideas.</li>
+              <li><strong>Persistence:</strong> Muse Secure VM, a persistent, isolated Linux computer with a browser that you and the agent share.</li>
+              <li><strong>Control:</strong> approval before actions such as sending emails or making purchases, a complete audit trail, a credential store the agent cannot read, and one-time card numbers at checkout.</li>
+            </ul>
+            <p class="small"><a href="https://ai.meta.com/muse/">Muse</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="compare">
+        <h2>Common design choices</h2>
+        <div class="table-wrap">
+          <table>
+            <caption class="visually-hidden">Design choices shared by always-on agents</caption>
+            <thead><tr><th scope="col">Design choice</th><th scope="col">Why it matters</th><th scope="col">Seen in</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">A dedicated cloud computer</th><td>The agent can work while your laptop is closed, and its work stays separate from your own machine.</td><td>dots, Grok Bot, Muse</td></tr>
+              <tr><th scope="row">Meeting you where you are</th><td>Chat apps, workplace tools, messaging, and phone calls replace a new interface.</td><td>dots, Grok Bot, Instinct, Muse</td></tr>
+              <tr><th scope="row">Read-only background work</th><td>Proactive help without the risk of unapproved changes.</td><td>dots</td></tr>
+              <tr><th scope="row">Approval for consequential actions</th><td>Sending, paying, and sharing stay under human control.</td><td>dots, Grok Bot, Muse</td></tr>
+              <tr><th scope="row">Inspectable activity</th><td>An activity view or audit trail makes background work accountable.</td><td>dots, Muse</td></tr>
+              <tr><th scope="row">Protected credentials</th><td>Passwords and card numbers are used without being exposed to the model.</td><td>dots, Muse</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="code">
+        <h2>Try it: a day in the life of an always-on agent</h2>
+        <div class="prose">
+          <p>This simulation runs one working day. Triggers arrive from a schedule, email, the calendar, and a background check. The agent decides what to do using its memory, and every action passes through permission rules. <strong>Input:</strong> timed events. <strong>Output:</strong> actions taken, approvals waiting for you, updated memory, and an activity log.</p>
+        </div>
+        <figure class="code-panel" data-example="ao_always_on.py" data-title="Triggers, memory, and permission rules" data-run="browser" data-colab="ao_always_on.ipynb">
+          <pre><code class="language-python">"""An always-on agent: triggers, memory, and permission rules
+
+Always-on agents do not wait for a prompt. They wake up on triggers
+(a schedule, an event in a connected app, a new message, or their own
+background "proactive" check), decide what to do using their memory of
+your goals, and then act within permission rules: some actions run
+automatically, some need your approval, and some are blocked.
+
+This example simulates one working day in a few milliseconds.
+Inputs:  a list of timed events (emails, calendar changes, schedule ticks)
+Outputs: what the agent did, what it asked you to approve, and an activity log
+
+Illustrative: decide() uses simple rules where a real agent would use an LLM.
+"""
+from dataclasses import dataclass, field
+
+# ---- Memory: what the agent knows about you ---------------------------------
+@dataclass
+class Memory:
+    goals: list = field(default_factory=lambda: ["submit the workshop proposal by Thursday",
+                                                  "keep mornings free for research"])
+    preferences: dict = field(default_factory=lambda: {"quiet_hours": (22, 7), "digest_time": 8})
+    notes: list = field(default_factory=list)
+
+# ---- Permission rules (like "allow / require approval / block") ------------
+RULES = {
+    "read_email": "allow",
+    "draft_reply": "allow",
+    "send_email": "approve",          # anything that leaves on your behalf needs approval
+    "move_meeting": "approve",
+    "pay_invoice": "approve",
+    "change_password": "block",       # sensitive tasks always stay with the human
+}
+
+# ---- Triggers: what wakes the agent up --------------------------------------
+EVENTS = [
+    (7,  "schedule", "daily digest"),
+    (9,  "email",    "Reviewer asks for the proposal draft by Wednesday"),
+    (11, "calendar", "Research block moved to 10:00 by a colleague"),
+    (13, "proactive", "scan connected apps (read-only)"),
+    (14, "email",    "IT: your password expires today"),
+    (16, "email",    "Vendor: invoice #482 is due tomorrow"),
+    (23, "email",    "Newsletter: weekly AI roundup"),
+]
+
+ACTIVITY_LOG, APPROVAL_QUEUE = [], []
+
+def in_quiet_hours(hour, mem):
+    start, end = mem.preferences["quiet_hours"]
+    return hour &gt;= start or hour &lt; end
+
+def request(action, detail, hour):
+    """Every action passes through the permission rules before it runs."""
+    rule = RULES.get(action, "approve")                    # unknown actions need approval
+    if rule == "allow":
+        status = "done"
+    elif rule == "approve":
+        status = "waiting for your approval"
+        APPROVAL_QUEUE.append((hour, action, detail))
+    else:
+        status = "blocked (you must do this yourself)"
+    ACTIVITY_LOG.append({"hour": hour, "action": action, "detail": detail, "status": status})
+    return status
+
+def decide(hour, kind, text, mem):
+    """Stand-in for the model: map a trigger to actions using memory."""
+    if in_quiet_hours(hour, mem) and kind != "schedule":
+        mem.notes.append(f"Saved for the morning: {text}")
+        return [("read_email", f"queued for tomorrow: {text}")]
+    if kind == "schedule":
+        return [("read_email", "prepare a digest of overnight messages and today's goals")]
+    if kind == "email" and "proposal" in text:
+        mem.notes.append("Deadline moved earlier: proposal due Wednesday")
+        return [("draft_reply", "confirm the Wednesday deadline"), ("send_email", "reply to reviewer")]
+    if kind == "calendar" and "Research block" in text:
+        return [("move_meeting", "restore the research block (goal: keep mornings free)")]
+    if kind == "proactive":
+        return [("read_email", "found 2 unanswered student questions; drafted answers for review")]
+    if kind == "email" and "password" in text:
+        return [("change_password", "reset the expiring password")]
+    if kind == "email" and "invoice" in text:
+        return [("pay_invoice", "pay invoice #482 before it is due")]
+    return []
+
+mem = Memory()
+for hour, kind, text in EVENTS:
+    print(f"{hour:02d}:00  trigger={kind:&lt;9} {text}")
+    for action, detail in decide(hour, kind, text, mem):
+        print(f"        -&gt; {action:&lt;15} {request(action, detail, hour)}")
+
+print("\nApprovals waiting for you:")
+for hour, action, detail in APPROVAL_QUEUE:
+    print(f"  [{hour:02d}:00] {action}: {detail}")
+print("\nUpdated memory:", mem.notes)
+print(f"Activity log entries: {len(ACTIVITY_LOG)} (you can inspect every step)")</code></pre>
+        </figure>
+        <h3>Try these changes</h3>
+        <ul class="prose">
+          <li>Change <code>"pay_invoice"</code> to <code>"allow"</code>. Would you be comfortable with that? Why or why not?</li>
+          <li>Set quiet hours to <code>(18, 8)</code> and see which events are deferred.</li>
+          <li>Add a new trigger, such as a weekly report every Thursday.</li>
+        </ul>
+      </section>
+
+      <section id="risks">
+        <h2>Opportunities and risks</h2>
+        <div class="def-grid">
+          <div><h4>Opportunities</h4><ul><li>Work continues while you focus elsewhere</li><li>Problems are noticed early, sometimes before you ask</li><li>Routine processes run reliably on a schedule</li></ul></div>
+          <div><h4>Risks</h4><ul><li>Mistakes can happen while nobody is watching</li><li>Broad access to email, files, and accounts raises privacy and security stakes</li><li>Prompt injection through the content the agent reads</li><li>Too many notifications and approvals lead to rubber-stamping</li></ul></div>
+          <div><h4>Good practice</h4><ul><li>Start with read-only access and add permissions gradually</li><li>Require approval for anything that sends, pays, or deletes</li><li>Review the activity log regularly</li><li>See Module 10 for governance controls</li></ul></div>
+        </div>
+      </section>
+
+      <section id="check">
+        <h2>Check your understanding</h2>
+        <form class="quiz" data-answer="b" data-explain="Background work is safest when it can only read. Actions that change things should pass through permission rules and, when consequential, wait for your approval.">
+          <fieldset>
+            <legend>An always-on agent checks your apps in the background to find ways to help. Which setup is safest?</legend>
+            <label><input type="radio" name="q1" value="a"> Full access, so it can fix problems immediately</label>
+            <label><input type="radio" name="q1" value="b"> Read-only access for the background check, with approval required before actions</label>
+            <label><input type="radio" name="q1" value="c"> No access, and it guesses what you need</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+      </section>
+
+      <nav id="pager"></nav>
+    </article>
+  </div>
+</main>
+<div id="site-footer"></div>
+</body>
+</html>

@@ -15,8 +15,8 @@ import re
 from collections import Counter
 
 DOCS = {
-    "syllabus.txt": "The crash course has eight modules. Module 4 covers the Model Context Protocol (MCP). "
-                    "Module 8 covers governance, guardrails and human oversight.",
+    "syllabus.txt": "The crash course has ten modules. Module 5 covers the Model Context Protocol (MCP). "
+                    "Module 10 covers governance, guardrails and human oversight.",
     "faq.txt": "Notebooks open in Google Colab. You need basic Python. No paid API key is required "
                "because examples use a stand-in model.",
 }

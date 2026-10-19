@@ -3,7 +3,7 @@
   "use strict";
 
   const CONFIG = {
-    title: "MCP workflow: answering \"When is the Module 4 session?\"",
+    title: "MCP workflow: answering \"When is the Module 5 session?\"",
     width: 960, height: 400, minWidth: 640, legend: true,
     nodes: [
       { id: "host", label: "Host application (e.g., a chat app or IDE)", x: 330, y: 200, w: 330, h: 330, kind: "group" },
@@ -30,11 +30,11 @@
     steps: [
       { nodes: ["client", "s1", "s2", "s3"], edges: ["client>s1", "client>s3"], text: "<strong>Connect and discover.</strong> When the host starts, each client connects to its server, runs <code>initialize</code>, and asks what it offers (<code>tools/list</code>, <code>resources/list</code>, <code>prompts/list</code>)." },
       { nodes: ["user", "llm"], edges: ["user>llm"], text: "<strong>Ask.</strong> The user asks a question. The host gives the LLM the question plus the list of available tools and their schemas." },
-      { nodes: ["llm", "client"], edges: ["llm>client"], text: "<strong>Choose a tool.</strong> The LLM decides to call <code>get_course_schedule</code> with <code>{\"module\": 4}</code>. The host may ask the user to approve this call." },
+      { nodes: ["llm", "client"], edges: ["llm>client"], text: "<strong>Choose a tool.</strong> The LLM decides to call <code>get_course_schedule</code> with <code>{\"module\": 5}</code>. The host may ask the user to approve this call." },
       { nodes: ["client", "s2"], edges: ["client>s2"], text: "<strong>Call.</strong> The client sends a JSON-RPC <code>tools/call</code> request to the course server over stdio or HTTP." },
       { nodes: ["s2", "e2"], edges: ["s2>e2"], text: "<strong>Reach the external system.</strong> The server runs its own code: here it queries the course database. The LLM never sees credentials." },
       { nodes: ["llm"], edges: ["client>llm"], text: "<strong>Return the result.</strong> The tool result travels back through the client into the LLM's context." },
-      { nodes: ["user"], edges: ["llm>user"], text: "<strong>Answer.</strong> The LLM writes a grounded answer: \"Module 4 runs on Sunday at 4 pm.\"" }
+      { nodes: ["user"], edges: ["llm>user"], text: "<strong>Answer.</strong> The LLM writes a grounded answer: \"Module 5 runs on Sunday at 4 pm.\"" }
     ]
   };
 

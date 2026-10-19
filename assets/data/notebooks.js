@@ -106,86 +106,163 @@ window.NOTEBOOKS = [
   "browser": true
  },
  {
+  "file": "ao_always_on",
+  "title": "An always-on agent: triggers, memory, and permission rules",
+  "module": "Module 4: Always-on AI Agents",
+  "page": "always-on.html",
+  "browser": true
+ },
+ {
   "file": "mcp_concepts",
   "title": "MCP concepts: a client and server exchanging JSON-RPC messages",
-  "module": "Module 4: Model Context Protocol",
+  "module": "Module 5: Model Context Protocol",
   "page": "mcp.html",
   "browser": true
  },
  {
   "file": "mcp_server",
   "title": "A real MCP server and client with the official Python SDK",
-  "module": "Module 4: Model Context Protocol",
+  "module": "Module 5: Model Context Protocol",
   "page": "mcp.html",
   "browser": false
  },
  {
   "file": "dec_openapi_tool",
   "title": "From an OpenAPI description to an agent tool",
-  "module": "Module 5: Decision APIs",
+  "module": "Module 6: Decision APIs",
   "page": "decision-apis.html",
   "browser": true
  },
  {
   "file": "dec_optimization",
   "title": "Optimization as a decision API: assigning shuttles to routes",
-  "module": "Module 5: Decision APIs",
+  "module": "Module 6: Decision APIs",
   "page": "decision-apis.html",
   "browser": true
  },
  {
   "file": "dec_ortools",
   "title": "The same assignment problem with Google OR-Tools",
-  "module": "Module 5: Decision APIs",
+  "module": "Module 6: Decision APIs",
   "page": "decision-apis.html",
   "browser": false
  },
  {
   "file": "dec_rules_engine",
   "title": "Decision table: a tiny rules engine an agent can call",
-  "module": "Module 5: Decision APIs",
+  "module": "Module 6: Decision APIs",
   "page": "decision-apis.html",
   "browser": true
  },
  {
   "file": "wf_end_to_end",
   "title": "End-to-end agentic workflow: a campus shuttle dispatcher",
-  "module": "Module 6: Agentic AI Workflows",
+  "module": "Module 7: Agentic AI Workflows",
   "page": "workflows.html",
   "browser": true
  },
  {
   "file": "nc_doc_qa",
   "title": "Python equivalent of a visual \"document Q&A\" (RAG) flow",
-  "module": "Module 7: No-Code Agentic Workflows",
+  "module": "Module 8: No-Code Agentic Workflows",
   "page": "no-code.html",
   "browser": true
  },
  {
   "file": "nc_email_triage",
   "title": "Python equivalent of the n8n \"email triage with approval\" workflow",
-  "module": "Module 7: No-Code Agentic Workflows",
+  "module": "Module 8: No-Code Agentic Workflows",
   "page": "no-code.html",
   "browser": true
  },
  {
+  "file": "cw_mini_framework",
+  "title": "What an agent SDK does for you: a tiny framework you can read",
+  "module": "Module 9: Code-based Agentic Workflows",
+  "page": "code-workflows.html",
+  "browser": true
+ },
+ {
+  "file": "cw_openrouter_agent",
+  "title": "A real tool-calling agent loop with a free OpenRouter model",
+  "module": "Module 9: Code-based Agentic Workflows",
+  "page": "code-workflows.html",
+  "browser": false
+ },
+ {
+  "file": "cw_openrouter_models",
+  "title": "Access free and commercial models through OpenRouter",
+  "module": "Module 9: Code-based Agentic Workflows",
+  "page": "code-workflows.html",
+  "browser": false
+ },
+ {
+  "file": "cw_sdk_autogen",
+  "title": "AutoGen and Magentic-One: agents that talk to each other",
+  "module": "Module 9: Code-based Agentic Workflows",
+  "page": "code-workflows.html",
+  "browser": false
+ },
+ {
+  "file": "cw_sdk_claude",
+  "title": "Claude Agent SDK: an agent with a custom tool",
+  "module": "Module 9: Code-based Agentic Workflows",
+  "page": "code-workflows.html",
+  "browser": false
+ },
+ {
+  "file": "cw_sdk_crewai",
+  "title": "CrewAI: a small crew with roles and tasks, through OpenRouter",
+  "module": "Module 9: Code-based Agentic Workflows",
+  "page": "code-workflows.html",
+  "browser": false
+ },
+ {
+  "file": "cw_sdk_langchain",
+  "title": "LangChain: create_agent with one tool, through OpenRouter",
+  "module": "Module 9: Code-based Agentic Workflows",
+  "page": "code-workflows.html",
+  "browser": false
+ },
+ {
+  "file": "cw_sdk_openai_agents",
+  "title": "OpenAI Agents SDK: one agent with one tool, through OpenRouter",
+  "module": "Module 9: Code-based Agentic Workflows",
+  "page": "code-workflows.html",
+  "browser": false
+ },
+ {
+  "file": "cw_sdk_pydanticai",
+  "title": "Pydantic AI: a type-safe agent with structured output, through OpenRouter",
+  "module": "Module 9: Code-based Agentic Workflows",
+  "page": "code-workflows.html",
+  "browser": false
+ },
+ {
+  "file": "cw_sdk_smolagents",
+  "title": "smolagents: a CodeAgent that writes Python to use its tools",
+  "module": "Module 9: Code-based Agentic Workflows",
+  "page": "code-workflows.html",
+  "browser": false
+ },
+ {
   "file": "gov_eval_monitoring",
   "title": "Evaluation, logging, and monitoring for an agent",
-  "module": "Module 8: Agentic AI Governance",
+  "module": "Module 10: Agentic AI Governance",
   "page": "governance.html",
   "browser": true
  },
  {
   "file": "gov_guardrails",
   "title": "Guardrails: checking inputs, tool calls, and outputs",
-  "module": "Module 8: Agentic AI Governance",
+  "module": "Module 10: Agentic AI Governance",
   "page": "governance.html",
   "browser": true
  },
  {
   "file": "gov_human_approval",
   "title": "Human-in-the-loop approval based on risk",
-  "module": "Module 8: Agentic AI Governance",
+  "module": "Module 10: Agentic AI Governance",
   "page": "governance.html",
   "browser": true
  }

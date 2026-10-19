@@ -17,12 +17,14 @@ deploys directly to GitHub Pages. Python examples run in the browser with
 | 1. Evolution of AI | `evolution.html` | Interactive timeline (GANs to Physical AI), model-release lanes, inference code |
 | 2. Components of AI Agents | `components.html` | Selectable architecture diagram, five component examples |
 | 3. Agent Design Patterns | `patterns.html` | Eight patterns, each with a playable workflow diagram and code |
-| 4. Model Context Protocol | `mcp.html` | Host/client/server workflow, JSON-RPC simulation, official SDK example |
-| 5. Decision APIs | `decision-apis.html` | Live decision table, OpenAPI-to-tool example, optimization with OR-Tools |
-| 6. Agentic AI Workflows | `workflows.html` | Perception-to-feedback loop and an end-to-end Python example |
-| 7. No-Code Agentic Workflows | `no-code.html` | n8n and Langflow flows, importable n8n templates, Python equivalents |
-| 8. Agentic AI Governance | `governance.html` | Control layers, approval simulator, guardrail/evaluation code, embedded video |
-| Glossary | `glossary.html` | 46 searchable terms with examples and related concepts |
+| 4. Always-on AI Agents | `always-on.html` | Proactive agents (OpenAI dots, Grok Bot, Instinct, Meta Muse), architecture diagram, trigger and permission simulation |
+| 5. Model Context Protocol | `mcp.html` | Host/client/server workflow, JSON-RPC simulation, official SDK example |
+| 6. Decision APIs | `decision-apis.html` | Live decision table, OpenAPI-to-tool example, optimization with OR-Tools |
+| 7. Agentic AI Workflows | `workflows.html` | Perception-to-feedback loop and an end-to-end Python example |
+| 8. No-Code Agentic Workflows | `no-code.html` | n8n and Langflow flows, importable n8n templates, Python equivalents |
+| 9. Code-based Agentic Workflows | `code-workflows.html` | Agent SDK comparison, a no-key mini framework, OpenRouter and Commonstack, the same agent in seven SDKs |
+| 10. Agentic AI Governance | `governance.html` | Control layers, approval simulator, guardrail/evaluation code, embedded video |
+| Glossary | `glossary.html` | 49 searchable terms with examples and related concepts |
 | Resources | `resources.html` | Curated links filtered by type, topic, and level, plus all notebooks |
 
 ## Folder structure
@@ -145,6 +147,13 @@ python tools/check_links.py --offline  # internal links and anchors only
 - Light and dark themes follow the system setting and can be switched in the header.
 - Animations respect "reduce motion".
 - Tested in current Chromium-based browsers at phone, tablet, and desktop widths.
+
+## API keys for Module 9
+
+Most examples need no key. The Module 9 OpenRouter examples need a free
+OpenRouter key stored as `OPENROUTER_API_KEY` (Colab Secrets or an environment
+variable); the Claude Agent SDK example needs `ANTHROPIC_API_KEY`. Never commit
+keys to the repository.
 
 ## Third-party services
 

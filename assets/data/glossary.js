@@ -10,10 +10,22 @@
 window.GLOSSARY_CATEGORIES = ["Foundations", "Agents", "Engineering", "Tools and protocols", "Data and retrieval", "Safety and governance"];
 
 window.GLOSSARY = [
+  { id: "always-on-agent", term: "Always-on agent", cat: "Agents", module: "always-on.html",
+    def: "An agent that keeps working in the background instead of waiting for a prompt. It is triggered by schedules, app events, messages, or its own read-only checks, remembers your goals, and acts within permission rules.",
+    example: "An agent notices an unpaid invoice in your email, prepares it, and asks for your approval before sending.",
+    related: ["ai-agent", "human-in-the-loop", "memory-engineering"] },
+  { id: "agent-sdk", term: "Agent SDK", cat: "Engineering", module: "code-workflows.html",
+    def: "A software development kit that provides ready-made building blocks for agents in code, such as tool definitions, the agent loop, handoffs, guardrails, and tracing.",
+    example: "Using the OpenAI Agents SDK or Pydantic AI instead of writing your own tool-calling loop.",
+    related: ["tools", "function-calling", "orchestration", "model-gateway"] },
+  { id: "model-gateway", term: "Model gateway", cat: "Tools and protocols", module: "code-workflows.html#gateways",
+    def: "A service that offers many models from different providers through one API and one key, often OpenAI-compatible. OpenRouter and Commonstack are examples.",
+    example: "Switching an agent from a free model to a commercial one by changing only the model ID.",
+    related: ["agent-sdk", "llm", "foundation-model"] },
   { id: "agentic-ai", term: "Agentic AI", cat: "Agents", module: "workflows.html",
     def: "AI systems that pursue goals with some autonomy: they plan multi-step work, use tools, act, and adapt based on feedback, usually under human oversight.",
     example: "A system that researches a topic, drafts a report, checks its sources, and emails it for review.",
-    related: ["ai-agent", "multi-agent-system", "orchestration", "ai-governance"] },
+    related: ["ai-agent", "always-on-agent", "multi-agent-system", "orchestration", "ai-governance"] },
   { id: "ai-agent", term: "AI agent", cat: "Agents", module: "components.html",
     def: "A software system that perceives its situation, decides what to do, and takes actions through tools to reach a goal. Modern agents usually use an LLM for reasoning.",
     example: "A booking assistant that reads your request, checks room availability with an API, and reserves a room.",

@@ -33,11 +33,13 @@ MODULES = {
     "evo": ("evolution.html", "Module 1: Evolution of AI"),
     "comp": ("components.html", "Module 2: Components of AI Agents"),
     "pat": ("patterns.html", "Module 3: Agent Design Patterns"),
-    "mcp": ("mcp.html", "Module 4: Model Context Protocol"),
-    "dec": ("decision-apis.html", "Module 5: Decision APIs"),
-    "wf": ("workflows.html", "Module 6: Agentic AI Workflows"),
-    "nc": ("no-code.html", "Module 7: No-Code Agentic Workflows"),
-    "gov": ("governance.html", "Module 8: Agentic AI Governance"),
+    "ao": ("always-on.html", "Module 4: Always-on AI Agents"),
+    "mcp": ("mcp.html", "Module 5: Model Context Protocol"),
+    "dec": ("decision-apis.html", "Module 6: Decision APIs"),
+    "wf": ("workflows.html", "Module 7: Agentic AI Workflows"),
+    "nc": ("no-code.html", "Module 8: No-Code Agentic Workflows"),
+    "cw": ("code-workflows.html", "Module 9: Code-based Agentic Workflows"),
+    "gov": ("governance.html", "Module 10: Agentic AI Governance"),
 }
 
 PANEL_RE = re.compile(

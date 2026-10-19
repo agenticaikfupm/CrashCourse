@@ -24,7 +24,7 @@ class TinyMCPServer:
                 "inputSchema": {"type": "object", "properties": {"module": {"type": "integer"}}, "required": ["module"]},
             }
         }
-        self.resources = {"course://syllabus": "Module 1: Evolution of AI ... Module 8: Governance"}
+        self.resources = {"course://syllabus": "Module 1: Evolution of AI ... Module 10: Governance"}
         self.prompts = {"summarize_module": "Summarize module {module} for a beginner in 3 bullet points."}
 
     def handle(self, request: dict) -> dict:
@@ -67,6 +67,6 @@ class TinyMCPClient:
 client = TinyMCPClient(TinyMCPServer())
 client.request("initialize")
 client.request("tools/list")
-client.request("tools/call", {"name": "get_course_schedule", "arguments": {"module": 4}})
+client.request("tools/call", {"name": "get_course_schedule", "arguments": {"module": 5}})
 client.request("resources/read", {"uri": "course://syllabus"})
-client.request("prompts/get", {"name": "summarize_module", "arguments": {"module": 4}})
+client.request("prompts/get", {"name": "summarize_module", "arguments": {"module": 5}})

@@ -7,7 +7,10 @@
     pat_tool_calling: "tools", pat_reflection: "reflection", pat_plan_execute: "plan", pat_multi_agent: "multi",
     dec_rules_engine: "rules-demo", dec_openapi_tool: "openapi", dec_optimization: "optimization", dec_ortools: "optimization",
     nc_email_triage: "triage", nc_doc_qa: "rag",
-    gov_guardrails: "guardrails", gov_human_approval: "approval", gov_eval_monitoring: "evaluation"
+    gov_guardrails: "guardrails", gov_human_approval: "approval", gov_eval_monitoring: "evaluation",
+    cw_mini_framework: "under-the-hood", cw_openrouter_models: "openrouter", cw_openrouter_agent: "openrouter",
+    cw_sdk_openai_agents: "same-agent", cw_sdk_claude: "same-agent", cw_sdk_langchain: "same-agent", cw_sdk_crewai: "same-agent",
+    cw_sdk_smolagents: "same-agent", cw_sdk_pydanticai: "same-agent", cw_sdk_autogen: "same-agent"
   };
 
   document.addEventListener("DOMContentLoaded", () => {

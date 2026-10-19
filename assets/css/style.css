@@ -822,3 +822,16 @@ kbd {
 .table-wrap, .figure, .figure-canvas, .code-panel, .res, .term, .card, .quiz label { position: relative; }
 .swipe-hint { display: none !important; font-style: italic; }
 @media (max-width: 700px) { .swipe-hint { display: inline-flex !important; } }
+
+/* Very narrow phones (360 px and below): keep the header within the screen. */
+@media (max-width: 400px) {
+  .site-header .wrap { gap: .5rem; }
+  .brand { gap: .45rem; font-size: .95rem; }
+  .brand img { width: 30px; height: 30px; }
+  .icon-btn { width: 38px; height: 38px; }
+}
+
+/* Local video with caption (for example, the always-on agents module) */
+.media-figure { margin: 1.2rem 0; max-width: 860px; }
+.media-figure video { width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border); background: #000; }
+.media-figure figcaption { margin-top: .5rem; font-size: .88rem; color: var(--muted); }
