@@ -3,8 +3,9 @@
 For every module in tools/deck_content.py this script:
   1. draws four 1280x720 slides (title, objectives, what's inside, takeaway)
      with the footer "Dr. Alaa Khamis | Agentic AI Crash Course"
-  2. narrates each slide in American English and Saudi Arabic with free
-     Microsoft neural voices (edge-tts package, no account or API key needed)
+  2. narrates each slide in American English (free Microsoft neural voice,
+     edge-tts package) and Arabic (free Google Translate voice, gTTS package);
+     neither needs an account or API key
   3. assembles one MP4 per language, timing each slide to its narration
   4. writes matching WebVTT captions and a poster image
 
@@ -12,7 +13,7 @@ Outputs (in assets/video/):
   module-01-en.mp4, module-01-ar.mp4, module-01-en.vtt, module-01-ar.vtt,
   module-01-poster.jpg, ... for all ten modules
 
-Requirements: pip install edge-tts pillow imageio-ffmpeg
+Requirements: pip install edge-tts gtts pillow imageio-ffmpeg
 Fonts: Windows Bahnschrift and Segoe UI (change FONT_DIR on other systems).
 Narration uses online text-to-speech services, so an internet connection is needed.
 
@@ -34,6 +35,7 @@ import tempfile
 from pathlib import Path
 
 import edge_tts
+from gtts import gTTS
 import imageio_ffmpeg
 from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
@@ -47,10 +49,13 @@ FONT_DIR = Path("C:/Windows/Fonts")
 FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 
 FOOTER = "Dr. Alaa Khamis | Agentic AI Crash Course"
-# Narration voices (free Microsoft neural voices). Arabic: Saudi female voice, slightly slower.
+# Narration voices. English: free Microsoft neural voice (edge-tts).
+# Arabic: free Google Translate voice (gTTS), chosen because the Microsoft
+# Saudi voice mispronounced key words. To go back, set "engine": "edge" and
+# "voice": "ar-SA-ZariyahNeural".
 VOICES = {
-    "en": {"voice": "en-US-AndrewNeural", "rate": "+0%"},
-    "ar": {"voice": "ar-SA-ZariyahNeural", "rate": "-6%"},
+    "en": {"engine": "edge", "voice": "en-US-AndrewNeural", "rate": "+0%"},
+    "ar": {"engine": "gtts", "lang": "ar"},
 }
 
 # How English terms are spoken in the Arabic narration (captions keep the English spelling).
@@ -254,7 +259,11 @@ async def edge_speak(text, voice, rate, path):
 def speak(text, lang, path):
     v = VOICES[lang]
     spoken = ar_spoken(text) if lang == "ar" else text
-    asyncio.run(edge_speak(spoken, v["voice"], v["rate"], path))
+    if v["engine"] == "gtts":
+        # Google reads unvoweled Arabic well, so the vowel marks are removed here.
+        gTTS(DIACRITICS.sub("", spoken), lang=v["lang"]).save(str(path))
+    else:
+        asyncio.run(edge_speak(spoken, v["voice"], v["rate"], path))
 
 
 def duration(path):

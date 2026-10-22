@@ -79,23 +79,27 @@ captions, and `module-NN-poster.jpg`). To change the slides or narration, edit
 `tools/deck_content.py` and rebuild:
 
 ```bash
-pip install edge-tts pillow imageio-ffmpeg
+pip install edge-tts gtts pillow imageio-ffmpeg
 python tools/make_decks.py          # all modules (about 2 minutes each)
 python tools/make_decks.py 4 9      # only modules 4 and 9
 ```
 
-Narration uses free Microsoft neural voices through the `edge-tts` package (no
-account or API key): `en-US-AndrewNeural` for English and `ar-SA-ZariyahNeural`,
-a Saudi Arabic female voice, for Arabic. An internet connection is needed while
-rendering.
+Narration uses free voices that need no account or API key: the Microsoft
+neural voice `en-US-AndrewNeural` (through the `edge-tts` package) for English,
+and the Google Translate voice (through the `gTTS` package) for Arabic. The
+Google voice was chosen because the Microsoft Saudi voice mispronounced key
+words. `gTTS` uses an unofficial Google service that can change or limit
+requests at any time; to switch back, edit `VOICES` in `tools/make_decks.py`.
+An internet connection is needed while rendering.
 
 To improve Arabic pronunciation:
 
 - English terms are spoken through the `AR_SPOKEN` list in `tools/make_decks.py`
   (for example, "OpenRouter" is spoken as "أوبن راوتر"). Captions keep the
   English spelling. Add a term there if it is mispronounced.
-- Add Arabic vowel marks (tashkeel) to an easily misread word in
-  `tools/deck_content.py`. Captions remove the marks automatically.
+- Vowel marks (tashkeel) in `tools/deck_content.py` are removed before the text
+  is sent to the Google voice, which reads unvoweled Arabic well. They are also
+  removed from captions.
 
 Then rebuild only the Arabic versions with `python tools/make_decks.py --lang ar`.
 Slides use the Windows fonts Bahnschrift and Segoe UI.

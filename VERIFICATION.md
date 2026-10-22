@@ -174,7 +174,7 @@ Date: 2026-10-19.
 Date: 2026-10-22.
 
 - **Overview videos:** 20 MP4 files in `assets/video/`, one in English and one
-  in Saudi Arabic (female voice, `ar-SA-ZariyahNeural`) for each module. Each has 4 slides at 1280x720 with the
+  in Arabic (free Google Translate voice) for each module. Each has 4 slides at 1280x720 with the
   footer "Dr. Alaa Khamis | Agentic AI Crash Course", plus matching WebVTT
   captions and a poster image. English versions run 44 to 56 seconds and
   Arabic versions 59 to 77 seconds. The 50 files total about 25 MB. Frames
@@ -192,12 +192,12 @@ Date: 2026-10-22.
   Module 4. Progress is stored only in the browser's `localStorage`.
 - **Pages:** all 14 pages load without script errors and without horizontal
   overflow at 360 px and 1280 px.
-- **Arabic narration:** uses the free Saudi female voice `ar-SA-ZariyahNeural`
-  at a slightly slower rate. English terms are spoken through Arabic
-  spellings, and easily misread words (for example, الاصْطِنَاعِيّ and
-  الوَكِيلِيّ) carry vowel marks. Captions keep the English terms and drop the
-  marks. A native speaker should still review the narration before
-  publishing.
+- **Arabic narration:** uses the free Google Translate voice (`gTTS`), chosen by
+  the course author after comparing ten free voices, because the Microsoft Saudi
+  voice mispronounced key words even with vowel marks. English terms are spoken
+  through Arabic spellings; captions keep the English terms. `gTTS` relies on
+  an unofficial Google service. A native speaker should still review the
+  narration before publishing.
 - **Local testing note:** Python's built-in test server does not support the
   range requests that video seeking needs, so seeking only works on GitHub
   Pages or another full web server.
