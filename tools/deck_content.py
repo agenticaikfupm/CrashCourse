@@ -2,7 +2,7 @@
 
 Each module has four slides: title, objectives, what's inside, and key
 takeaway. Slide text is English. Narration is written in American English
-("en") and in Arabic for a Saudi Arabic voice ("ar").
+("en"), Arabic ("ar"), and Urdu ("ur", in deck_content_ur.py).
 Edit this file, then run:  python tools/make_decks.py
 """
 
@@ -308,3 +308,9 @@ DECKS = [
         },
     },
 ]
+
+# Urdu narration lives in its own file; attach it to each deck.
+from deck_content_ur import UR  # noqa: E402
+
+for _deck in DECKS:
+    _deck["narration"]["ur"] = UR[_deck["id"]]

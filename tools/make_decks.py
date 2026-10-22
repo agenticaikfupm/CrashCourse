@@ -24,6 +24,7 @@ English terms and drop the vowel marks.
 Usage:  python tools/make_decks.py               # all modules, both languages
         python tools/make_decks.py 4 9           # only modules 4 and 9
         python tools/make_decks.py --lang ar     # only the Arabic versions
+        python tools/make_decks.py --lang ur     # only the Urdu versions
 """
 from __future__ import annotations
 
@@ -56,6 +57,28 @@ FOOTER = "Dr. Alaa Khamis | Agentic AI Crash Course"
 VOICES = {
     "en": {"engine": "edge", "voice": "en-US-AndrewNeural", "rate": "+0%"},
     "ar": {"engine": "gtts", "lang": "ar"},
+    "ur": {"engine": "edge", "voice": "ur-PK-AsadNeural", "rate": "+0%"},   # Urdu: male voice
+}
+
+# How English terms are spoken in the Urdu narration (captions keep the English spelling).
+UR_SPOKEN = {
+    "OpenAI Agents SDK": "اوپن اے آئی ایجنٹس ایس ڈی کے",
+    "Claude Agent SDK": "کلاڈ ایجنٹ ایس ڈی کے",
+    "Magentic-One": "میگنیٹک ون",
+    "Pydantic AI": "پائیڈینٹک اے آئی",
+    "smolagents": "سمول ایجنٹس",
+    "LangChain": "لینگ چین",
+    "OpenRouter": "اوپن راؤٹر",
+    "Commonstack": "کامن اسٹیک",
+    "JSON-RPC": "جے سن آر پی سی",
+    "OpenAPI": "اوپن اے پی آئی",
+    "OR-Tools": "او آر ٹولز",
+    "Langflow": "لینگ فلو",
+    "Flowise": "فلو وائز",
+    "AutoGen": "آٹو جین",
+    "CrewAI": "کرو اے آئی",
+    "Dify": "ڈیفائی",
+    "n8n": "این ایٹ این",
 }
 
 # How English terms are spoken in the Arabic narration (captions keep the English spelling).
@@ -80,9 +103,12 @@ AR_SPOKEN = {
 }
 
 
-def ar_spoken(text):
-    for term in sorted(AR_SPOKEN, key=len, reverse=True):
-        text = text.replace(term, AR_SPOKEN[term])
+def spoken_form(text, lang):
+    """Replace English terms with how they should be spoken in Arabic or Urdu."""
+    table = {"ar": AR_SPOKEN, "ur": UR_SPOKEN}.get(lang)
+    if table:
+        for term in sorted(table, key=len, reverse=True):
+            text = text.replace(term, table[term])
     return text
 
 
@@ -258,7 +284,7 @@ async def edge_speak(text, voice, rate, path):
 
 def speak(text, lang, path):
     v = VOICES[lang]
-    spoken = ar_spoken(text) if lang == "ar" else text
+    spoken = spoken_form(text, lang)
     if v["engine"] == "gtts":
         # Google reads unvoweled Arabic well, so the vowel marks are removed here.
         gTTS(DIACRITICS.sub("", spoken), lang=v["lang"]).save(str(path))
@@ -329,7 +355,7 @@ def build(deck, lang, slides, workdir):
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     args = sys.argv[1:]
-    langs = ("en", "ar")
+    langs = ("en", "ar", "ur")
     if "--lang" in args:
         i = args.index("--lang")
         langs = (args[i + 1],)

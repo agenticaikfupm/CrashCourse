@@ -842,7 +842,7 @@ kbd {
 .lang-switch { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; margin-bottom: .7rem; }
 .lang-switch .lang-label { font-size: .88rem; font-weight: 600; color: var(--muted); margin-right: .2rem; }
 .lang-switch .pill { padding: .38rem .85rem; font-size: .88rem; }
-.lang-switch [lang="ar"] { font-family: "Segoe UI", Tahoma, "Noto Sans Arabic", var(--font-sans); }
+.lang-switch [lang="ar"], .lang-switch [lang="ur"] { font-family: "Segoe UI", Tahoma, "Noto Sans Arabic", var(--font-sans); }
 
 /* Check your understanding: three questions and a running score */
 .quiz-num { display: block; font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: .2rem; }

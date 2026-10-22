@@ -201,3 +201,8 @@ Date: 2026-10-22.
 - **Local testing note:** Python's built-in test server does not support the
   range requests that video seeking needs, so seeking only works on GitHub
   Pages or another full web server.
+- **Urdu narration (added later):** a third narration language, read by the
+  free Microsoft male voice `ur-PK-AsadNeural`, with Urdu captions. English
+  product names are spoken through Urdu-script spellings, and captions keep the
+  English names. A native Urdu speaker should review the narration before
+  publishing.

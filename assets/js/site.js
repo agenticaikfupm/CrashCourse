@@ -422,15 +422,16 @@ ${sections ? `<div class="toc-block"><h2>On this page</h2><ol class="toc">${sect
     updateScore();
   }
 
-  // Module overview video with an English (default) / Arabic narration switch.
+  // Module overview video with an English (default), Arabic, or Urdu narration switch.
   // Markup: <div class="overview-player" data-module="04"> with .lang-switch buttons and a <video>.
   function initOverviewPlayers() {
     $$(".overview-player").forEach(box => {
       const n = box.dataset.module;
       const video = $("video", box);
       const buttons = $$(".lang-switch [data-lang]", box);
+      const LANGS = { en: ["English", "English"], ar: ["العربية", "Arabic"], ur: ["اردو", "Urdu"] };
       let saved = store("cc-narration");
-      if (saved !== "ar") saved = "en";                       // English is the default
+      if (!LANGS[saved]) saved = "en";                        // English is the default
       const setLang = (lang, keepPlaying) => {
         const playing = keepPlaying && !video.paused;
         buttons.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
@@ -443,12 +444,12 @@ ${sections ? `<div class="toc-block"><h2>On this page</h2><ol class="toc">${sect
           track.kind = "captions";
           track.src = `assets/video/module-${n}-${lang}.vtt`;
           track.srclang = lang;
-          track.label = lang === "ar" ? "العربية" : "English";
+          track.label = LANGS[lang][0];
           if (old) old.replaceWith(track); else video.appendChild(track);
           video.load();
           if (playing) video.play().catch(() => {});
         }
-        video.setAttribute("aria-label", `Module ${Number(n)} overview video, ${lang === "ar" ? "Arabic" : "English"} narration`);
+        video.setAttribute("aria-label", `Module ${Number(n)} overview video, ${LANGS[lang][1]} narration`);
       };
       buttons.forEach(b => b.addEventListener("click", () => {
         store("cc-narration", b.dataset.lang);

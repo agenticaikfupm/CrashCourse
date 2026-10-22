@@ -69,12 +69,13 @@ but running a local server is closer to how GitHub Pages serves the site.
 
 Each module starts with a short narrated video (four slides: title, learning
 objectives, what's inside, and key takeaway). Every slide carries the footer
-"Dr. Alaa Khamis | Agentic AI Crash Course". Each video comes in two narration
-languages, American English (the default) and Saudi Arabic, with matching
+"Dr. Alaa Khamis | Agentic AI Crash Course". Each video comes in three narration
+languages, American English (the default), Arabic, and Urdu, with matching
 captions. Learners switch languages above the player, and the choice is
 remembered.
 
-Files are in `assets/video/` (`module-NN-en.mp4`, `module-NN-ar.mp4`, `.vtt`
+Files are in `assets/video/` (`module-NN-en.mp4`, `module-NN-ar.mp4`,
+`module-NN-ur.mp4`, `.vtt`
 captions, and `module-NN-poster.jpg`). To change the slides or narration, edit
 `tools/deck_content.py` and rebuild:
 
@@ -86,7 +87,8 @@ python tools/make_decks.py 4 9      # only modules 4 and 9
 
 Narration uses free voices that need no account or API key: the Microsoft
 neural voice `en-US-AndrewNeural` (through the `edge-tts` package) for English,
-and the Google Translate voice (through the `gTTS` package) for Arabic. The
+the Google Translate voice (through the `gTTS` package) for Arabic, and the
+Microsoft male voice `ur-PK-AsadNeural` for Urdu. The
 Google voice was chosen because the Microsoft Saudi voice mispronounced key
 words. `gTTS` uses an unofficial Google service that can change or limit
 requests at any time; to switch back, edit `VOICES` in `tools/make_decks.py`.
@@ -101,7 +103,9 @@ To improve Arabic pronunciation:
   is sent to the Google voice, which reads unvoweled Arabic well. They are also
   removed from captions.
 
-Then rebuild only the Arabic versions with `python tools/make_decks.py --lang ar`.
+Then rebuild only one language with `python tools/make_decks.py --lang ar` (or
+`--lang ur`). Urdu narration is in `tools/deck_content_ur.py`, and English terms
+in it are spoken through `UR_SPOKEN`.
 Slides use the Windows fonts Bahnschrift and Segoe UI.
 
 ## Quizzes and progress
