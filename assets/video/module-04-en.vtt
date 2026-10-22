@@ -1,0 +1,33 @@
+WEBVTT
+
+1
+00:00:00.500 --> 00:00:03.377
+Welcome to Module 4: Always-on AI Agents.
+
+2
+00:00:03.377 --> 00:00:06.184
+These agents do not wait for you to ask.
+
+3
+00:00:06.184 --> 00:00:08.710
+They keep working in the background.
+
+4
+00:00:10.110 --> 00:00:20.171
+You will learn how always-on agents differ from reactive assistants, how they are triggered, how they persist over time, and how they stay under your control.
+
+5
+00:00:20.171 --> 00:00:25.520
+You will also compare four products: OpenAI dots, Grok Bot, Instinct, and Meta Muse.
+
+6
+00:00:26.920 --> 00:00:40.444
+You will see how schedules, app events, messages, and proactive checks wake an agent up, how memory and a dedicated cloud computer keep it working, and how permission rules, approvals, and activity logs keep it accountable.
+
+7
+00:00:40.444 --> 00:00:42.930
+A Python simulation runs one working day.
+
+8
+00:00:44.330 --> 00:00:52.560
+The key takeaway: the more an agent works without you, the more it needs clear permissions, approvals, and an activity log you can inspect.

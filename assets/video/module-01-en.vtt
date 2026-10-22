@@ -1,0 +1,37 @@
+WEBVTT
+
+1
+00:00:00.500 --> 00:00:05.220
+Welcome to Module 1 of the Agentic AI Crash Course: the Evolution of AI.
+
+2
+00:00:05.220 --> 00:00:11.250
+We will see how we got from networks that generate pictures to agents that act in the world.
+
+3
+00:00:12.650 --> 00:00:18.961
+In this module, you will trace nine milestones, from generative adversarial networks to Physical AI.
+
+4
+00:00:18.961 --> 00:00:28.490
+You will see why Transformers and large language models became the core of modern agents, and how a language model generates text, one token at a time.
+
+5
+00:00:29.890 --> 00:00:32.469
+You will explore an interactive timeline.
+
+6
+00:00:32.469 --> 00:00:40.836
+For each milestone, you will see its capabilities, typical applications, representative examples, and its contribution to agentic AI.
+
+7
+00:00:40.836 --> 00:00:44.170
+Then you will run two Python labs on model inference.
+
+8
+00:00:45.570 --> 00:00:49.179
+The key takeaway: agents are not a new kind of model.
+
+9
+00:00:49.179 --> 00:00:54.830
+They are systems built around models, adding tools, memory, planning, and feedback.

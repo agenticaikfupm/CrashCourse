@@ -40,6 +40,23 @@
     <nav id="course-nav" class="course-nav"></nav>
     <article class="content">
 
+      <section id="module-video">
+        <h2>Module overview</h2>
+        <p class="prose">A short narrated summary of this module's objectives, content, and main takeaway. Choose the narration language below.</p>
+        <div class="overview-player" data-module="02">
+          <div class="lang-switch" role="group" aria-label="Narration language">
+            <span class="lang-label">Narration:</span>
+            <button type="button" class="pill" data-lang="en" aria-pressed="true">English</button>
+            <button type="button" class="pill" data-lang="ar" aria-pressed="false" lang="ar">العربية</button>
+          </div>
+          <video controls playsinline preload="metadata" poster="assets/video/module-02-poster.jpg" width="1280" height="720">
+            <source src="assets/video/module-02-en.mp4" type="video/mp4">
+            <track kind="captions" src="assets/video/module-02-en.vtt" srclang="en" label="English">
+            <p>Your browser cannot play this video. <a href="assets/video/module-02-en.mp4">Download the English version</a> or <a href="assets/video/module-02-ar.mp4">the Arabic version</a>.</p>
+          </video>
+        </div>
+      </section>
+
       <section id="definition">
         <h2>What is an AI agent?</h2>
         <div class="prose">
@@ -386,19 +403,6 @@ for m in ltm.retrieve(query, k=3):
         </div>
       </section>
 
-      <section id="check">
-        <h2>Check your understanding</h2>
-        <form class="quiz" data-answer="c" data-explain="Episodic memory records past events, such as what the user booked last week. Semantic memory holds facts; procedural memory holds how-to knowledge.">
-          <fieldset>
-            <legend>"Last week the user booked room B22-204." What type of long-term memory is this?</legend>
-            <label><input type="radio" name="q1" value="a"> Semantic</label>
-            <label><input type="radio" name="q1" value="b"> Procedural</label>
-            <label><input type="radio" name="q1" value="c"> Episodic</label>
-          </fieldset>
-          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
-          <p class="feedback" role="status"></p>
-        </form>
-      </section>
 
       <section id="takeaways">
         <h2>Key takeaways</h2>
@@ -407,6 +411,42 @@ for m in ltm.retrieve(query, k=3):
           <li>Tools give agents real capabilities, so actions are where safety checks and approvals belong.</li>
           <li>Memory and feedback turn a one-shot answer into a system that improves over a task.</li>
         </ul>
+      </section>
+
+      <section id="check">
+        <h2>Check your understanding</h2>
+        <p class="prose">Answer all three questions. Your answers are saved on this device and count toward your <a href="progress.html">course progress</a>.</p>
+        <form class="quiz" data-q="1" data-answer="c" data-explain="Episodic memory records past events, such as what the user booked last week. Semantic memory holds facts; procedural memory holds how-to knowledge.">
+          <fieldset>
+            <legend><span class="quiz-num">Question 1 of 3.</span> "Last week the user booked room B22-204." What type of long-term memory is this?</legend>
+            <label><input type="radio" name="q1" value="a"> Semantic</label>
+            <label><input type="radio" name="q1" value="b"> Procedural</label>
+            <label><input type="radio" name="q1" value="c"> Episodic</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+        <form class="quiz" data-q="2" data-answer="a" data-explain="Perception cleans and structures inputs, and flags missing or suspicious data, before reasoning starts.">
+          <fieldset>
+            <legend><span class="quiz-num">Question 2 of 3.</span> Which component turns raw inputs, such as messages and sensor readings, into structured observations?</legend>
+            <label><input type="radio" name="q2" value="a"> Perception</label>
+            <label><input type="radio" name="q2" value="b"> Planning</label>
+            <label><input type="radio" name="q2" value="c"> Memory</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+        <form class="quiz" data-q="3" data-answer="b" data-explain="Actions are where decisions have real effects, so permissions, guardrails, and approvals belong there.">
+          <fieldset>
+            <legend><span class="quiz-num">Question 3 of 3.</span> Why do actions need extra safety checks?</legend>
+            <label><input type="radio" name="q3" value="a"> Actions are slower than reasoning</label>
+            <label><input type="radio" name="q3" value="b"> Actions change the world, for example by sending messages or spending money</label>
+            <label><input type="radio" name="q3" value="c"> Actions use more memory</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+        <p class="quiz-score" role="status" aria-live="polite"></p>
       </section>
 
       <nav id="pager"></nav>

@@ -40,6 +40,23 @@
     <nav id="course-nav" class="course-nav"></nav>
     <article class="content">
 
+      <section id="module-video">
+        <h2>Module overview</h2>
+        <p class="prose">A short narrated summary of this module's objectives, content, and main takeaway. Choose the narration language below.</p>
+        <div class="overview-player" data-module="08">
+          <div class="lang-switch" role="group" aria-label="Narration language">
+            <span class="lang-label">Narration:</span>
+            <button type="button" class="pill" data-lang="en" aria-pressed="true">English</button>
+            <button type="button" class="pill" data-lang="ar" aria-pressed="false" lang="ar">العربية</button>
+          </div>
+          <video controls playsinline preload="metadata" poster="assets/video/module-08-poster.jpg" width="1280" height="720">
+            <source src="assets/video/module-08-en.mp4" type="video/mp4">
+            <track kind="captions" src="assets/video/module-08-en.vtt" srclang="en" label="English">
+            <p>Your browser cannot play this video. <a href="assets/video/module-08-en.mp4">Download the English version</a> or <a href="assets/video/module-08-ar.mp4">the Arabic version</a>.</p>
+          </video>
+        </div>
+      </section>
+
       <section id="why">
         <h2>No-code, low-code, and code</h2>
         <div class="prose">
@@ -258,6 +275,42 @@ for q in ["Which module covers MCP?", "Do I need an API key?"]:
           <li>Log every run and review failed executions regularly.</li>
           <li>Export workflows as JSON and keep them in version control.</li>
         </ul>
+      </section>
+
+      <section id="check">
+        <h2>Check your understanding</h2>
+        <p class="prose">Answer all three questions. Your answers are saved on this device and count toward your <a href="progress.html">course progress</a>.</p>
+        <form class="quiz" data-q="1" data-answer="b" data-explain="Approvals protect the steps with real-world consequences, such as sending an email or making a payment.">
+          <fieldset>
+            <legend><span class="quiz-num">Question 1 of 3.</span> Where should an approval step go in a visual agent workflow?</legend>
+            <label><input type="radio" name="q1" value="a"> At the very start, before the trigger</label>
+            <label><input type="radio" name="q1" value="b"> Before any node that sends, pays, or deletes</label>
+            <label><input type="radio" name="q1" value="c"> Nowhere, because approvals slow things down</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+        <form class="quiz" data-q="2" data-answer="a" data-explain="The Text Classifier node labels each email, and each label has its own output branch.">
+          <fieldset>
+            <legend><span class="quiz-num">Question 2 of 3.</span> In the n8n email triage example, what decides which branch an email follows?</legend>
+            <label><input type="radio" name="q2" value="a"> An AI classifier that labels it spam, urgent, or question</label>
+            <label><input type="radio" name="q2" value="b"> The time of day</label>
+            <label><input type="radio" name="q2" value="c"> A random choice</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+        <form class="quiz" data-q="3" data-answer="c" data-explain="Visual tools are fast for prototypes; code fits complex logic, testing, and strict deployment needs.">
+          <fieldset>
+            <legend><span class="quiz-num">Question 3 of 3.</span> When is code a better choice than a no-code platform?</legend>
+            <label><input type="radio" name="q3" value="a"> For a quick prototype that connects common apps</label>
+            <label><input type="radio" name="q3" value="b"> When non-programmers must maintain the workflow</label>
+            <label><input type="radio" name="q3" value="c"> When you need complex logic, automated tests, and version control</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+        <p class="quiz-score" role="status" aria-live="polite"></p>
       </section>
 
       <nav id="pager"></nav>

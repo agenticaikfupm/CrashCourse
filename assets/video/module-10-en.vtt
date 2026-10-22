@@ -1,0 +1,29 @@
+WEBVTT
+
+1
+00:00:00.500 --> 00:00:04.086
+Welcome to Module 10: Agentic AI Governance.
+
+2
+00:00:04.086 --> 00:00:08.080
+When AI systems can act, mistakes become actions.
+
+3
+00:00:09.480 --> 00:00:20.520
+You will learn why agents need governance, describe nine areas of agent governance, and apply practical controls: guardrails, human approval, evaluation, and monitoring.
+
+4
+00:00:21.920 --> 00:00:31.465
+You will explore safety, transparency, privacy, oversight, access control, evaluation, accountability, monitoring, and responsible deployment.
+
+5
+00:00:31.465 --> 00:00:39.060
+You will follow a request through layered controls, run three Python labs, and learn how to respond to incidents.
+
+6
+00:00:40.460 --> 00:00:43.637
+The key takeaway: no single control is enough.
+
+7
+00:00:43.637 --> 00:00:47.920
+Layer guardrails, permissions, human approval, and monitoring.

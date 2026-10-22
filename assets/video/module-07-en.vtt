@@ -1,0 +1,29 @@
+WEBVTT
+
+1
+00:00:00.500 --> 00:00:04.450
+Welcome to Module 7: Agentic AI Workflows.
+
+2
+00:00:04.450 --> 00:00:10.750
+An agent is a loop: it perceives, reasons, plans, acts, and learns.
+
+3
+00:00:12.150 --> 00:00:21.580
+You will learn the five stages of the agent loop, trace how information flows from one stage to the next, and run an end-to-end example that improves with feedback.
+
+4
+00:00:22.980 --> 00:00:33.439
+You will explore an interactive loop diagram, see the inputs and outputs of every stage, and learn the difference between learning inside one task and learning across many tasks.
+
+5
+00:00:33.439 --> 00:00:36.730
+Then you will run a campus shuttle dispatcher in Python.
+
+6
+00:00:38.130 --> 00:00:42.167
+The key takeaway: an agent is a loop, not a single answer.
+
+7
+00:00:42.167 --> 00:00:45.160
+Feedback from each cycle improves the next.

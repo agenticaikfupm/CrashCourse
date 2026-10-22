@@ -25,6 +25,7 @@ deploys directly to GitHub Pages. Python examples run in the browser with
 | 9. Code-based Agentic Workflows | `code-workflows.html` | Agent SDK comparison, a no-key mini framework, OpenRouter and Commonstack, the same agent in seven SDKs |
 | 10. Agentic AI Governance | `governance.html` | Control layers, approval simulator, guardrail/evaluation code, embedded video |
 | Glossary | `glossary.html` | 49 searchable terms with examples and related concepts |
+| My progress | `progress.html` | Overall and per-module progress: videos watched and questions answered |
 | Resources | `resources.html` | Curated links filtered by type, topic, and level, plus all notebooks |
 
 ## Folder structure
@@ -63,6 +64,50 @@ python -m http.server 8000
 
 Then open http://localhost:8000/. Opening the HTML files directly also works,
 but running a local server is closer to how GitHub Pages serves the site.
+
+## Module overview videos
+
+Each module starts with a short narrated video (four slides: title, learning
+objectives, what's inside, and key takeaway). Every slide carries the footer
+"Dr. Alaa Khamis | Agentic AI Crash Course". Each video comes in two narration
+languages, American English (the default) and Saudi Arabic, with matching
+captions. Learners switch languages above the player, and the choice is
+remembered.
+
+Files are in `assets/video/` (`module-NN-en.mp4`, `module-NN-ar.mp4`, `.vtt`
+captions, and `module-NN-poster.jpg`). To change the slides or narration, edit
+`tools/deck_content.py` and rebuild:
+
+```bash
+pip install edge-tts pillow imageio-ffmpeg
+python tools/make_decks.py          # all modules (about 2 minutes each)
+python tools/make_decks.py 4 9      # only modules 4 and 9
+```
+
+Narration uses free Microsoft neural voices through the `edge-tts` package (no
+account or API key): `en-US-AndrewNeural` for English and `ar-SA-ZariyahNeural`,
+a Saudi Arabic female voice, for Arabic. An internet connection is needed while
+rendering.
+
+To improve Arabic pronunciation:
+
+- English terms are spoken through the `AR_SPOKEN` list in `tools/make_decks.py`
+  (for example, "OpenRouter" is spoken as "أوبن راوتر"). Captions keep the
+  English spelling. Add a term there if it is mispronounced.
+- Add Arabic vowel marks (tashkeel) to an easily misread word in
+  `tools/deck_content.py`. Captions remove the marks automatically.
+
+Then rebuild only the Arabic versions with `python tools/make_decks.py --lang ar`.
+Slides use the Windows fonts Bahnschrift and Segoe UI.
+
+## Quizzes and progress
+
+Every module ends with three multiple-choice questions. The **My progress**
+page (`progress.html`) and a progress bar beside each module's level show how far a learner has come.
+Each module has four steps: watching at least 90 percent of the overview video,
+and answering each of the three questions correctly. Progress is stored only
+in the learner's browser (`localStorage`). It is not sent anywhere and does
+not carry over to other devices.
 
 ## Edit content
 

@@ -40,6 +40,23 @@
     <nav id="course-nav" class="course-nav"></nav>
     <article class="content">
 
+      <section id="module-video">
+        <h2>Module overview</h2>
+        <p class="prose">A short narrated summary of this module's objectives, content, and main takeaway. Choose the narration language below.</p>
+        <div class="overview-player" data-module="09">
+          <div class="lang-switch" role="group" aria-label="Narration language">
+            <span class="lang-label">Narration:</span>
+            <button type="button" class="pill" data-lang="en" aria-pressed="true">English</button>
+            <button type="button" class="pill" data-lang="ar" aria-pressed="false" lang="ar">العربية</button>
+          </div>
+          <video controls playsinline preload="metadata" poster="assets/video/module-09-poster.jpg" width="1280" height="720">
+            <source src="assets/video/module-09-en.mp4" type="video/mp4">
+            <track kind="captions" src="assets/video/module-09-en.vtt" srclang="en" label="English">
+            <p>Your browser cannot play this video. <a href="assets/video/module-09-en.mp4">Download the English version</a> or <a href="assets/video/module-09-ar.mp4">the Arabic version</a>.</p>
+          </video>
+        </div>
+      </section>
+
       <section id="why">
         <h2>Why build agents in code?</h2>
         <div class="prose">
@@ -719,9 +736,10 @@ asyncio.run(main())
 
       <section id="check">
         <h2>Check your understanding</h2>
-        <form class="quiz" data-answer="c" data-explain="Gateways such as OpenRouter and Commonstack are OpenAI-compatible, so most SDKs only need a different base URL, key, and model ID.">
+        <p class="prose">Answer all three questions. Your answers are saved on this device and count toward your <a href="progress.html">course progress</a>.</p>
+        <form class="quiz" data-q="1" data-answer="c" data-explain="Gateways such as OpenRouter and Commonstack are OpenAI-compatible, so most SDKs only need a different base URL, key, and model ID.">
           <fieldset>
-            <legend>Your agent works with one provider and you want to try a model from another provider. With a model gateway, what usually changes?</legend>
+            <legend><span class="quiz-num">Question 1 of 3.</span> Your agent works with one provider and you want to try a model from another provider. With a model gateway, what usually changes?</legend>
             <label><input type="radio" name="q1" value="a"> You rewrite the agent in a different SDK</label>
             <label><input type="radio" name="q1" value="b"> You install a new library for each provider</label>
             <label><input type="radio" name="q1" value="c"> Only the base URL, the API key, and the model ID</label>
@@ -729,6 +747,27 @@ asyncio.run(main())
           <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
           <p class="feedback" role="status"></p>
         </form>
+        <form class="quiz" data-q="2" data-answer="a" data-explain="Free model IDs end in :free, and the openrouter/free router picks an available free model.">
+          <fieldset>
+            <legend><span class="quiz-num">Question 2 of 3.</span> How are free models identified on OpenRouter?</legend>
+            <label><input type="radio" name="q2" value="a"> Their IDs end with :free</label>
+            <label><input type="radio" name="q2" value="b"> Their IDs start with beta/</label>
+            <label><input type="radio" name="q2" value="c"> They have no ID</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+        <form class="quiz" data-q="3" data-answer="b" data-explain="Keys in shared notebooks or repositories can be copied and misused. If a key leaks, delete it and create a new one.">
+          <fieldset>
+            <legend><span class="quiz-num">Question 3 of 3.</span> Where should you keep your API key when working in Colab?</legend>
+            <label><input type="radio" name="q3" value="a"> In the notebook code you share</label>
+            <label><input type="radio" name="q3" value="b"> In Colab Secrets or an environment variable</label>
+            <label><input type="radio" name="q3" value="c"> In a public GitHub repository</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+        <p class="quiz-score" role="status" aria-live="polite"></p>
       </section>
 
       <nav id="pager"></nav>

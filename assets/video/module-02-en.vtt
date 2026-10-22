@@ -1,0 +1,29 @@
+WEBVTT
+
+1
+00:00:00.500 --> 00:00:03.523
+Welcome to Module 2: Components of AI Agents.
+
+2
+00:00:03.523 --> 00:00:07.890
+Here we open up an agent and look at the parts that make it work.
+
+3
+00:00:09.290 --> 00:00:17.830
+You will learn what an AI agent is, describe nine components and how they connect, and build the core components yourself in short Python examples.
+
+4
+00:00:19.230 --> 00:00:32.297
+You will select each part of an interactive architecture diagram: perception, reasoning, planning, action, and tools, then memory, feedback and learning, safety and governance, and human oversight.
+
+5
+00:00:32.297 --> 00:00:34.950
+Five Python examples bring them to life.
+
+6
+00:00:36.350 --> 00:00:40.280
+The key takeaway: the foundation model is only one component.
+
+7
+00:00:40.280 --> 00:00:43.050
+Reliability comes from the parts around it.

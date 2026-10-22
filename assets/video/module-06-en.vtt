@@ -1,0 +1,21 @@
+WEBVTT
+
+1
+00:00:00.500 --> 00:00:03.244
+Welcome to Module 6: Decision APIs.
+
+2
+00:00:03.244 --> 00:00:09.280
+Many decisions must be consistent, auditable, and sometimes provably optimal.
+
+3
+00:00:10.680 --> 00:00:21.840
+You will learn what a decision API is, compare rules engines, optimization solvers, and predictive models, and turn a service described with OpenAPI into a tool that an agent can call.
+
+4
+00:00:23.240 --> 00:00:36.250
+You will follow an agent as it calls a decision service, change the inputs of a live decision table, convert an OpenAPI document into a tool, and solve a small assignment problem by exhaustive search and with OR-Tools.
+
+5
+00:00:37.650 --> 00:00:43.770
+The key takeaway: let the language model understand and explain, and let the decision service decide.

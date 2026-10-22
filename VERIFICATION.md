@@ -168,3 +168,36 @@ Date: 2026-10-19.
   endpoints such as `/chat/completions`.
 - **Layout:** no horizontal overflow on any page at 360 px or 768 px. The header
   was tightened for phones 360 px wide.
+
+## 9. Update: overview videos, three questions per module, progress tracking
+
+Date: 2026-10-22.
+
+- **Overview videos:** 20 MP4 files in `assets/video/`, one in English and one
+  in Saudi Arabic (female voice, `ar-SA-ZariyahNeural`) for each module. Each has 4 slides at 1280x720 with the
+  footer "Dr. Alaa Khamis | Agentic AI Crash Course", plus matching WebVTT
+  captions and a poster image. English versions run 44 to 56 seconds and
+  Arabic versions 59 to 77 seconds. The 50 files total about 25 MB. Frames
+  from several modules were checked for text wrapping and layout.
+- **Language switch:** English is selected by default. Switching to Arabic
+  loads the Arabic video and captions, and the choice is remembered across
+  pages. Tested in the browser.
+- **Questions:** every module page now ends with three multiple-choice
+  questions. Wrong answers ask the learner to try again; correct answers show
+  an explanation and are saved. Tested on Module 4, including the score line
+  ("3 of 3").
+- **Progress:** the progress bar beside each module's level (a bar without a percentage, with the exact value for screen readers and as a tooltip) and `progress.html` update live. A module counts
+  as complete after watching at least 90 percent of the overview video and
+  answering all three questions correctly; this was tested end to end on
+  Module 4. Progress is stored only in the browser's `localStorage`.
+- **Pages:** all 14 pages load without script errors and without horizontal
+  overflow at 360 px and 1280 px.
+- **Arabic narration:** uses the free Saudi female voice `ar-SA-ZariyahNeural`
+  at a slightly slower rate. English terms are spoken through Arabic
+  spellings, and easily misread words (for example, الاصْطِنَاعِيّ and
+  الوَكِيلِيّ) carry vowel marks. Captions keep the English terms and drop the
+  marks. A native speaker should still review the narration before
+  publishing.
+- **Local testing note:** Python's built-in test server does not support the
+  range requests that video seeking needs, so seeking only works on GitHub
+  Pages or another full web server.

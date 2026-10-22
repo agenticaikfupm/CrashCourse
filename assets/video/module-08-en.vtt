@@ -1,0 +1,29 @@
+WEBVTT
+
+1
+00:00:00.500 --> 00:00:04.060
+Welcome to Module 8: No-Code Agentic Workflows.
+
+2
+00:00:04.060 --> 00:00:10.650
+Visual platforms let you connect triggers, AI models, tools, and approvals on a canvas.
+
+3
+00:00:12.050 --> 00:00:24.630
+You will learn when no-code, low-code, or code fits best, compare platforms such as n8n, Langflow, Flowise, and Dify, and build three example workflows that you can import and adapt.
+
+4
+00:00:26.030 --> 00:00:35.162
+You will walk through an email triage workflow with human approval, a weekly research digest, and a document question-and-answer flow based on retrieval.
+
+5
+00:00:35.162 --> 00:00:39.400
+Each one comes with a step-by-step explanation and a Python equivalent.
+
+6
+00:00:40.800 --> 00:00:44.869
+The key takeaway: visual tools are a fast way to prototype.
+
+7
+00:00:44.869 --> 00:00:49.490
+Keep an approval step before anything that sends, pays, or deletes.

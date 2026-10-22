@@ -1,0 +1,25 @@
+WEBVTT
+
+1
+00:00:00.500 --> 00:00:04.173
+Welcome to Module 9: Code-based Agentic Workflows.
+
+2
+00:00:04.173 --> 00:00:08.800
+When a workflow outgrows a visual canvas, you build it in code.
+
+3
+00:00:10.200 --> 00:00:20.040
+You will learn what agent SDKs provide, compare eight Python SDKs, and reach free and commercial models through the OpenRouter and Commonstack gateways.
+
+4
+00:00:21.440 --> 00:00:35.652
+You will start with a tiny agent framework in plain Python, then compare the OpenAI Agents SDK, the Claude Agent SDK, LangChain, CrewAI, smolagents, Pydantic AI, AutoGen, and Magentic-One.
+
+5
+00:00:35.652 --> 00:00:41.700
+Finally, you will load an API key safely and build the same agent in seven SDKs.
+
+6
+00:00:43.100 --> 00:00:51.070
+The key takeaway: SDKs handle the plumbing and gateways make models interchangeable, so you can focus on designing the workflow.

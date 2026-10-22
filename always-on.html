@@ -40,6 +40,23 @@
     <nav id="course-nav" class="course-nav"></nav>
     <article class="content">
 
+      <section id="module-video">
+        <h2>Module overview</h2>
+        <p class="prose">A short narrated summary of this module's objectives, content, and main takeaway. Choose the narration language below.</p>
+        <div class="overview-player" data-module="04">
+          <div class="lang-switch" role="group" aria-label="Narration language">
+            <span class="lang-label">Narration:</span>
+            <button type="button" class="pill" data-lang="en" aria-pressed="true">English</button>
+            <button type="button" class="pill" data-lang="ar" aria-pressed="false" lang="ar">العربية</button>
+          </div>
+          <video controls playsinline preload="metadata" poster="assets/video/module-04-poster.jpg" width="1280" height="720">
+            <source src="assets/video/module-04-en.mp4" type="video/mp4">
+            <track kind="captions" src="assets/video/module-04-en.vtt" srclang="en" label="English">
+            <p>Your browser cannot play this video. <a href="assets/video/module-04-en.mp4">Download the English version</a> or <a href="assets/video/module-04-ar.mp4">the Arabic version</a>.</p>
+          </video>
+        </div>
+      </section>
+
       <section id="what">
         <h2>From reactive assistants to always-on agents</h2>
         <div class="prose">
@@ -267,9 +284,10 @@ print(f"Activity log entries: {len(ACTIVITY_LOG)} (you can inspect every step)")
 
       <section id="check">
         <h2>Check your understanding</h2>
-        <form class="quiz" data-answer="b" data-explain="Background work is safest when it can only read. Actions that change things should pass through permission rules and, when consequential, wait for your approval.">
+        <p class="prose">Answer all three questions. Your answers are saved on this device and count toward your <a href="progress.html">course progress</a>.</p>
+        <form class="quiz" data-q="1" data-answer="b" data-explain="Background work is safest when it can only read. Actions that change things should pass through permission rules and, when consequential, wait for your approval.">
           <fieldset>
-            <legend>An always-on agent checks your apps in the background to find ways to help. Which setup is safest?</legend>
+            <legend><span class="quiz-num">Question 1 of 3.</span> An always-on agent checks your apps in the background to find ways to help. Which setup is safest?</legend>
             <label><input type="radio" name="q1" value="a"> Full access, so it can fix problems immediately</label>
             <label><input type="radio" name="q1" value="b"> Read-only access for the background check, with approval required before actions</label>
             <label><input type="radio" name="q1" value="c"> No access, and it guesses what you need</label>
@@ -277,6 +295,27 @@ print(f"Activity log entries: {len(ACTIVITY_LOG)} (you can inspect every step)")
           <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
           <p class="feedback" role="status"></p>
         </form>
+        <form class="quiz" data-q="2" data-answer="a" data-explain="Always-on agents start work from schedules, app events, messages, or their own read-only background checks.">
+          <fieldset>
+            <legend><span class="quiz-num">Question 2 of 3.</span> Which of these can wake an always-on agent without a prompt from you?</legend>
+            <label><input type="radio" name="q2" value="a"> A scheduled routine, such as a daily digest</label>
+            <label><input type="radio" name="q2" value="b"> The model&#x27;s context window</label>
+            <label><input type="radio" name="q2" value="c"> The activity log</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+        <form class="quiz" data-q="3" data-answer="c" data-explain="OpenAI states that certain sensitive tasks, such as changing a password, always stay with you.">
+          <fieldset>
+            <legend><span class="quiz-num">Question 3 of 3.</span> According to OpenAI, which kind of task always stays with the user when working with dots?</legend>
+            <label><input type="radio" name="q3" value="a"> Drafting documents</label>
+            <label><input type="radio" name="q3" value="b"> Reading connected apps</label>
+            <label><input type="radio" name="q3" value="c"> Sensitive tasks, such as changing a password</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+        <p class="quiz-score" role="status" aria-live="polite"></p>
       </section>
 
       <nav id="pager"></nav>

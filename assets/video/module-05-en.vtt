@@ -1,0 +1,25 @@
+WEBVTT
+
+1
+00:00:00.500 --> 00:00:04.571
+Welcome to Module 5: the Model Context Protocol, or MCP.
+
+2
+00:00:04.571 --> 00:00:10.460
+It is an open standard for connecting AI applications to external tools and data.
+
+3
+00:00:11.860 --> 00:00:24.030
+You will learn what MCP is and why it is useful, how hosts, clients, and servers work together, and how to use the three server primitives, tools, resources, and prompts, in Python.
+
+4
+00:00:25.430 --> 00:00:32.210
+You will follow one question through an interactive workflow, from the user to an external system and back.
+
+5
+00:00:32.210 --> 00:00:38.610
+Then you will read real JSON-RPC messages and build a server and client with the official Python SDK.
+
+6
+00:00:40.010 --> 00:00:48.510
+The key takeaway: build a connector once as an MCP server, and any MCP-compatible application can use it, with your approval.

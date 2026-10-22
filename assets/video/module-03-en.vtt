@@ -1,0 +1,25 @@
+WEBVTT
+
+1
+00:00:00.500 --> 00:00:03.871
+Welcome to Module 3: Agent Design Patterns.
+
+2
+00:00:03.871 --> 00:00:09.280
+Patterns are reusable ways to arrange model calls, tools, and checks.
+
+3
+00:00:10.680 --> 00:00:21.170
+You will learn the difference between workflows and agents, explore eight design patterns with their strengths and limitations, and practice choosing the simplest pattern that solves a task.
+
+4
+00:00:22.570 --> 00:00:34.107
+The patterns range from a basic responder to sequential, routing, and parallel workflows, then tool calling, evaluator-optimizer loops, plan-and-execute, and multi-agent collaboration.
+
+5
+00:00:34.107 --> 00:00:37.430
+Each one has a playable diagram and a Python example.
+
+6
+00:00:38.830 --> 00:00:45.290
+The key takeaway: start with the simplest pattern that works, and add autonomy only when it clearly helps.

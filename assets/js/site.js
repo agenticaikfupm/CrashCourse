@@ -35,7 +35,8 @@
     ],
     reference: [
       { id: "glossary",  title: "Glossary",  href: "glossary.html" },
-      { id: "resources", title: "Resources", href: "resources.html" }
+      { id: "resources", title: "Resources", href: "resources.html" },
+      { id: "progress",  title: "My progress", href: "progress.html" }
     ]
   };
   window.SITE = SITE;
@@ -148,6 +149,7 @@
       <a href="index.html#labs"${cur("labs")}>Labs</a>
       <a href="glossary.html"${cur("glossary")}>Glossary</a>
       <a href="resources.html"${cur("resources")}>Resources</a>
+      <a href="progress.html"${cur("progress")}>Progress</a>
     </nav>
     <button class="icon-btn theme-toggle" type="button" aria-label="Switch theme">${icon("sun", "sun")}${icon("moon", "moon")}</button>
     <button class="icon-btn menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Open menu">${icon("menu")}</button>
@@ -200,20 +202,54 @@
     if (id && !v.includes(id)) { v.push(id); store("cc-visited", JSON.stringify(v)); }
   }
 
+  /* Progress (saved in this browser only) ---------------------------------
+     For each module: opened, overview video watched, and which of the three
+     check-your-understanding questions were answered correctly.
+     A module has four steps: the video plus three questions. */
+  const Progress = {
+    KEY: "cc-progress",
+    load() {
+      let d;
+      try { d = JSON.parse(store(this.KEY) || "{}") || {}; } catch (e) { d = {}; }
+      visited().forEach(id => { this.mod(d, id).opened = true; });      // older "visited" list
+      return d;
+    },
+    save(d) { store(this.KEY, JSON.stringify(d)); document.dispatchEvent(new CustomEvent("progresschange")); },
+    mod(d, id) { d[id] = d[id] || { opened: false, video: false, quiz: {} }; d[id].quiz = d[id].quiz || {}; return d[id]; },
+    open(id) { const d = this.load(); const m = this.mod(d, id); m.opened = true; m.last = Date.now(); this.save(d); },
+    video(id) { const d = this.load(); const m = this.mod(d, id); if (!m.video) { m.video = true; this.save(d); } },
+    quiz(id, q, ok) { const d = this.load(); const m = this.mod(d, id); if (ok && !m.quiz[q]) { m.quiz[q] = true; this.save(d); } },
+    module(id) {
+      const m = this.load()[id] || {};
+      const correct = Object.values(m.quiz || {}).filter(Boolean).length;
+      const steps = (m.video ? 1 : 0) + correct;
+      return { opened: !!m.opened, video: !!m.video, quiz: m.quiz || {}, correct, steps, total: 4,
+               pct: steps / 4, complete: steps === 4, last: m.last || 0 };
+    },
+    overall() {
+      const list = SITE.modules.map(x => this.module(x.id));
+      const steps = list.reduce((a, b) => a + b.steps, 0);
+      return { steps, total: list.length * 4, pct: steps / (list.length * 4),
+               complete: list.filter(x => x.complete).length, opened: list.filter(x => x.opened).length,
+               videos: list.filter(x => x.video).length, correct: list.reduce((a, b) => a + b.correct, 0) };
+    },
+    reset() { store(this.KEY, "{}"); store("cc-visited", "[]"); document.dispatchEvent(new CustomEvent("progresschange")); }
+  };
+  window.CourseProgress = Progress;
+
   function renderSidebar() {
     const host = $("#course-nav");
     if (!host) return;
-    const v = visited();
     const items = SITE.modules.map(m => {
-      const cls = v.includes(m.id) && m.id !== page ? ' class="visited"' : "";
+      const pr = Progress.module(m.id);
+      const cls = pr.complete ? ' class="done"' : (pr.opened && m.id !== page ? ' class="visited"' : "");
       const cur = m.id === page ? ' aria-current="page"' : "";
-      const done = v.includes(m.id) && m.id !== page ? '<span class="visually-hidden"> (visited)</span>' : "";
-      return `<li><a href="${m.href}"${cls}${cur}><span class="step" aria-hidden="true">${m.num}</span><span>${m.title}${done}</span></a></li>`;
+      const note = pr.complete ? " (completed)" : (pr.opened && m.id !== page ? " (started)" : "");
+      return `<li><a href="${m.href}"${cls}${cur} data-mod="${m.id}"><span class="step" aria-hidden="true">${pr.complete ? icon("check") : m.num}</span><span>${m.title}<span class="visually-hidden">${note}</span></span></a></li>`;
     }).join("");
     const ref = SITE.reference.map(r =>
-      `<li><a href="${r.href}"${r.id === page ? ' aria-current="page"' : ""}><span class="step" aria-hidden="true">${icon(r.id === "glossary" ? "book" : "layers")}</span><span>${r.title}</span></a></li>`
+      `<li><a href="${r.href}"${r.id === page ? ' aria-current="page"' : ""}><span class="step" aria-hidden="true">${icon({ glossary: "book", resources: "layers", progress: "target" }[r.id] || "layers")}</span><span>${r.title}</span></a></li>`
     ).join("");
-    const doneCount = SITE.modules.filter(m => v.includes(m.id)).length;
     const sections = $$(".content > section[id]").map(s => {
       const h = $("h2", s);
       return h ? `<li><a href="#${s.id}">${h.textContent.trim()}</a></li>` : "";
@@ -227,7 +263,6 @@
 <div class="course-nav-body" id="course-nav-body">
   <h2>Modules</h2>
   <ol>${items}</ol>
-  <p class="progress-note">${doneCount} of ${SITE.modules.length} modules opened on this device.</p>
   <h2 class="mt-1">Reference</h2>
   <ol>${ref}</ol>
 </div>
@@ -296,6 +331,7 @@ ${sections ? `<div class="toc-block"><h2>On this page</h2><ol class="toc">${sect
         <li><a href="${SITE.community}">Agentic AI @ KFUPM</a></li>
         <li><a href="glossary.html">Glossary</a></li>
         <li><a href="resources.html">Resources</a></li>
+        <li><a href="progress.html">My progress</a></li>
         <li><a href="${SITE.repo}">Course source on GitHub</a></li>
       </ul></div>
     </div>
@@ -351,17 +387,110 @@ ${sections ? `<div class="toc-block"><h2>On this page</h2><ol class="toc">${sect
   window.initTabs = initTabs;
 
   // Single-answer quiz: <form class="quiz" data-answer="b" data-explain="...">
+  // Check-your-understanding questions: <form class="quiz" data-q="1" data-answer="b" data-explain="...">
+  // Correct answers are saved to course progress for module pages.
   function initQuizzes() {
-    $$("form.quiz").forEach(f => {
+    const isModule = SITE.modules.some(m => m.id === page);
+    const forms = $$("form.quiz");
+    const scoreEl = $(".quiz-score");
+    const updateScore = () => {
+      if (!scoreEl || !isModule) return;
+      const pr = Progress.module(page);
+      scoreEl.textContent = `You have answered ${pr.correct} of ${forms.length} questions correctly.` +
+        (pr.correct === forms.length ? " Well done!" : "");
+      scoreEl.className = "quiz-score" + (pr.correct === forms.length ? " ok" : "");
+    };
+    forms.forEach(f => {
       const fb = $(".feedback", f);
+      const q = f.dataset.q;
+      if (isModule && q && Progress.module(page).quiz[q]) {
+        f.classList.add("answered");
+        fb.className = "feedback ok";
+        fb.textContent = "You answered this correctly earlier. Try it again any time.";
+      }
       f.addEventListener("submit", e => {
         e.preventDefault();
         const chosen = $("input:checked", f);
         if (!chosen) { fb.className = "feedback no"; fb.textContent = "Choose an answer first."; return; }
         const ok = chosen.value === f.dataset.answer;
         fb.className = "feedback " + (ok ? "ok" : "no");
-        fb.textContent = (ok ? "Correct. " : "Not quite. ") + (f.dataset.explain || "");
+        fb.textContent = ok ? ("Correct. " + (f.dataset.explain || "")).trim() : "Not quite. Try again.";
+        if (ok) f.classList.add("answered");
+        if (isModule && q) { Progress.quiz(page, q, ok); updateScore(); }
       });
+    });
+    updateScore();
+  }
+
+  // Module overview video with an English (default) / Arabic narration switch.
+  // Markup: <div class="overview-player" data-module="04"> with .lang-switch buttons and a <video>.
+  function initOverviewPlayers() {
+    $$(".overview-player").forEach(box => {
+      const n = box.dataset.module;
+      const video = $("video", box);
+      const buttons = $$(".lang-switch [data-lang]", box);
+      let saved = store("cc-narration");
+      if (saved !== "ar") saved = "en";                       // English is the default
+      const setLang = (lang, keepPlaying) => {
+        const playing = keepPlaying && !video.paused;
+        buttons.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+        const src = `assets/video/module-${n}-${lang}.mp4`;
+        const source = $("source", video);
+        if (source.getAttribute("src") !== src) {
+          source.setAttribute("src", src);
+          const old = $("track", video);
+          const track = document.createElement("track");
+          track.kind = "captions";
+          track.src = `assets/video/module-${n}-${lang}.vtt`;
+          track.srclang = lang;
+          track.label = lang === "ar" ? "العربية" : "English";
+          if (old) old.replaceWith(track); else video.appendChild(track);
+          video.load();
+          if (playing) video.play().catch(() => {});
+        }
+        video.setAttribute("aria-label", `Module ${Number(n)} overview video, ${lang === "ar" ? "Arabic" : "English"} narration`);
+      };
+      buttons.forEach(b => b.addEventListener("click", () => {
+        store("cc-narration", b.dataset.lang);
+        setLang(b.dataset.lang, true);
+      }));
+      setLang(saved, false);
+      // Count the video as watched once 90 percent has been played.
+      const markWatched = () => { if (SITE.modules.some(m => m.id === page)) Progress.video(page); };
+      video.addEventListener("timeupdate", () => {
+        if (video.duration && video.currentTime / video.duration >= 0.9) markWatched();
+      });
+      video.addEventListener("ended", markWatched);
+    });
+  }
+
+  // Course progress bar in the page details row, beside the level (module pages).
+  function renderMetaProgress() {
+    const meta = $(".page-head .page-meta");
+    if (!meta || !SITE.modules.some(m => m.id === page)) return;
+    meta.insertAdjacentHTML("beforeend", `<a class="meta-progress" href="progress.html">
+      <span>Course progress</span>
+      <span class="bar" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="100"><i></i></span>
+    </a>`);
+    refreshProgressUI();
+  }
+
+  // Keep the progress bar and the sidebar module checkmarks current.
+  function refreshProgressUI() {
+    const ov = Progress.overall();
+    const pct = Math.round(ov.pct * 100);
+    $$(".meta-progress").forEach(a => {
+      const bar = $(".bar", a);
+      $("i", bar).style.width = ov.pct * 100 + "%";
+      bar.setAttribute("aria-valuenow", String(pct));
+      bar.setAttribute("aria-valuetext", `${pct} percent, ${ov.complete} of ${SITE.modules.length} modules completed`);
+      a.title = `Course progress: ${pct}% (${ov.complete} of ${SITE.modules.length} modules completed). Select to see details.`;
+    });
+    $$(".course-nav a[data-mod]").forEach(a => {
+      const pr = Progress.module(a.dataset.mod);
+      const m = SITE.modules.find(x => x.id === a.dataset.mod);
+      a.classList.toggle("done", pr.complete);
+      $(".step", a).innerHTML = pr.complete ? icon("check") : String(m.num);
     });
   }
 
@@ -416,6 +545,7 @@ ${sections ? `<div class="toc-block"><h2>On this page</h2><ol class="toc">${sect
   document.addEventListener("DOMContentLoaded", () => {
     hydrateIcons();
     markVisited(page);
+    if (SITE.modules.some(m => m.id === page)) Progress.open(page);
     renderHeader();
     renderSidebar();
     renderPager();
@@ -423,6 +553,9 @@ ${sections ? `<div class="toc-block"><h2>On this page</h2><ol class="toc">${sect
     initTabs();
     initQuizzes();
     initVideos();
+    initOverviewPlayers();
+    renderMetaProgress();
+    document.addEventListener("progresschange", refreshProgressUI);
     hydrateColab();
     // Page scripts may add content after this point; they call markExternal() again.
     setTimeout(() => {

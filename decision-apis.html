@@ -40,6 +40,23 @@
     <nav id="course-nav" class="course-nav"></nav>
     <article class="content">
 
+      <section id="module-video">
+        <h2>Module overview</h2>
+        <p class="prose">A short narrated summary of this module's objectives, content, and main takeaway. Choose the narration language below.</p>
+        <div class="overview-player" data-module="06">
+          <div class="lang-switch" role="group" aria-label="Narration language">
+            <span class="lang-label">Narration:</span>
+            <button type="button" class="pill" data-lang="en" aria-pressed="true">English</button>
+            <button type="button" class="pill" data-lang="ar" aria-pressed="false" lang="ar">العربية</button>
+          </div>
+          <video controls playsinline preload="metadata" poster="assets/video/module-06-poster.jpg" width="1280" height="720">
+            <source src="assets/video/module-06-en.mp4" type="video/mp4">
+            <track kind="captions" src="assets/video/module-06-en.vtt" srclang="en" label="English">
+            <p>Your browser cannot play this video. <a href="assets/video/module-06-en.mp4">Download the English version</a> or <a href="assets/video/module-06-ar.mp4">the Arabic version</a>.</p>
+          </video>
+        </div>
+      </section>
+
       <section id="what">
         <h2>What is a decision API?</h2>
         <div class="prose">
@@ -369,9 +386,10 @@ print("Total minutes:", total)</code></pre>
 
       <section id="check">
         <h2>Check your understanding</h2>
-        <form class="quiz" data-answer="c" data-explain="Assignment under constraints is an optimization problem. The LLM should interpret the request and call a solver, then explain the result.">
+        <p class="prose">Answer all three questions. Your answers are saved on this device and count toward your <a href="progress.html">course progress</a>.</p>
+        <form class="quiz" data-q="1" data-answer="c" data-explain="Assignment under constraints is an optimization problem. The LLM should interpret the request and call a solver, then explain the result.">
           <fieldset>
-            <legend>An agent must assign 40 exam proctors to 25 rooms while respecting availability. What should decide the assignment?</legend>
+            <legend><span class="quiz-num">Question 1 of 3.</span> An agent must assign 40 exam proctors to 25 rooms while respecting availability. What should decide the assignment?</legend>
             <label><input type="radio" name="q1" value="a"> The LLM, using careful reasoning</label>
             <label><input type="radio" name="q1" value="b"> A decision table</label>
             <label><input type="radio" name="q1" value="c"> An optimization solver called as a tool</label>
@@ -379,6 +397,27 @@ print("Total minutes:", total)</code></pre>
           <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
           <p class="feedback" role="status"></p>
         </form>
+        <form class="quiz" data-q="2" data-answer="a" data-explain="Rules give consistent results that point to a specific rule, which experts can maintain and auditors can review.">
+          <fieldset>
+            <legend><span class="quiz-num">Question 2 of 3.</span> Why should an eligibility policy be decided by a decision table rather than by the LLM?</legend>
+            <label><input type="radio" name="q2" value="a"> The same facts always give the same, auditable decision</label>
+            <label><input type="radio" name="q2" value="b"> Decision tables write friendlier text</label>
+            <label><input type="radio" name="q2" value="c"> Decision tables need no inputs</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+        <form class="quiz" data-q="3" data-answer="b" data-explain="Because OpenAPI is machine-readable, agent platforms can turn its operations into tools.">
+          <fieldset>
+            <legend><span class="quiz-num">Question 3 of 3.</span> What does an OpenAPI document describe?</legend>
+            <label><input type="radio" name="q3" value="a"> A model&#x27;s training data</label>
+            <label><input type="radio" name="q3" value="b"> An HTTP API&#x27;s paths, operations, parameters, and schemas</label>
+            <label><input type="radio" name="q3" value="c"> A user&#x27;s preferences</label>
+          </fieldset>
+          <button class="btn btn-primary btn-sm mt-1" type="submit">Check answer</button>
+          <p class="feedback" role="status"></p>
+        </form>
+        <p class="quiz-score" role="status" aria-live="polite"></p>
       </section>
 
       <nav id="pager"></nav>
