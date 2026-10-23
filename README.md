@@ -117,6 +117,38 @@ and answering each of the three questions correctly. Progress is stored only
 in the learner's browser (`localStorage`). It is not sent anywhere and does
 not carry over to other devices.
 
+## Course activity stats
+
+The landing page shows four cards: **Unique visitors**, **Pageviews**,
+**Bounce rate**, and **Visit duration**. Each card shows an all-time value, the
+change from the week before last to last week, and small bars for the last
+seven weeks (the highlighted bar is the current week so far).
+
+The numbers come from [Abacus](https://abacus.jasoncameron.dev), a free counter
+service that needs no account or API key (namespace
+`agenticaikfupm-crashcourse`). Abacus can only add 1 to a counter, so
+`assets/js/site.js` keeps these counters, each with a weekly copy:
+
+| Counter | Adds 1 when |
+|---|---|
+| `unique-visits` / `visitors-WEEK` | a browser visits for the first time / for the first time that week |
+| `pageviews` | any course page loads |
+| `sessions` | a visit starts (after 30 minutes without activity) |
+| `engaged` | a visit reaches its second page; the rest count as bounces |
+| `active30` | a course page stays visible for another 30 seconds (up to 30 minutes per visit) |
+
+Bounce rate is `1 - engaged / sessions` and visit duration is
+`active30 x 30 s / sessions`. Unique visitors and pageviews start at 100, the
+estimated number of earlier visits (`STATS.base` in `assets/js/site.js`).
+
+Counting happens only on `agenticaikfupm.github.io`, so a local copy only reads
+the numbers. No personal data is sent; the browser remembers only whether it
+was already counted. The numbers are estimates: clearing site data or changing
+browsers counts a visitor again, ad blockers may skip counting, and anyone who
+knows the counter names could add hits. If Abacus cannot be reached, the
+section stays hidden. Abacus allows 30 requests per 10 seconds per visitor, so
+the page spaces out its requests and caches weeks that no longer change.
+
 ## Edit content
 
 - **Text and layout:** edit the HTML page. Each module page uses the same
@@ -219,6 +251,8 @@ Loaded only from public CDNs, with fallbacks:
 - YouTube, for the embedded video on the governance page. YouTube requires the
   page to send a referrer, so test the page through a local server (not by
   opening the file directly), or the player may show an error.
+- Abacus (`abacus.jasoncameron.dev`), a free keyless counter for the landing
+  page's activity stats: the section stays hidden if it cannot load.
 
 ## License and credits
 

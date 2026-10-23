@@ -206,3 +206,29 @@ Date: 2026-10-22.
   product names are spoken through Urdu-script spellings, and captions keep the
   English names. A native Urdu speaker should review the narration before
   publishing.
+
+## 10. Update: course activity stats
+
+- **Landing page:** a "Course activity" section after the hero shows Unique
+  visitors, Pageviews, Bounce rate, and Visit duration, each with a trend and
+  seven weekly bars. It replaces the single unique-visits stat.
+- **Live data, local copy:** shows 100 visitors, 100 pageviews, and "n/a" for
+  bounce rate and duration (no visits counted yet). No hits were sent from the
+  local copy, only reads.
+- **Sample data:** with sample counters, the cards showed "3k", "8.5k", "44%",
+  and "1m 35s". The trends were "up 25%", "up 21.2%", "down 2.1 pts" (green,
+  because a lower bounce rate is better), and "down 9.7%" (red). All were
+  checked by hand.
+- **Tracking:** with the network stubbed, a first page sent pageview, visitor
+  (all time and weekly), session, and 30-second ticks. A second page in the
+  same visit sent only the pageview and the "engaged" mark.
+- **Requests:** a first visit to the landing page makes about 40 reads; the
+  page keeps under the limit of 30 per 10 seconds (25 sent, the rest after a
+  short wait). Later visits read about 15, because older weeks are cached.
+  Weekly counters that do not exist yet return 404, which shows as console
+  errors until those weeks have data; the page treats them as 0.
+- **Layout:** four columns on desktop, a 2 by 2 grid below 900 px, no
+  horizontal overflow at 360 px, and readable colors in both themes.
+- **Note:** during testing, 14 stray hits reached an earlier counter named
+  `time30`. It cannot be reset without an admin key, so the time counter was
+  renamed to `active30`, which is clean.

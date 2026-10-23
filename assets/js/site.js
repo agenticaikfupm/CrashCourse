@@ -237,6 +237,95 @@
   };
   window.CourseProgress = Progress;
 
+  /* Course activity stats ------------------------------------------------
+     Uses Abacus (https://abacus.jasoncameron.dev), a free public counter that
+     needs no account or API key. Abacus can only add 1 to a counter, so every
+     metric is built from counters that go up by one:
+       unique-visits  browsers that ever visited (once per browser)
+       visitors-WEEK  browsers that visited in that week (once per week)
+       pageviews      every page load
+       sessions       visits; a new one starts after 30 minutes of inactivity
+       engaged        sessions that viewed a second page (the rest bounced)
+       active30       30-second ticks while a course page is visible
+     Each counter except unique-visits also has a weekly copy ("-2026w43").
+     Bounce rate = 1 - engaged / sessions; visit duration = active30 * 30 s /
+     sessions. Counting happens only on the published site, so local testing
+     never changes the numbers. home.js reads the counters for the landing page. */
+  const STATS = {
+    api: "https://abacus.jasoncameron.dev",
+    namespace: "agenticaikfupm-crashcourse",
+    liveHost: "agenticaikfupm.github.io",
+    base: 100,                     // visitors and pageviews before the counter was added
+    tick: 30,                      // seconds per active30 tick
+    maxTicks: 60,                  // count at most 30 minutes per session
+    sessionGap: 30 * 60 * 1000     // inactivity that ends a session
+  };
+
+  // ISO week id in UTC, such as "2026w43"; offset -1 is last week.
+  function weekId(offset) {
+    const d = new Date(Date.now() + (offset || 0) * 7 * 864e5);
+    const t = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
+    t.setUTCDate(t.getUTCDate() + 4 - (t.getUTCDay() || 7));
+    const y = t.getUTCFullYear();
+    const w = Math.ceil(((t - Date.UTC(y, 0, 1)) / 864e5 + 1) / 7);
+    return y + "w" + String(w).padStart(2, "0");
+  }
+
+  // Abacus allows 30 requests per 10 seconds per IP; stay under it.
+  let sent = [];
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  async function slot() {
+    for (;;) {
+      const now = Date.now();
+      sent = sent.filter(t => now - t < 10500);
+      if (sent.length < 25) { sent.push(now); return; }
+      await wait(10600 - (now - sent[0]));
+    }
+  }
+  // Returns the counter value, 0 for a counter that does not exist yet, or null on failure.
+  async function abacus(action, key, tries) {
+    await slot();
+    try {
+      const r = await fetch(`${STATS.api}/${action}/${STATS.namespace}/${key}`, { cache: "no-store", keepalive: action === "hit" });
+      if (r.status === 429 && (tries || 0) < 2) { await wait(3000); return abacus(action, key, (tries || 0) + 1); }
+      if (r.status === 404) return 0;
+      if (!r.ok) return null;
+      return Number((await r.json()).value) || 0;
+    } catch (e) { return null; }
+  }
+  const hit = key => abacus("hit", key);
+
+  function trackVisit() {
+    if (location.hostname !== STATS.liveHost) return;
+    const wk = weekId(0);
+    hit("pageviews"); hit("pageviews-" + wk);
+    if (!store("cc-visit-counted")) hit("unique-visits").then(v => { if (v !== null) store("cc-visit-counted", "1"); });
+    if (store("cc-visit-week") !== wk) { store("cc-visit-week", wk); hit("visitors-" + wk); }
+
+    const loadSession = () => { try { return JSON.parse(store("cc-session")); } catch (e) { return null; } };
+    const saveSession = s => store("cc-session", JSON.stringify(s));
+    let s = loadSession();
+    const now = Date.now();
+    if (!s || now - s.last > STATS.sessionGap) {
+      s = { wk, pages: 0, ticks: 0, last: now };     // the whole session counts toward its starting week
+      hit("sessions"); hit("sessions-" + wk);
+    }
+    s.pages += 1; s.last = now;
+    saveSession(s);
+    if (s.pages === 2) { hit("engaged"); hit("engaged-" + s.wk); }
+
+    setInterval(() => {
+      if (document.visibilityState !== "visible") return;
+      const cur = loadSession();                     // other tabs may have updated it
+      if (!cur || cur.ticks >= STATS.maxTicks) return;
+      cur.ticks += 1; cur.last = Date.now();
+      saveSession(cur);
+      hit("active30"); hit("active30-" + cur.wk);
+    }, STATS.tick * 1000);
+  }
+  trackVisit();
+  window.CourseStats = { config: STATS, weekId, get: key => abacus("get", key) };
+
   function renderSidebar() {
     const host = $("#course-nav");
     if (!host) return;

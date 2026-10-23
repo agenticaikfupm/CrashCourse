@@ -13,7 +13,109 @@
     cw_sdk_smolagents: "same-agent", cw_sdk_pydanticai: "same-agent", cw_sdk_autogen: "same-agent"
   };
 
+  /* Course activity cards (the counters are described in site.js). */
+  const WEEKS = 7;                               // bars per card, oldest first, this week last
+  const NAMES = ["visitors", "pageviews", "sessions", "engaged", "active30"];
+  const TOTALS = { visitors: "unique-visits", pageviews: "pageviews", sessions: "sessions", engaged: "engaged", active30: "active30" };
+
+  function readCache() { try { return JSON.parse(localStorage.getItem("cc-stats-weeks")) || {}; } catch (e) { return {}; } }
+  function saveCache(c) { try { localStorage.setItem("cc-stats-weeks", JSON.stringify(c)); } catch (e) { /* storage blocked */ } }
+
+  // Weekly counters. Weeks before last week no longer change, so they are cached.
+  async function loadWeeks(S) {
+    const cache = readCache();
+    const weeks = [];
+    for (let i = WEEKS - 1; i >= 0; i--) weeks.push(S.weekId(-i));
+    const rows = await Promise.all(weeks.map((wk, idx) => {
+      const old = idx < WEEKS - 2;
+      return Promise.all(NAMES.map(n => {
+        const key = n + "-" + wk;
+        if (old && key in cache) return cache[key];
+        return S.get(key).then(v => { if (old && v !== null) cache[key] = v; return v; });
+      }));
+    }));
+    const keep = new Set(weeks.flatMap(wk => NAMES.map(n => n + "-" + wk)));
+    Object.keys(cache).forEach(k => { if (!keep.has(k)) delete cache[k]; });
+    saveCache(cache);
+    return rows.map(r => Object.fromEntries(NAMES.map((n, i) => [n, r[i]])));
+  }
+
+  const ratio = (a, b) => (a === null || !b ? null : a / b);
+  function derive(d, base, tick) {
+    return {
+      visitors: d.visitors === null ? null : d.visitors + base,
+      pageviews: d.pageviews === null ? null : d.pageviews + base,
+      bounce: d.engaged === null ? null : ratio(d.sessions - d.engaged, d.sessions),
+      duration: d.active30 === null ? null : ratio(d.active30 * tick, d.sessions)
+    };
+  }
+
+  const compact = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 });
+  const fmtCount = v => (v < 1000 ? String(v) : compact.format(v).toLowerCase());
+  const trim = x => x.toFixed(1).replace(/\.0$/, "");
+  function fmtDuration(sec) {
+    sec = Math.round(sec);
+    if (sec < 60) return sec + "s";
+    if (sec < 3600) return Math.floor(sec / 60) + "m " + (sec % 60) + "s";
+    return Math.floor(sec / 3600) + "h " + Math.floor((sec % 3600) / 60) + "m";
+  }
+  const CARDS = [
+    { id: "visitors", label: "Unique visitors", fmt: fmtCount, up: true },
+    { id: "pageviews", label: "Pageviews", fmt: fmtCount, up: true },
+    { id: "bounce", label: "Bounce rate", fmt: v => Math.round(v * 100) + "%", up: false, points: true },
+    { id: "duration", label: "Visit duration", fmt: fmtDuration, up: true }
+  ];
+
+  // Change from the week before last to last week: percent, or percentage points for bounce rate.
+  function trend(card, prev, cur) {
+    if (cur === null || prev === null) return null;
+    let change;
+    if (card.points) change = (cur - prev) * 100;
+    else if (prev === 0) return cur > 0 ? { text: "New", good: true, sr: "new since the week before" } : null;
+    else change = ((cur - prev) / prev) * 100;
+    if (Math.abs(change) < 0.05) return { text: "0%", flat: true, sr: "no change from the week before" };
+    const up = change > 0;
+    return {
+      text: (up ? "↑ " : "↓ ") + trim(Math.abs(change)) + (card.points ? " pts" : "%"),
+      good: up === card.up,
+      sr: (up ? "up " : "down ") + trim(Math.abs(change)) + (card.points ? " percentage points" : " percent") + " from the week before"
+    };
+  }
+
+  function renderCards(row, totals, weeks) {
+    row.innerHTML = CARDS.map(c => {
+      const v = totals[c.id];
+      const series = weeks ? weeks.map(w => w[c.id]) : [];
+      const max = Math.max(0, ...series.filter(x => x !== null));
+      const bars = weeks ? series.map((x, i) => {
+        const h = x ? Math.max(18, Math.round((x / max) * 100)) : 8;
+        return `<i style="height:${h}%"${i === series.length - 1 ? ' class="now"' : ""}></i>`;
+      }).join("") : "<i></i>".repeat(WEEKS);
+      const t = weeks ? trend(c, series[WEEKS - 3], series[WEEKS - 2]) : null;
+      const tr = t ? `<p class="metric-trend${t.flat ? "" : t.good ? " good" : " bad"}"><span aria-hidden="true">${t.text}</span><span class="visually-hidden">${t.sr}</span></p>`
+                   : `<p class="metric-trend" aria-hidden="true">&nbsp;</p>`;
+      return `<div class="metric">
+          <div class="metric-top"><h3>${c.label}</h3><span class="metric-bars${weeks ? "" : " loading"}" aria-hidden="true">${bars}</span></div>
+          <p class="metric-value">${v === null ? "n/a" : c.fmt(v)}</p>${tr}
+        </div>`;
+    }).join("");
+  }
+
+  async function showActivity() {
+    const S = window.CourseStats, section = document.getElementById("activity"), row = document.getElementById("metric-row");
+    if (!S || !section || !row) return;
+    const { base, tick } = S.config;
+    const raw = await Promise.all(NAMES.map(n => S.get(TOTALS[n])));
+    if (raw.every(v => v === null)) return;      // service unavailable: keep the section hidden
+    const totals = derive(Object.fromEntries(NAMES.map((n, i) => [n, raw[i]])), base, tick);
+    renderCards(row, totals, null);
+    section.hidden = false;
+    const weeks = (await loadWeeks(S)).map(w => derive(w, 0, tick));
+    renderCards(row, totals, weeks);
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
+    showActivity();
     const host = document.getElementById("labs-list");
     const items = window.NOTEBOOKS || [];
     if (!host || !items.length) return;
