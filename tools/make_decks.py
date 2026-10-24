@@ -79,6 +79,9 @@ UR_SPOKEN = {
     "CrewAI": "کرو اے آئی",
     "Dify": "ڈیفائی",
     "n8n": "این ایٹ این",
+    "Google Calendar": "گوگل کیلنڈر",
+    "Gmail": "جی میل",
+    "Telegram": "ٹیلی گرام",
 }
 
 # How English terms are spoken in the Arabic narration (captions keep the English spelling).
@@ -100,6 +103,9 @@ AR_SPOKEN = {
     "CrewAI": "كرو إيه آي",
     "Dify": "ديفاي",
     "n8n": "إن إيت إن",
+    "Google Calendar": "تقويم جوجل",
+    "Gmail": "جي ميل",
+    "Telegram": "تيليجرام",
 }
 
 
@@ -306,7 +312,7 @@ def ts(t):
 
 def vtt_cues(text, start, end):
     """Split a slide's narration into sentence cues spread over its time."""
-    sentences = [s.strip() for s in re.split(r"(?<=[.!?؟])\s+", text) if s.strip()]
+    sentences = [s.strip() for s in re.split(r"(?<=[.!?؟۔])\s+", text) if s.strip()]   # ۔ ends Urdu sentences
     total = sum(len(s) for s in sentences) or 1
     cues, t = [], start
     for s in sentences:

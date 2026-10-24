@@ -6,7 +6,7 @@
     pat_basic: "basic", pat_sequential: "sequential", pat_routing: "routing", pat_parallel: "parallel",
     pat_tool_calling: "tools", pat_reflection: "reflection", pat_plan_execute: "plan", pat_multi_agent: "multi",
     dec_rules_engine: "rules-demo", dec_openapi_tool: "openapi", dec_optimization: "optimization", dec_ortools: "optimization",
-    nc_email_triage: "triage", nc_doc_qa: "rag",
+    nc_google_manager: "google-manager", nc_lost_found: "lost-found", nc_email_triage: "triage", nc_doc_qa: "rag",
     gov_guardrails: "guardrails", gov_human_approval: "approval", gov_eval_monitoring: "evaluation",
     cw_mini_framework: "under-the-hood", cw_openrouter_models: "openrouter", cw_openrouter_agent: "openrouter",
     cw_sdk_openai_agents: "same-agent", cw_sdk_claude: "same-agent", cw_sdk_langchain: "same-agent", cw_sdk_crewai: "same-agent",
@@ -15,8 +15,8 @@
 
   /* Course activity cards (the counters are described in site.js). */
   const WEEKS = 7;                               // bars per card, oldest first, this week last
-  const NAMES = ["visitors", "pageviews", "sessions", "engaged", "active30"];
-  const TOTALS = { visitors: "unique-visits", pageviews: "pageviews", sessions: "sessions", engaged: "engaged", active30: "active30" };
+  const NAMES = ["visitors", "pageviews", "sessions", "engaged"];
+  const TOTALS = { visitors: "unique-visits", pageviews: "pageviews", sessions: "sessions", engaged: "engaged" };
 
   function readCache() { try { return JSON.parse(localStorage.getItem("cc-stats-weeks")) || {}; } catch (e) { return {}; } }
   function saveCache(c) { try { localStorage.setItem("cc-stats-weeks", JSON.stringify(c)); } catch (e) { /* storage blocked */ } }
@@ -41,29 +41,21 @@
   }
 
   const ratio = (a, b) => (a === null || !b ? null : a / b);
-  function derive(d, base, tick) {
+  function derive(d, base) {
     return {
       visitors: d.visitors === null ? null : d.visitors + base,
       pageviews: d.pageviews === null ? null : d.pageviews + base,
-      bounce: d.engaged === null ? null : ratio(d.sessions - d.engaged, d.sessions),
-      duration: d.active30 === null ? null : ratio(d.active30 * tick, d.sessions)
+      bounce: d.engaged === null ? null : ratio(d.sessions - d.engaged, d.sessions)
     };
   }
 
   const compact = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 });
   const fmtCount = v => (v < 1000 ? String(v) : compact.format(v).toLowerCase());
   const trim = x => x.toFixed(1).replace(/\.0$/, "");
-  function fmtDuration(sec) {
-    sec = Math.round(sec);
-    if (sec < 60) return sec + "s";
-    if (sec < 3600) return Math.floor(sec / 60) + "m " + (sec % 60) + "s";
-    return Math.floor(sec / 3600) + "h " + Math.floor((sec % 3600) / 60) + "m";
-  }
   const CARDS = [
     { id: "visitors", label: "Unique visitors", fmt: fmtCount, up: true },
     { id: "pageviews", label: "Pageviews", fmt: fmtCount, up: true },
-    { id: "bounce", label: "Bounce rate", fmt: v => Math.round(v * 100) + "%", up: false, points: true },
-    { id: "duration", label: "Visit duration", fmt: fmtDuration, up: true }
+    { id: "bounce", label: "Bounce rate", fmt: v => Math.round(v * 100) + "%", up: false, points: true }
   ];
 
   // Change from the week before last to last week: percent, or percentage points for bounce rate.
@@ -104,13 +96,13 @@
   async function showActivity() {
     const S = window.CourseStats, section = document.getElementById("activity"), row = document.getElementById("metric-row");
     if (!S || !section || !row) return;
-    const { base, tick } = S.config;
+    const { base } = S.config;
     const raw = await Promise.all(NAMES.map(n => S.get(TOTALS[n])));
     if (raw.every(v => v === null)) return;      // service unavailable: keep the section hidden
-    const totals = derive(Object.fromEntries(NAMES.map((n, i) => [n, raw[i]])), base, tick);
+    const totals = derive(Object.fromEntries(NAMES.map((n, i) => [n, raw[i]])), base);
     renderCards(row, totals, null);
     section.hidden = false;
-    const weeks = (await loadWeeks(S)).map(w => derive(w, 0, tick));
+    const weeks = (await loadWeeks(S)).map(w => derive(w, 0));
     renderCards(row, totals, weeks);
   }
 

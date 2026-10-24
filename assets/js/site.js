@@ -29,7 +29,7 @@
       { id: "mcp",        num: 5, title: "Model Context Protocol",   href: "mcp.html",        time: "35 min", blurb: "A standard way to connect agents to tools, data, and prompts." },
       { id: "decisions",  num: 6, title: "Decision APIs",            href: "decision-apis.html", time: "35 min", blurb: "Rules engines, optimization solvers, and OpenAPI decision services as agent tools." },
       { id: "workflows",  num: 7, title: "Agentic AI Workflows",     href: "workflows.html",  time: "40 min", blurb: "Perception to feedback: an end-to-end agent loop you can run." },
-      { id: "nocode",     num: 8, title: "No-Code Agentic Workflows", href: "no-code.html",   time: "35 min", blurb: "Build agent workflows visually with n8n and similar platforms." },
+      { id: "nocode",     num: 8, title: "No-Code Agentic Workflows", href: "no-code.html",   time: "55 min", blurb: "Build agent workflows visually with n8n and similar platforms." },
       { id: "codeflows",  num: 9, title: "Code-based Agentic Workflows", href: "code-workflows.html", time: "50 min", blurb: "Agent SDKs in Python and many models through OpenRouter and Commonstack." },
       { id: "governance", num: 10, title: "Agentic AI Governance",   href: "governance.html", time: "40 min", blurb: "Guardrails, evaluation, monitoring, and human oversight." }
     ],
@@ -246,18 +246,15 @@
        pageviews      every page load
        sessions       visits; a new one starts after 30 minutes of inactivity
        engaged        sessions that viewed a second page (the rest bounced)
-       active30       30-second ticks while a course page is visible
      Each counter except unique-visits also has a weekly copy ("-2026w43").
-     Bounce rate = 1 - engaged / sessions; visit duration = active30 * 30 s /
-     sessions. Counting happens only on the published site, so local testing
-     never changes the numbers. home.js reads the counters for the landing page. */
+     Bounce rate = 1 - engaged / sessions. Counting happens only on the
+     published site, so local testing never changes the numbers. home.js reads
+     the counters for the landing page. */
   const STATS = {
     api: "https://abacus.jasoncameron.dev",
     namespace: "agenticaikfupm-crashcourse",
     liveHost: "agenticaikfupm.github.io",
     base: 100,                     // visitors and pageviews before the counter was added
-    tick: 30,                      // seconds per active30 tick
-    maxTicks: 60,                  // count at most 30 minutes per session
     sessionGap: 30 * 60 * 1000     // inactivity that ends a session
   };
 
@@ -307,21 +304,12 @@
     let s = loadSession();
     const now = Date.now();
     if (!s || now - s.last > STATS.sessionGap) {
-      s = { wk, pages: 0, ticks: 0, last: now };     // the whole session counts toward its starting week
+      s = { wk, pages: 0, last: now };              // the whole session counts toward its starting week
       hit("sessions"); hit("sessions-" + wk);
     }
     s.pages += 1; s.last = now;
     saveSession(s);
     if (s.pages === 2) { hit("engaged"); hit("engaged-" + s.wk); }
-
-    setInterval(() => {
-      if (document.visibilityState !== "visible") return;
-      const cur = loadSession();                     // other tabs may have updated it
-      if (!cur || cur.ticks >= STATS.maxTicks) return;
-      cur.ticks += 1; cur.last = Date.now();
-      saveSession(cur);
-      hit("active30"); hit("active30-" + cur.wk);
-    }, STATS.tick * 1000);
   }
   trackVisit();
   window.CourseStats = { config: STATS, weekId, get: key => abacus("get", key) };

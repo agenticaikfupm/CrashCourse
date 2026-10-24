@@ -210,8 +210,8 @@ Date: 2026-10-22.
 ## 10. Update: course activity stats
 
 - **Landing page:** a "Course activity" section after the hero shows Unique
-  visitors, Pageviews, Bounce rate, and Visit duration, each with a trend and
-  seven weekly bars. It replaces the single unique-visits stat.
+  visitors, Pageviews, and Bounce rate, each with a trend and seven weekly
+  bars. (Visit duration was shown at first and later removed; see section 11.)
 - **Live data, local copy:** shows 100 visitors, 100 pageviews, and "n/a" for
   bounce rate and duration (no visits counted yet). No hits were sent from the
   local copy, only reads.
@@ -232,3 +232,52 @@ Date: 2026-10-22.
 - **Note:** during testing, 14 stray hits reached an earlier counter named
   `time30`. It cannot be reset without an admin key, so the time counter was
   renamed to `active30`, which is clean.
+
+## 11. Update: Module 8 examples by Usman Ibrahim, stats without visit duration
+
+- **New Examples 1 and 2 on `no-code.html`:** Google Manager (Gmail and
+  Calendar with approval in chat) and a lost-and-found assistant on Telegram,
+  both by Usman Ibrahim. The credit "Example contributed by Usman Ibrahim"
+  appears in each code panel, after the title, and in the generated notebooks;
+  it is not repeated in the page text or the video. Email triage is now Example 3, the research
+  digest Example 4, and document Q&A Example 5. Each new example has the
+  page's usual parts: objective, inputs, and outputs; an animated n8n diagram;
+  step-by-step text; a link to Usman's guide (`assets/guides/`); an
+  interactive simulator; and a Python version that runs in the browser.
+- **Python examples:** `nc_google_manager.py` and `nc_lost_found.py` run with
+  CPython and in the browser (Pyodide) with the same output. The course now
+  has 40 examples.
+- **Simulators:** checked case by case. Google Manager: send with Approve or
+  Decline, delete from an email run (blocked), duplicate and conflicting
+  events. Lost-and-found: a full description (one match, LF002), a missing
+  date (one question), the claimed backpack (no match, LF007 never returned),
+  and an inventory request (refusal).
+- **Full SDK notebooks** (`notebooks/*_sdk.ipynb`), improved from the
+  originals: email runs use an agent without send, reply, or delete tools;
+  faster email listing; HTML bodies converted to text and shortened; a clear
+  message when a deleted event is recreated; search no longer matches empty
+  or "Unknown" fields and understands dates such as "16 October 2026"; claims
+  check the contact format and refuse duplicates. Every code cell compiles,
+  and the lost-and-found search and claim functions were run with pandas
+  (all cases above behaved as expected). Neither notebook was run against a
+  live model or a real Google account, which need keys and OAuth.
+- **Stats:** the live counters gave 151 visitors, 251 pageviews, and a 51%
+  bounce rate, matching the figures the course author reported, so the base
+  values were not changed. The Visit duration card and its 30-second tracking
+  requests were removed; the remaining three cards use three columns, or one
+  column below 640 px.
+- **Fixes found while testing:** long dropdown text made the page wider than
+  a phone screen, and a header rule enlarged green tags on phones (also in
+  the home page labs list). Both are fixed.
+- **Checks:** `python tools/build.py` reports no warnings, internal links have
+  0 problems, and no page overflows horizontally at phone width.
+- **Module 8 videos:** the slides and narration now describe the five
+  examples. All three were regenerated: English 61 s, Arabic 113 s,
+  Urdu 72 s. Arabic and Urdu say Gmail, Google Calendar, and
+  Telegram in local script, and the captions keep the English names. A native
+  speaker should review the new Arabic and Urdu sentences.
+- **Urdu captions, all modules:** the caption splitter did not recognize the
+  Urdu full stop, so each slide showed one paragraph-long caption (up to 725
+  characters). The splitter is fixed, and all ten Urdu caption files were
+  rebuilt with one cue per sentence, keeping the recorded slide timings. No
+  audio or video changed except Module 8.

@@ -223,26 +223,26 @@ DECKS = [
         "objectives": [
             "Decide when no-code, low-code, or code fits best",
             "Compare visual platforms such as n8n, Langflow, Flowise, and Dify",
-            "Build and import three example workflows",
+            "Study five example workflows with approvals and privacy checks",
         ],
         "contents": [
             "A comparison of visual workflow platforms",
-            "n8n: email triage with human approval",
-            "n8n: a weekly research digest",
+            "n8n: Google Manager and a lost-and-found assistant",
+            "n8n: email triage with approval, and a research digest",
             "Document Q&A with RAG, plus Python equivalents",
         ],
         "takeaway": "Visual tools are a fast way to prototype. Keep an approval step before anything that sends, pays, or deletes.",
         "narration": {
             "en": [
                 "Welcome to Module 8: No-Code Agentic Workflows. Visual platforms let you connect triggers, AI models, tools, and approvals on a canvas.",
-                "You will learn when no-code, low-code, or code fits best, compare platforms such as n8n, Langflow, Flowise, and Dify, and build three example workflows that you can import and adapt.",
-                "You will walk through an email triage workflow with human approval, a weekly research digest, and a document question-and-answer flow based on retrieval. Each one comes with a step-by-step explanation and a Python equivalent.",
+                "You will learn when no-code, low-code, or code fits best, compare platforms such as n8n, Langflow, Flowise, and Dify, and study five example workflows. Each one comes with a step-by-step explanation and a Python equivalent.",
+                "The first example manages Gmail and Google Calendar, with approval in chat before anything is sent or deleted. The second helps people find lost items through Telegram without revealing the inventory. You will also explore email triage with human approval, a weekly research digest, and a document question-and-answer flow based on retrieval.",
                 "The key takeaway: visual tools are a fast way to prototype. Keep an approval step before anything that sends, pays, or deletes.",
             ],
             "ar": [
                 "مرحبًا بكم في الوحدة الثامنة: مسارات العمل الوَكِيلِيَّة دون برمجة. تتيح لك المنصات المرئية ربط المحفزات ونماذج الذكاء الاصْطِنَاعِيّ والأدوات والموافقات على لوحة واحدة.",
-                "ستتعلم متى يكون العمل دون برمجة أو ببرمجة قليلة أو بالبرمجة الكاملة هو الأنسب، وستقارن بين منصات مثل n8n وLangflow وFlowise وDify، وستبني ثلاثة مسارات عمل يمكنك استيرادها وتعديلها.",
-                "ستتعرف خطوة بخطوة على مسار لفرز البريد الإلكتروني بموافقة بشرية، ومسار لملخص بحثي أسبوعي، ومسار للإجابة عن الأسئلة من المستندات يعتمد على الاسترجاع. ولكل منها شرح مفصل ومقابل بلغة بايثون.",
+                "ستتعلم متى يكون العمل دون برمجة أو ببرمجة قليلة أو بالبرمجة الكاملة هو الأنسب، وستقارن بين منصات مثل n8n وLangflow وFlowise وDify، وستدرس خمسة أمثلة لمسارات العمل، لكل منها شرح خطوة بخطوة ومقابل بلغة بايثون.",
+                "المثال الأول يدير البريد في Gmail والمواعيد في Google Calendar، ويطلب موافقتك داخل المحادثة قبل أي إرسال أو حذف. والثاني يساعد الناس في العثور على أغراضهم المفقودة عبر Telegram دون كشف قائمة الأغراض المعثور عليها. وستتعرف أيضًا على مسار لفرز البريد الإلكتروني بموافقة بشرية، وملخص بحثي أسبوعي، ومسار للإجابة عن الأسئلة من المستندات يعتمد على الاسترجاع.",
                 "الخلاصة الأساسية: الأدوات المرئية طريقة سريعة لبناء النماذج الأولية. واحرص دائمًا على خطوة موافقة قبل أي إجراء يرسل أو يدفع أو يحذف.",
             ],
         },

@@ -45,9 +45,11 @@ website/
     data/resources.js               curated resources (edit here)
     data/notebooks.js               generated list of notebooks
     exports/*.json                  importable n8n workflow templates
+    guides/*.html                   step-by-step n8n guides by Usman Ibrahim (Module 8)
     img/                            logo and icons from the community site
   examples/*.py                     Python examples (single source of truth)
-  notebooks/*.ipynb                 generated Google Colab notebooks
+  notebooks/*.ipynb                 generated Google Colab notebooks, plus two
+                                    hand-written SDK notebooks (*_sdk.ipynb)
   tools/build.py                    injects code into pages, generates notebooks
   tools/check_links.py              checks internal and external links
   VERIFICATION.md                   test report and known limitations
@@ -119,8 +121,8 @@ not carry over to other devices.
 
 ## Course activity stats
 
-The landing page shows four cards: **Unique visitors**, **Pageviews**,
-**Bounce rate**, and **Visit duration**. Each card shows an all-time value, the
+The landing page shows three cards: **Unique visitors**, **Pageviews**, and
+**Bounce rate**. Each card shows an all-time value, the
 change from the week before last to last week, and small bars for the last
 seven weeks (the highlighted bar is the current week so far).
 
@@ -135,10 +137,8 @@ service that needs no account or API key (namespace
 | `pageviews` | any course page loads |
 | `sessions` | a visit starts (after 30 minutes without activity) |
 | `engaged` | a visit reaches its second page; the rest count as bounces |
-| `active30` | a course page stays visible for another 30 seconds (up to 30 minutes per visit) |
 
-Bounce rate is `1 - engaged / sessions` and visit duration is
-`active30 x 30 s / sessions`. Unique visitors and pageviews start at 100, the
+Bounce rate is `1 - engaged / sessions`. Unique visitors and pageviews start at 100, the
 estimated number of earlier visits (`STATS.base` in `assets/js/site.js`).
 
 Counting happens only on `agenticaikfupm.github.io`, so a local copy only reads
@@ -175,6 +175,10 @@ python tools/build.py
 This copies each example into its code panel (`<figure class="code-panel"
 data-example="file.py">`), regenerates `notebooks/*.ipynb` and
 `assets/data/notebooks.js`, and warns about missing examples and em dashes.
+
+Two notebooks are not generated: `notebooks/nc_google_manager_sdk.ipynb` and
+`notebooks/nc_lost_found_sdk.ipynb` are the full OpenAI Agents SDK versions of
+Module 8's Examples 1 and 2. Edit them directly; the build leaves them alone.
 
 Conventions:
 
@@ -256,6 +260,9 @@ Loaded only from public CDNs, with fallbacks:
 
 ## License and credits
 
-Course content by the Agentic AI @ KFUPM community. Add a license file (for
+Course content by the Agentic AI @ KFUPM community. Module 8's Google Manager
+and lost-and-found examples (n8n workflows, step-by-step guides in
+`assets/guides/`, and the original notebooks) were contributed by Usman
+Ibrahim and adapted for the course. Add a license file (for
 example, CC BY 4.0 for content and MIT for code) before publishing if you want
 others to reuse the material.

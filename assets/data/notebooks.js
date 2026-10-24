@@ -176,6 +176,20 @@ window.NOTEBOOKS = [
   "browser": true
  },
  {
+  "file": "nc_google_manager",
+  "title": "Google Manager: Gmail and Calendar tools with approval in chat",
+  "module": "Module 8: No-Code Agentic Workflows",
+  "page": "no-code.html",
+  "browser": true
+ },
+ {
+  "file": "nc_lost_found",
+  "title": "Lost-and-found agent: private search, one match, claims after confirmation",
+  "module": "Module 8: No-Code Agentic Workflows",
+  "page": "no-code.html",
+  "browser": true
+ },
+ {
   "file": "cw_mini_framework",
   "title": "What an agent SDK does for you: a tiny framework you can read",
   "module": "Module 9: Code-based Agentic Workflows",

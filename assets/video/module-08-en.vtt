@@ -9,21 +9,29 @@ Welcome to Module 8: No-Code Agentic Workflows.
 Visual platforms let you connect triggers, AI models, tools, and approvals on a canvas.
 
 3
-00:00:12.050 --> 00:00:24.630
-You will learn when no-code, low-code, or code fits best, compare platforms such as n8n, Langflow, Flowise, and Dify, and build three example workflows that you can import and adapt.
+00:00:12.050 --> 00:00:22.674
+You will learn when no-code, low-code, or code fits best, compare platforms such as n8n, Langflow, Flowise, and Dify, and study five example workflows.
 
 4
-00:00:26.030 --> 00:00:35.162
-You will walk through an email triage workflow with human approval, a weekly research digest, and a document question-and-answer flow based on retrieval.
-
-5
-00:00:35.162 --> 00:00:39.400
+00:00:22.674 --> 00:00:27.670
 Each one comes with a step-by-step explanation and a Python equivalent.
 
+5
+00:00:29.070 --> 00:00:35.880
+The first example manages Gmail and Google Calendar, with approval in chat before anything is sent or deleted.
+
 6
-00:00:40.800 --> 00:00:44.869
-The key takeaway: visual tools are a fast way to prototype.
+00:00:35.880 --> 00:00:41.390
+The second helps people find lost items through Telegram without revealing the inventory.
 
 7
-00:00:44.869 --> 00:00:49.490
+00:00:41.390 --> 00:00:50.120
+You will also explore email triage with human approval, a weekly research digest, and a document question-and-answer flow based on retrieval.
+
+8
+00:00:51.520 --> 00:00:55.589
+The key takeaway: visual tools are a fast way to prototype.
+
+9
+00:00:55.589 --> 00:01:00.210
 Keep an approval step before anything that sends, pays, or deletes.
