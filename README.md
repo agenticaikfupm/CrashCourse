@@ -24,7 +24,7 @@ deploys directly to GitHub Pages. Python examples run in the browser with
 | 8. No-Code Agentic Workflows | `no-code.html` | n8n and Langflow flows, importable n8n templates, Python equivalents |
 | 9. Code-based Agentic Workflows | `code-workflows.html` | Agent SDK comparison, a no-key mini framework, OpenRouter and Commonstack, the same agent in seven SDKs |
 | 10. Agentic AI Governance | `governance.html` | Control layers, approval simulator, guardrail/evaluation code, embedded video |
-| Glossary | `glossary.html` | 49 searchable terms with examples and related concepts |
+| Glossary | `glossary.html` | 50 searchable terms with examples and related concepts |
 | My progress | `progress.html` | Overall and per-module progress: videos watched and questions answered |
 | Resources | `resources.html` | Curated links filtered by type, topic, and level, plus all notebooks |
 
