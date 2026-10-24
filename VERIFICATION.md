@@ -252,15 +252,8 @@ Date: 2026-10-22.
   events. Lost-and-found: a full description (one match, LF002), a missing
   date (one question), the claimed backpack (no match, LF007 never returned),
   and an inventory request (refusal).
-- **Full SDK notebooks** (`notebooks/*_sdk.ipynb`), improved from the
-  originals: email runs use an agent without send, reply, or delete tools;
-  faster email listing; HTML bodies converted to text and shortened; a clear
-  message when a deleted event is recreated; search no longer matches empty
-  or "Unknown" fields and understands dates such as "16 October 2026"; claims
-  check the contact format and refuse duplicates. Every code cell compiles,
-  and the lost-and-found search and claim functions were run with pandas
-  (all cases above behaved as expected). Neither notebook was run against a
-  live model or a real Google account, which need keys and OAuth.
+- **SDK versions:** the improved OpenAI Agents SDK code now lives in Module 9
+  (see section 12); Module 8 links to it.
 - **Stats:** the live counters gave 151 visitors, 251 pageviews, and a 51%
   bounce rate, matching the figures the course author reported, so the base
   values were not changed. The Visit duration card and its 30-second tracking
@@ -281,3 +274,30 @@ Date: 2026-10-22.
   characters). The splitter is fixed, and all ten Urdu caption files were
   rebuilt with one cue per sentence, keeping the recorded slide timings. No
   audio or video changed except Module 8.
+
+## 12. Update: Google Manager and lost-and-found in Module 9 (code)
+
+- **New Examples 3 and 4 on `code-workflows.html`:** improved OpenAI Agents
+  SDK versions of Usman Ibrahim's notebooks, in the module's usual format
+  (`examples/cw_google_manager.py` and `examples/cw_lost_found.py`, with
+  generated notebooks). Each starts with "Example contributed by Usman
+  Ibrahim." after the title. Module 8's Examples 1 and 2 now link to them,
+  and the two separate notebooks added earlier were removed so there is one
+  version of each. The course now has 42 examples; Module 9 has 12 and
+  takes about 65 minutes.
+- **Improvements over the originals:** a free OpenRouter model by default,
+  like the rest of Module 9; email runs use a clone of the agent without
+  send, reply, or delete tools; faster email listing; HTML bodies converted
+  to text and shortened; a clear message when a deleted event is recreated;
+  search ignores empty and "Unknown" fields and matches dates such as
+  "16 October 2026" within a few days; claims check the contact format and
+  refuse duplicates.
+- **Checks with openai-agents 0.24.0:** the lost-and-found example ran with
+  a deliberately invalid key. It created the tables, ranked LF002 first,
+  built the agent and its guardrail, and stopped at the expected
+  authentication error (HTTP 401). The Google Manager's tool and agent cells
+  ran with a stand-in for Gmail and Calendar: event creation, duplicate
+  detection, conflict detection, and the deleted-event case all behaved as
+  expected; the four sensitive tools require approval; and email runs get
+  only the four safe tools. Every notebook cell compiles. Neither example
+  was run against a live model or a real Google account.

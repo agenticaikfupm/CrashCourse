@@ -190,6 +190,20 @@ window.NOTEBOOKS = [
   "browser": true
  },
  {
+  "file": "cw_google_manager",
+  "title": "Google Manager: a Gmail and Calendar agent with the OpenAI Agents SDK",
+  "module": "Module 9: Code-based Agentic Workflows",
+  "page": "code-workflows.html",
+  "browser": false
+ },
+ {
+  "file": "cw_lost_found",
+  "title": "Lost-and-found agent with the OpenAI Agents SDK",
+  "module": "Module 9: Code-based Agentic Workflows",
+  "page": "code-workflows.html",
+  "browser": false
+ },
+ {
   "file": "cw_mini_framework",
   "title": "What an agent SDK does for you: a tiny framework you can read",
   "module": "Module 9: Code-based Agentic Workflows",

@@ -48,8 +48,7 @@ website/
     guides/*.html                   step-by-step n8n guides by Usman Ibrahim (Module 8)
     img/                            logo and icons from the community site
   examples/*.py                     Python examples (single source of truth)
-  notebooks/*.ipynb                 generated Google Colab notebooks, plus two
-                                    hand-written SDK notebooks (*_sdk.ipynb)
+  notebooks/*.ipynb                 generated Google Colab notebooks
   tools/build.py                    injects code into pages, generates notebooks
   tools/check_links.py              checks internal and external links
   VERIFICATION.md                   test report and known limitations
@@ -175,10 +174,6 @@ python tools/build.py
 This copies each example into its code panel (`<figure class="code-panel"
 data-example="file.py">`), regenerates `notebooks/*.ipynb` and
 `assets/data/notebooks.js`, and warns about missing examples and em dashes.
-
-Two notebooks are not generated: `notebooks/nc_google_manager_sdk.ipynb` and
-`notebooks/nc_lost_found_sdk.ipynb` are the full OpenAI Agents SDK versions of
-Module 8's Examples 1 and 2. Edit them directly; the build leaves them alone.
 
 Conventions:
 

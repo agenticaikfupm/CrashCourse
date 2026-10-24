@@ -10,7 +10,8 @@
     gov_guardrails: "guardrails", gov_human_approval: "approval", gov_eval_monitoring: "evaluation",
     cw_mini_framework: "under-the-hood", cw_openrouter_models: "openrouter", cw_openrouter_agent: "openrouter",
     cw_sdk_openai_agents: "same-agent", cw_sdk_claude: "same-agent", cw_sdk_langchain: "same-agent", cw_sdk_crewai: "same-agent",
-    cw_sdk_smolagents: "same-agent", cw_sdk_pydanticai: "same-agent", cw_sdk_autogen: "same-agent"
+    cw_sdk_smolagents: "same-agent", cw_sdk_pydanticai: "same-agent", cw_sdk_autogen: "same-agent",
+    cw_google_manager: "google-manager-sdk", cw_lost_found: "lost-found-sdk"
   };
 
   /* Course activity cards (the counters are described in site.js). */

@@ -110,7 +110,7 @@
         </ol>
         <div class="btn-row">
           <a class="btn btn-primary" href="assets/guides/google-manager-n8n-guide.html"><i data-icon="book"></i>Step-by-step n8n guide</a>
-          <a class="btn btn-ghost" href="notebooks/nc_google_manager_sdk.ipynb" download><i data-icon="download"></i>Full SDK notebook (run locally)</a>
+          <a class="btn btn-ghost" href="code-workflows.html#google-manager-sdk"><i data-icon="code"></i>Code version in Module 9</a>
         </div>
         <h3 class="mt-2">Try it: which actions need approval?</h3>
         <p class="prose">Choose a request and where it came from. The simulator shows the tools the agent would call and how the workflow treats each one. It follows the same rules as the Python version below.</p>
@@ -145,7 +145,7 @@
         </div>
         <div class="callout illustrative">
           <i data-icon="alert"></i>
-          <div><span class="callout-title">About the guide and the full notebook</span><p>The guide walks through all 10 stages in n8n, with every setting ready to copy. The full notebook builds the same agent with the OpenAI Agents SDK and real Gmail and Calendar access. It needs a Google Cloud OAuth client and a model API key, and it must run on your own computer because Google sign-in opens a local browser. Use a test account: the Gmail permission it requests allows permanent deletion. Neither was run against a live account for this course.</p></div>
+          <div><span class="callout-title">About the guide and the code version</span><p>The guide walks through all 10 stages in n8n, with every setting ready to copy. The code version in Module 9 builds the same agent with the OpenAI Agents SDK and real Gmail and Calendar access. It needs a Google Cloud OAuth client and a model API key, and it must run on your own computer because Google sign-in opens a local browser. Use a test account: the Gmail permission it requests allows permanent deletion. Neither was run against a live account for this course.</p></div>
         </div>
         <p class="prose">The same logic in Python, with each function mapped to a node. A small in-memory mailbox and calendar replace Gmail and Google Calendar, so it runs in your browser.</p>
         <figure class="code-panel" data-example="nc_google_manager.py" data-title="Google Manager as Python" data-run="browser" data-colab="nc_google_manager.ipynb">
@@ -161,7 +161,7 @@ inside an email are treated as data.
 
 Illustrative: an in-memory mailbox and calendar stand in for Gmail and Google
 Calendar, and plan() stands in for the model's tool choices, so this runs
-anywhere. The full OpenAI Agents SDK notebook is linked on the course page.
+anywhere. Module 9 builds the same agent with the OpenAI Agents SDK.
 """
 import json
 import re
@@ -353,7 +353,7 @@ print("\nCalendar now:", [e["title"] for e in CALENDAR], "| Emails sent:", len(S
         </ol>
         <div class="btn-row">
           <a class="btn btn-primary" href="assets/guides/lost-found-n8n-guide.html"><i data-icon="book"></i>Step-by-step n8n guide</a>
-          <a class="btn btn-ghost" data-colab="nc_lost_found_sdk.ipynb" href="notebooks/nc_lost_found_sdk.ipynb"><i data-icon="book"></i>Full SDK notebook in Colab</a>
+          <a class="btn btn-ghost" href="code-workflows.html#lost-found-sdk"><i data-icon="code"></i>Code version in Module 9</a>
         </div>
         <h3 class="mt-2">Try it: search without leaking the inventory</h3>
         <p class="prose">Describe a lost item, or ask for the whole inventory. The panel shows what the user sees and, separately, what happens inside the workflow. Try leaving the date empty, or describing the claimed backpack.</p>
@@ -375,7 +375,7 @@ print("\nCalendar now:", [e["title"] for e in CALENDAR], "| Emails sent:", len(S
         </div>
         <div class="callout illustrative">
           <i data-icon="alert"></i>
-          <div><span class="callout-title">About the guide and the full notebook</span><p>The guide covers all 9 stages in n8n, including the sample data to import and a Telegram bot. The full notebook builds the same agent with the OpenAI Agents SDK and a model-based privacy guardrail; it runs in Colab with a model API key. Neither was run against a live model for this course. A Pending Review claim records a request; staff must still verify ownership.</p></div>
+          <div><span class="callout-title">About the guide and the code version</span><p>The guide covers all 9 stages in n8n, including the sample data to import and a Telegram bot. The code version in Module 9 builds the same agent with the OpenAI Agents SDK and a model-based privacy guardrail; it runs in Colab with a model API key. Neither was run against a live model for this course. A Pending Review claim records a request; staff must still verify ownership.</p></div>
         </div>
         <p class="prose">The same workflow in Python. Simple rules stand in for the model and for the guardrail's reviewer model, so it runs in your browser and always gives the same conversation.</p>
         <figure class="code-panel" data-example="nc_lost_found.py" data-title="Lost-and-found agent as Python" data-run="browser" data-colab="nc_lost_found.ipynb">
@@ -390,8 +390,8 @@ A privacy check reviews every reply before it is sent, so the inventory and
 other people's claims never leak.
 
 Illustrative: extract() and the reply rules stand in for the model, and a
-pattern check stands in for the model-based guardrail. The full OpenAI Agents
-SDK notebook is linked on the course page.
+pattern check stands in for the model-based guardrail. Module 9 builds the
+same agent with the OpenAI Agents SDK.
 """
 import re
 from datetime import date

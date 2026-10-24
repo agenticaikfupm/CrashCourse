@@ -10,7 +10,7 @@ inside an email are treated as data.
 
 Illustrative: an in-memory mailbox and calendar stand in for Gmail and Google
 Calendar, and plan() stands in for the model's tool choices, so this runs
-anywhere. The full OpenAI Agents SDK notebook is linked on the course page.
+anywhere. Module 9 builds the same agent with the OpenAI Agents SDK.
 """
 import json
 import re

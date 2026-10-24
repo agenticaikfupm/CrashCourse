@@ -30,7 +30,7 @@
       { id: "decisions",  num: 6, title: "Decision APIs",            href: "decision-apis.html", time: "35 min", blurb: "Rules engines, optimization solvers, and OpenAPI decision services as agent tools." },
       { id: "workflows",  num: 7, title: "Agentic AI Workflows",     href: "workflows.html",  time: "40 min", blurb: "Perception to feedback: an end-to-end agent loop you can run." },
       { id: "nocode",     num: 8, title: "No-Code Agentic Workflows", href: "no-code.html",   time: "55 min", blurb: "Build agent workflows visually with n8n and similar platforms." },
-      { id: "codeflows",  num: 9, title: "Code-based Agentic Workflows", href: "code-workflows.html", time: "50 min", blurb: "Agent SDKs in Python and many models through OpenRouter and Commonstack." },
+      { id: "codeflows",  num: 9, title: "Code-based Agentic Workflows", href: "code-workflows.html", time: "65 min", blurb: "Agent SDKs in Python and many models through OpenRouter and Commonstack." },
       { id: "governance", num: 10, title: "Agentic AI Governance",   href: "governance.html", time: "40 min", blurb: "Guardrails, evaluation, monitoring, and human oversight." }
     ],
     reference: [

@@ -9,8 +9,8 @@ A privacy check reviews every reply before it is sent, so the inventory and
 other people's claims never leak.
 
 Illustrative: extract() and the reply rules stand in for the model, and a
-pattern check stands in for the model-based guardrail. The full OpenAI Agents
-SDK notebook is linked on the course page.
+pattern check stands in for the model-based guardrail. Module 9 builds the
+same agent with the OpenAI Agents SDK.
 """
 import re
 from datetime import date
