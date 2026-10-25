@@ -412,7 +412,7 @@ ${sections ? `<div class="toc-block"><h2>On this page</h2><ol class="toc">${sect
       </ul></div>
     </div>
     <div class="footer-bottom">
-      <span><strong>To cite:</strong> Dr. Alaa Khamis. <em>Agentic AI Crash Course</em>. Agentic AI @ KFUPM Community, KFUPM, 2026.</span>
+      <span>&copy; 2026 Dr. Alaa Khamis. <em>Agentic AI Crash Course</em>. Agentic AI @ KFUPM Community, KFUPM.</span>
       <span>Course content for educational use.</span>
     </div>
   </div>

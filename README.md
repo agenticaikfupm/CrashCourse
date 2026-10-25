@@ -253,6 +253,11 @@ Loaded only from public CDNs, with fallbacks:
 - Abacus (`abacus.jasoncameron.dev`), a free keyless counter for the landing
   page's activity stats: the section stays hidden if it cannot load.
 
+## How to cite
+
+To cite: Dr. Alaa Khamis. *Agentic AI Crash Course*. Agentic AI @ KFUPM
+Community, KFUPM, 2026. https://agenticaikfupm.github.io/CrashCourse/
+
 ## License and credits
 
 Course content by the Agentic AI @ KFUPM community. Module 8's Google Manager
