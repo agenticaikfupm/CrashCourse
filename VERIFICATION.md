@@ -301,3 +301,28 @@ Date: 2026-10-22.
   expected; the four sensitive tools require approval; and email runs get
   only the four safe tools. Every notebook cell compiles. Neither example
   was run against a live model or a real Google account.
+
+## 13. Update: Google Manager notebook for Colab
+
+- **Source:** the updated `notebooks/cw_google_manager.ipynb` was carried
+  back into `examples/cw_google_manager.py`, which the build turns into the
+  notebook. The build now supports `# %% [markdown]` text cells, so the
+  notebook keeps its step headings, Google setup steps, and troubleshooting
+  notes. Contributor names in the docstring become links in notebooks only.
+- **Colab sign-in:** Google credentials now come from an OAuth Playground
+  refresh token entered in hidden prompts, so the example runs in Colab. The
+  Module 9 page and Module 8's note were updated, and the Colab button is back.
+- **Fixes:** a resumed approval now continues with the right agent (email
+  runs keep their restricted tools); approvals and chat share one lock per
+  conversation; new-email summaries are printed; the Colab widget setup is
+  skipped outside Colab; `nest_asyncio` is installed explicitly; the
+  duplicate credit line and the extra review cell were removed.
+- **Outputs:** the uploaded notebook contained run outputs, including the
+  connected Gmail address and a drafted email. The regenerated notebook has
+  no outputs or widget state, and step 4 now asks users to clear outputs
+  before sharing a copy. The earlier commit still contains those outputs.
+- **Checks:** the notebook's code cells compile; the tool and agent cells ran
+  with a stand-in for Gmail; and with a stand-in for the SDK runner, a paused
+  send blocked new requests in that chat, Approve and Decline each resumed
+  the run, and the reply was delivered. Other notebooks changed only by the
+  linked credit. Not run against a live model or a real Google account here.

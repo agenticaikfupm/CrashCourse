@@ -5,8 +5,12 @@ This script:
   1. Copies each example into the matching <figure class="code-panel"
      data-example="..."> block of every HTML page (so code is visible even
      without JavaScript and works when opening files directly).
-  2. Generates a Google Colab notebook per example in notebooks/.
+  2. Generates a Google Colab notebook per example in notebooks/. In an
+     example, "# %%" starts a code cell and "# %% [markdown]" starts a text
+     cell written as comment lines.
   3. Warns about missing examples and about em dashes in course text.
+
+Edit the example, not the notebook: notebooks are overwritten on every build.
 
 Usage (from the website folder):
     python tools/build.py
@@ -40,6 +44,12 @@ MODULES = {
     "nc": ("no-code.html", "Module 8: No-Code Agentic Workflows"),
     "cw": ("code-workflows.html", "Module 9: Code-based Agentic Workflows"),
     "gov": ("governance.html", "Module 10: Agentic AI Governance"),
+}
+
+# Contributors credited in example docstrings ("Example contributed by NAME.").
+# Notebooks turn the name into a link.
+CONTRIBUTORS = {
+    "Usman Ibrahim": "https://www.linkedin.com/in/usman-ibrahim-314a54277",
 }
 
 PANEL_RE = re.compile(
@@ -79,14 +89,18 @@ def split_docstring(source: str) -> tuple[str, str, str]:
     return title, description, source[m.end():]
 
 
-def to_cells(code: str) -> list[str]:
-    """Split on '# %%' markers and convert notebook-only lines."""
-    # "# %%" starts a new cell; "# %%writefile" stays as the first line of its cell.
-    parts = re.split(r"^# %%(?!writefile)[^\n]*\n", code, flags=re.MULTILINE)
+def to_cells(code: str) -> list[tuple[str, str]]:
+    """Split on '# %%' markers into (kind, text) cells and convert notebook-only lines."""
+    # "# %%" starts a code cell; "# %% [markdown]" starts a Markdown cell whose
+    # lines are comments; "# %%writefile" stays as the first line of its cell.
+    parts = re.split(r"^# %%(?!writefile)([^\n]*)\n", code, flags=re.MULTILINE)
     cells = []
-    for part in parts:
+    for marker, part in zip([""] + parts[1::2], parts[0::2]):
         lines = part.strip("\n").splitlines()
         if not lines:
+            continue
+        if marker.strip() == "[markdown]":
+            cells.append(("markdown", "\n".join(re.sub(r"^# ?", "", line) for line in lines)))
             continue
         out = []
         for i, line in enumerate(lines):
@@ -98,7 +112,7 @@ def to_cells(code: str) -> list[str]:
         text = "\n".join(out)
         # Jupyter and Colab already run an event loop: use top-level await.
         text = re.sub(r"^asyncio\.run\((.+)\)\s*$", r"await \1", text, flags=re.MULTILINE)
-        cells.append(text)
+        cells.append(("code", text))
     return cells
 
 
@@ -129,6 +143,8 @@ def build_notebook(path: Path) -> Path:
     source = path.read_text(encoding="utf-8")
     title, description, code = split_docstring(source)
     page, module = MODULES.get(path.stem.split("_")[0], ("index.html", "Agentic AI Crash Course"))
+    for name, url in CONTRIBUTORS.items():          # code panels show the name; notebooks link it
+        description = description.replace(f"contributed by {name}.", f"contributed by [{name}]({url}).")
     header = (
         f"# {title}\n\n"
         f"**{module}** of the [Agentic AI Crash Course]({SITE_URL}{page}) by "
@@ -136,7 +152,7 @@ def build_notebook(path: Path) -> Path:
         f"{description}\n\n"
         "Run each cell with **Shift+Enter**. Edit anything and run it again to experiment."
     )
-    cells = [nb_cell("markdown", header)] + [nb_cell("code", c) for c in to_cells(code)]
+    cells = [nb_cell("markdown", header)] + [nb_cell(kind, text) for kind, text in to_cells(code)]
     uses_stand_in = re.search(r"^def (llm|fake_llm)\(", code, re.MULTILINE)
     if uses_stand_in:
         cells += [nb_cell("markdown", REAL_MODEL_MD), nb_cell("code", REAL_MODEL_CODE)]
